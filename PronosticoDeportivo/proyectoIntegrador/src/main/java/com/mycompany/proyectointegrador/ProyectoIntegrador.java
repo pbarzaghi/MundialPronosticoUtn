@@ -29,7 +29,7 @@ public class ProyectoIntegrador {
     
     
         FileCvs file= new FileCvs();
-        file.leerArchivoPronostico(csvResultdo);
+        file.leerArchivoResultado(csvResultdo);
         file.leerArchivoPronostico(csvPronostico);
         // Invocar los metodos para obtebner los resulados una ves cargados los objetos
         

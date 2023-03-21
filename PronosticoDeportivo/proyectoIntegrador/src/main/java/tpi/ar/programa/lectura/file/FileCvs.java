@@ -39,7 +39,7 @@ public class FileCvs {
       
       
       for ( ServicioPronostico suscripcion : listaDeSuscripciones) {
-          System.out.println(suscripcion.getNombreEquipo1() + ";" + suscripcion.getNombreEquipo2() + ";" +
+          System.out.println(suscripcion.getNombreEquipo1() + ";" + suscripcion.getNombreEquipo2() + ";" + 
                   suscripcion.getNombreParticipante()+ ";" + suscripcion.getResultadoGanador1()+ ";" + suscripcion.getResultadoEmpate()+";" + suscripcion.getResultadoGanador2());
            // TODO Aca hay que implementar la logica para cargar la lista de pronostico
       }
