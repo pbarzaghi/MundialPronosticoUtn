@@ -4,28 +4,19 @@
  */
 package tpi.ar.programa.pronostico.deportivo;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  *
  * @author pbarzaghi
  */
 public class Ronda {
     
-    private Partido[] partidos;
+    private List <Partido> partidos;
     private int nro;
 
-    /**
-     * @return the partidos
-     */
-    public Partido[] getPartidos() {
-        return partidos;
-    }
-
-    /**
-     * @param partidos the partidos to set
-     */
-    public void setPartidos(Partido[] partidos) {
-        this.partidos = partidos;
-    }
+   
 
     /**
      * @return the nro
@@ -40,6 +31,27 @@ public class Ronda {
     public void setNro(int nro) {
         this.nro = nro;
     }
+
+    /**
+     * @return the partidos
+     */
+    public List <Partido> getPartidos() {
+        return partidos;
+    }
+
+    /**
+     * @param partidos the partidos to set
+     */
+    public void setPartidos(List <Partido> partidos) {
+        this.partidos = partidos;
+    }
+    
+      public void appendPartido(Partido partido) {
+          if (this.partidos == null)
+              this.partidos= new ArrayList();
+             
+          partidos.add(partido);   
+      }
     
     
     

@@ -13,19 +13,14 @@ public class Equipo {
   private String nombre;
   private String descripcion;
 
-    /**
-     * @return the id
-     */
-    public int getId() {
-        return id;
-    }
-
-    /**
-     * @param id the id to set
-     */
-    public void setId(int id) {
-        this.id = id;
-    }
+  
+  public Equipo(String nombre,String descripcion){
+  
+    this.nombre=nombre;
+    this.descripcion=descripcion;
+  
+  }
+  
 
     /**
      * @return the nombre
@@ -53,6 +48,20 @@ public class Equipo {
      */
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
+    }
+
+    /**
+     * @return the id
+     */
+    public int getId() {
+        return id;
+    }
+
+    /**
+     * @param id the id to set
+     */
+    public void setId(int id) {
+        this.id = id;
     }
     
 }

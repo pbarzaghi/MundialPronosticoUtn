@@ -4,7 +4,10 @@
 
 package com.mycompany.proyectointegrador;
 
+import java.util.List;
 import tpi.ar.programa.lectura.file.FileCvs;
+import tpi.ar.programa.pronostico.Pronostico;
+import tpi.ar.programa.pronostico.deportivo.Ronda;
 
 /**
  *
@@ -31,9 +34,9 @@ public class ProyectoIntegrador {
     */
     
         FileCvs file= new FileCvs();
-        
-        file.leerArchivoResultado(csvResultdo);
-        file.leerArchivoPronostico(csvPronostico);
+        // tengo que ejecutar primero resultado para poder crear los objetos
+        List<Ronda> listaRonda= file.leerArchivoResultado(csvResultdo);
+        List<Pronostico> listaPronostico= file.leerArchivoPronostico(csvPronostico);
         // Invocar los metodos para obtebner los resulados una ves cargados los objetos
         
     }
