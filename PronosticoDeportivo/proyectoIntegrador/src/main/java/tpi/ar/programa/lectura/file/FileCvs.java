@@ -74,7 +74,8 @@ public class FileCvs {
       
       
       for ( ServicioResultado suscripcion : listaDeSuscripciones) {
-        System.out.println("implementar logica para cargar la ronda con sus partidos y equipos"+suscripcion.toString());
+          //  cargar la estruc de ronda partido equipo pers
+          
           System.out.println(suscripcion.getNombreEquipo1() + ";" + suscripcion.getCantGoles1Equipo1() + ";" +
                   suscripcion.getNombreEquipo2() + ";" + suscripcion.getCantGoles1Equipo2()+ ";" + suscripcion.getNroRonda());
         
