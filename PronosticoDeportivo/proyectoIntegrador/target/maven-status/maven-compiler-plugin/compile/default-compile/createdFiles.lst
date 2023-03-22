@@ -1,6 +1,12 @@
-tpi\ar\programa\pronostico\deportivo\Equipo.class
 tpi\ar\programa\pronostico\participante\Persona.class
-tpi\ar\programa\pronostico\deportivo\Partido.class
+tpi\ar\programa\lectura\file\ServicioPronostico.class
 tpi\ar\programa\pronostico\Pronostico.class
 com\mycompany\proyectointegrador\ProyectoIntegrador.class
+tpi\ar\programa\pronostico\deportivo\Equipo.class
+tpi\ar\programa\pronostico\deportivo\Partido.class
+tpi\ar\programa\enumerado\ResultadoEmun.class
+tpi\ar\programa\pronostico\GanadorPronostico.class
+tpi\ar\programa\lectura\file\FileCvs.class
+tpi\ar\programa\lectura\file\ServicioResultado.class
+tpi\ar\programa\enumerado\TipoDocumento.class
 tpi\ar\programa\pronostico\deportivo\Ronda.class

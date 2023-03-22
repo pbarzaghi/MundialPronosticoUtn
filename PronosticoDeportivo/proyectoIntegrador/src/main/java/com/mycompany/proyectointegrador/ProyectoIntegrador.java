@@ -6,6 +6,7 @@ package com.mycompany.proyectointegrador;
 
 import java.util.List;
 import tpi.ar.programa.lectura.file.FileCvs;
+import tpi.ar.programa.pronostico.GanadorPronostico;
 import tpi.ar.programa.pronostico.Pronostico;
 import tpi.ar.programa.pronostico.deportivo.Ronda;
 
@@ -19,10 +20,12 @@ public class ProyectoIntegrador {
     
         //TODO aca hay que leer los archivos por parametros no como esta ahora
         
-        String csvResultdo = "..\\proyectoIntegrador\\src\\main\\resources\\resultado.csv";         
-        String csvPronostico = "..\\proyectoIntegrador\\src\\main\\resources\\pronostico.csv"; 
+       // System.out.println("args "+ args.length);
+        String csvResultdo = "src\\main\\resources\\resultado.csv";         
+        String csvPronostico = "src\\main\\resources\\pronostico.csv"; 
       //En la variable args va a viajar la ruta del archivo que queremos que abra el programa
    
+      
       
       /*  
  
@@ -33,11 +36,25 @@ public class ProyectoIntegrador {
      
     */
     
-        FileCvs file= new FileCvs();
-        // tengo que ejecutar primero resultado para poder crear los objetos
-        List<Ronda> listaRonda= file.leerArchivoResultado(csvResultdo);
-        List<Pronostico> listaPronostico= file.leerArchivoPronostico(csvPronostico);
+       FileCvs file= new FileCvs();
+     // tengo que ejecutar primero resultado para poder crear los objetos
+      List<Ronda> listaRonda= file.leerArchivoResultado(csvResultdo);
+      List<Pronostico> listaPronostico= file.leerArchivoPronostico(csvPronostico);
         // Invocar los metodos para obtebner los resulados una ves cargados los objetos
+    
+        GanadorPronostico ganador= new GanadorPronostico();
+        ganador.ganadorDelPronostico(listaRonda, listaPronostico);
+        
+        // Imprimir el orden de los ganadores y sus puntos
+              ganador.getParticipantePuntos();
+    
         
     }
+    
+  
+    
+    
+    
+    
+    
 }

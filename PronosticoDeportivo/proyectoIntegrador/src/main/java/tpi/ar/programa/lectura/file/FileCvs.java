@@ -12,10 +12,12 @@ import java.util.HashMap;
 
 import java.util.List;
 import tpi.ar.programa.enumerado.ResultadoEmun;
+
 import tpi.ar.programa.pronostico.Pronostico;
 import tpi.ar.programa.pronostico.deportivo.Equipo;
 import tpi.ar.programa.pronostico.deportivo.Partido;
 import tpi.ar.programa.pronostico.deportivo.Ronda;
+import tpi.ar.programa.pronostico.participante.Persona;
 
 
 
@@ -32,6 +34,88 @@ public class FileCvs {
          objCreacion=new HashMap();
       
     }
+    
+    
+     /*
+      Este metodo debe leer el archivo de resultado y cargarlos
+    
+    */
+    
+     public List <Ronda> leerArchivoResultado(String path){
+    
+      List <ServicioResultado> listaDeSuscripciones;
+      List <Ronda> listaRondas =new ArrayList();
+        try {
+            // En esta primera lÃ­nea definimos el archivos que va a ingresar
+            listaDeSuscripciones = new CsvToBeanBuilder(new FileReader(path))
+                    // Es necesario definir el tipo de dato que va a generar el objeto que estamos queriendo parsear a partir del CSV
+                    .withType(ServicioResultado.class)
+                    .build()
+                    .parse();
+        
+            //El resultado de este mÃ©todo nos da una lita del objetos
+      
+      int idEquipo=1;
+      int idPartido=1;
+      for ( ServicioResultado suscripcion : listaDeSuscripciones) {
+          //  cargar la estruc de ronda partido equipo pers
+          
+          
+          Equipo equipo1= (Equipo)  objCreacion.get(Equipo.class+suscripcion.getNombreEquipo1().strip());
+          if(equipo1 == null){
+             equipo1= new Equipo(suscripcion.getNombreEquipo1().strip(), "SELECCIONADO");
+             equipo1.setId(idEquipo);
+             objCreacion.put(Equipo.class+equipo1.getNombre().strip(), equipo1);
+             idEquipo++;
+          }
+           
+           
+         
+           Equipo equipo2= (Equipo)  objCreacion.get(Equipo.class+suscripcion.getNombreEquipo2().strip());
+           if(equipo2 == null){
+               equipo2= new Equipo(suscripcion.getNombreEquipo2(), "SELECCIONADO");
+              equipo2.setId(idEquipo);
+              objCreacion.put(Equipo.class+equipo2.getNombre(), equipo2);
+               idEquipo++;
+          }
+                   
+           Partido partido= (Partido)  objCreacion.get(Partido.class+String.valueOf(equipo1.getId())+"_"+String.valueOf(equipo2.getId()) );
+           if(partido == null){
+               partido =new Partido();
+               partido.setIdPartido(idPartido);
+               partido.setEquipo1(equipo1);
+               partido.setEquipo2(equipo2);
+               partido.setGolesEquipo1(suscripcion.getCantGoles1Equipo1());
+               partido.setGolesEquipo2(suscripcion.getCantGoles1Equipo2());
+               objCreacion.put(Partido.class+equipo1.getNombre()+"_"+equipo2.getNombre(), partido);
+               idPartido++;
+            }
+          
+           Ronda ronda= (Ronda)  objCreacion.get(Ronda.class+suscripcion.getNroRonda().toString());
+            if(ronda == null){
+                ronda = new Ronda();
+                ronda.setNro(suscripcion.getNroRonda());
+                ronda.appendPartido(partido);
+                listaRondas.add(ronda);
+                 objCreacion.put(Ronda.class+String.valueOf(ronda.getNro()), ronda);
+            }
+          System.out.println(suscripcion.getNombreEquipo1() + ";" + suscripcion.getCantGoles1Equipo1() + ";" +
+                  suscripcion.getNombreEquipo2() + ";" + suscripcion.getCantGoles1Equipo2()+ ";" + suscripcion.getNroRonda());
+        
+      }
+      } catch (FileNotFoundException ex) {
+            System.out.println(ex.getMessage());
+        }
+    
+        System.out.println(" ----- F I N CARGAR RESULTADOS -------");
+      //  Esto return null no va. Tiene que retornar la lista de los resultados de los partido 
+      // es decir la ronda 
+    return listaRondas;
+ 
+}
+ //-----------------------------------  Fin del metodo cargar resultados --------------------    
+    
+    
     
     /*
       Este metodo lee dado el path del archivo los pronosticos y retorna una lista de pronostico
@@ -91,6 +175,10 @@ public class FileCvs {
                            pronostico.setResultado(ResultadoEmun.EMPATE);
                   }  
              
+              
+         
+               Persona participante= new Persona(suscripcion.getNombreParticipante());
+               pronostico.setParticipante(participante);
           listaPronostico.add(pronostico);
           System.out.println(suscripcion.getNombreEquipo1() + ";" + suscripcion.getNombreEquipo2() + ";" + 
                   suscripcion.getNombreParticipante()+ ";" + suscripcion.getResultadoGanador1()+ ";" + suscripcion.getResultadoEmpate()+";" + suscripcion.getResultadoGanador2());
@@ -107,79 +195,5 @@ public class FileCvs {
     
     
     
-    /*
-      Este metodo debe leer el archivo de resultado y cargarlos
-    
-    */
-    
-     public List <Ronda> leerArchivoResultado(String path){
-    
-      List <ServicioResultado> listaDeSuscripciones;
-      List <Ronda> listaRondas =new ArrayList();
-        try {
-            // En esta primera lÃ­nea definimos el archivos que va a ingresar
-            listaDeSuscripciones = new CsvToBeanBuilder(new FileReader(path))
-                    // Es necesario definir el tipo de dato que va a generar el objeto que estamos queriendo parsear a partir del CSV
-                    .withType(ServicioResultado.class)
-                    .build()
-                    .parse();
-        
-            //El resultado de este mÃ©todo nos da una lita del objetos
-      
-      int idEquipo=1;
-      for ( ServicioResultado suscripcion : listaDeSuscripciones) {
-          //  cargar la estruc de ronda partido equipo pers
-          
-          Equipo equipo1= (Equipo)  objCreacion.get(Equipo.class+suscripcion.getNombreEquipo1().strip());
-          if(equipo1 == null){
-             equipo1= new Equipo(suscripcion.getNombreEquipo1().strip(), "SELECCIONADO");
-             equipo1.setId(idEquipo);
-             objCreacion.put(Equipo.class+equipo1.getNombre().strip(), equipo1);
-             idEquipo++;
-          }
-           
-           
-         
-           Equipo equipo2= (Equipo)  objCreacion.get(Equipo.class+suscripcion.getNombreEquipo2().strip());
-           if(equipo2 == null){
-               equipo2= new Equipo(suscripcion.getNombreEquipo2(), "SELECCIONADO");
-              equipo2.setId(idEquipo);
-              objCreacion.put(Equipo.class+equipo2.getNombre(), equipo2);
-
-               idEquipo++;
-          }
-                   
-           Partido partido= (Partido)  objCreacion.get(Partido.class+String.valueOf(equipo1.getId())+"_"+String.valueOf(equipo2.getId()) );
-           if(partido == null){
-               partido =new Partido();
-               partido.setEquipo1(equipo1);
-               partido.setEquipo2(equipo2);
-               partido.setGolesEquipo1(suscripcion.getCantGoles1Equipo1());
-               partido.setGolesEquipo2(suscripcion.getCantGoles1Equipo2());
-               objCreacion.put(Partido.class+equipo1.getNombre()+"_"+equipo2.getNombre(), partido);
-            }
-          
-           Ronda ronda= (Ronda)  objCreacion.get(Ronda.class+suscripcion.getNroRonda().toString());
-            if(ronda == null){
-                ronda = new Ronda();
-                ronda.setNro(suscripcion.getNroRonda());
-                ronda.appendPartido(partido);
-                listaRondas.add(ronda);
-                 objCreacion.put(Ronda.class+String.valueOf(ronda.getNro()), ronda);
-            }
-          System.out.println(suscripcion.getNombreEquipo1() + ";" + suscripcion.getCantGoles1Equipo1() + ";" +
-                  suscripcion.getNombreEquipo2() + ";" + suscripcion.getCantGoles1Equipo2()+ ";" + suscripcion.getNroRonda());
-        
-      }
-      } catch (FileNotFoundException ex) {
-            System.out.println(ex.getMessage());
-        }
-    
-        System.out.println(" ----- F I N CARGAR RESULTADOS -------");
-      //  Esto return null no va. Tiene que retornar la lista de los resultados de los partido 
-      // es decir la ronda 
-    return listaRondas;
- 
-}
-     
+   
 }

@@ -7,6 +7,7 @@ package tpi.ar.programa.pronostico;
 import tpi.ar.programa.enumerado.ResultadoEmun;
 import tpi.ar.programa.pronostico.deportivo.Equipo;
 import tpi.ar.programa.pronostico.deportivo.Partido;
+import tpi.ar.programa.pronostico.participante.Persona;
 
 /**
  *
@@ -16,6 +17,7 @@ public class Pronostico {
     private Partido partido;
     private Equipo equipo;
     private ResultadoEmun resultado;
+    private Persona participante;
 
     /**
      * @return the partido
@@ -57,6 +59,20 @@ public class Pronostico {
      */
     public void setResultado(ResultadoEmun resultado) {
         this.resultado = resultado;
+    }
+
+    /**
+     * @return the participante
+     */
+    public Persona getParticipante() {
+        return participante;
+    }
+
+    /**
+     * @param participante the participante to set
+     */
+    public void setParticipante(Persona participante) {
+        this.participante = participante;
     }
     
 }

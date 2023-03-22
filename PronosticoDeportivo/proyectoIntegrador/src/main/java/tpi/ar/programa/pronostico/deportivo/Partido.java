@@ -10,7 +10,7 @@ package tpi.ar.programa.pronostico.deportivo;
  */
 public class Partido {
     
-   
+   private int idPartido;
    private Equipo equipo1;
    private Equipo equipo2;
    private int golesEquipo1;
@@ -70,6 +70,20 @@ public class Partido {
      */
     public void setGolesEquipo2(int golesEquipo2) {
         this.golesEquipo2 = golesEquipo2;
+    }
+
+    /**
+     * @return the idPartido
+     */
+    public int getIdPartido() {
+        return idPartido;
+    }
+
+    /**
+     * @param idPartido the idPartido to set
+     */
+    public void setIdPartido(int idPartido) {
+        this.idPartido = idPartido;
     }
    
    

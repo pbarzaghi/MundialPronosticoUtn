@@ -16,6 +16,12 @@ public class Persona {
     private int nroDoc;
     private TipoDocumento tipoDoc;
 
+       public Persona(String nombre){
+      this.nombre=nombre;
+    
+    
+    }
+    
     
     public Persona(String nombre,String apellido,int nroDoc,TipoDocumento tipo){
       this.nombre=nombre;
