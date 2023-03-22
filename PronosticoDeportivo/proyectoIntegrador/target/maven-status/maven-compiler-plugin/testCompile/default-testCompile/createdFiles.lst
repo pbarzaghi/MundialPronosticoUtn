@@ -1,0 +1,5 @@
+test\participante\PersonaTest.class
+test\pronostico\deportivo\EquipoTest.class
+test\pronostico\deportivo\RondaTest.class
+test\pronostico\deportivo\PartidoTest.class
+test\pronostico\PronosticoTest.class
