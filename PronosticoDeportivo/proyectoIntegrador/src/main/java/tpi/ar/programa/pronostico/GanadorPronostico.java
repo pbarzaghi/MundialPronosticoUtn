@@ -5,6 +5,8 @@
 package tpi.ar.programa.pronostico;
 
 import java.util.List;
+import tpi.ar.programa.enumerado.ResultadoEmun;
+import tpi.ar.programa.pronostico.deportivo.Partido;
 import tpi.ar.programa.pronostico.deportivo.Ronda;
 
 /**
@@ -13,9 +15,11 @@ import tpi.ar.programa.pronostico.deportivo.Ronda;
  */
 public class GanadorPronostico {
     
-    private String[] participantePuntos;
+   
     
-      public void ganadorDelPronostico( List<Ronda> listaRonda, List<Pronostico> listaPronostico){
+      public void ganadorDelPronostico(  List<Pronostico> listaPronostico){ 
+      }
+}
         
      // Recorrer la rondas
      
@@ -23,16 +27,13 @@ public class GanadorPronostico {
                 
                  // en ese partido puede haber un pronostico o varios si son varios participantes
                  // analizar la logica de como realizarlo
-                
-         
-             
-    }
+   /*         Pronostico pronostico;
+           Partido partido =  pronostico.getPartido();
+          ResultadoEmun resultadoPartido=   partido.getResultado(pronostico.getEquipo());
+          
+              if(pronostico.getResultado()==resultadoPartido)  
+                  1
+     */                     
+ 
 
-    /**
-     * @return the participantePuntos
-     */
-    public String[] getParticipantePuntos() {
-        return participantePuntos;
-    }
-    
-}
+  

@@ -122,14 +122,14 @@ public class FileCvs {
       Este metodo lee dado el path del archivo los pronosticos y retorna una lista de pronostico
     cargados desde el archivo
     */
-    public List<Pronostico> leerArchivoPronostico(String path){
+    public List<Pronostico> leerArchivoPronostico(String pathResultado,String pathPronostico){
     
-        
+       List<Ronda> rondas=leerArchivoResultado( pathResultado); 
        List <Pronostico> listaPronostico=new ArrayList();   
        List <ServicioPronostico> listaDeSuscripciones;
         try {
             // En esta primera lÃ­nea definimos el archivos que va a ingresar
-            listaDeSuscripciones = new CsvToBeanBuilder(new FileReader(path))
+            listaDeSuscripciones = new CsvToBeanBuilder(new FileReader(pathPronostico))
                     // Es necesario definir el tipo de dato que va a generar el objeto que estamos queriendo parsear a partir del CSV
                     .withType(ServicioPronostico.class)
                     .build()
