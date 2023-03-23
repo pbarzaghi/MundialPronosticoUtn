@@ -98,7 +98,8 @@ public class FileCvs {
                 ronda.appendPartido(partido);
                 listaRondas.add(ronda);
                  objCreacion.put(Ronda.class+String.valueOf(ronda.getNro()), ronda);
-            }
+            }else
+                 ronda.appendPartido(partido);
           System.out.println(suscripcion.getNombreEquipo1() + ";" + suscripcion.getCantGoles1Equipo1() + ";" +
                   suscripcion.getNombreEquipo2() + ";" + suscripcion.getCantGoles1Equipo2()+ ";" + suscripcion.getNroRonda());
         

@@ -4,6 +4,8 @@
  */
 package tpi.ar.programa.pronostico.deportivo;
 
+import tpi.ar.programa.enumerado.ResultadoEmun;
+
 /**
  *
  * @author pbarzaghi
@@ -86,6 +88,24 @@ public class Partido {
         this.idPartido = idPartido;
     }
    
+    public ResultadoEmun getResultado(Equipo equipo){
+        
+          if(equipo.getId()== this.equipo1.getId())
+                 return getResultadoPorGoles(this.golesEquipo1,golesEquipo2);
+          else       
+               return getResultadoPorGoles(this.golesEquipo2,golesEquipo1);
+       
+    }
+    private ResultadoEmun getResultadoPorGoles(int goles1,int goles2){
+    
+      if(goles1 > goles2)
+                  return ResultadoEmun.GANADOR;
+              else  if(goles1 < goles2 )
+                       return ResultadoEmun.PERDEDOR;
+                 else
+                    return ResultadoEmun.EMPATE;
+    
+    }
    
    
    
