@@ -7,7 +7,6 @@ package tpi.ar.programa.pronostico;
 import java.util.List;
 import tpi.ar.programa.enumerado.ResultadoEmun;
 import tpi.ar.programa.pronostico.deportivo.Partido;
-import tpi.ar.programa.pronostico.deportivo.Ronda;
 
 /**
  *
@@ -17,23 +16,54 @@ public class GanadorPronostico {
     
    
     
-      public void ganadorDelPronostico(  List<Pronostico> listaPronostico){ 
+    /*
+     El metodo ganadorDelPronostic: Dada una lista de Pronostico, la recorro
+     obteniendo los partidos y determinando como salieron.
+     Segun el resultado del partido y el pronosticado se determa el puntaje 
+     que se le da.
+     Este metodo retorna un String de la concatenacion del Participante y la
+     cantidad de punto que hizo
+    */
+      public String ganadorDelPronostico(  List<Pronostico> listaPronostico){ 
+          int cantidadPuntos=0;
+          String participante="";
+           for ( Pronostico pronostico : listaPronostico) {
+           
+                 Partido partido =  pronostico.getPartido();
+                 ResultadoEmun resultadoPartido=   partido.getResultado(pronostico.getEquipo());
+                 cantidadPuntos+=obtenerPuntaje(pronostico.getResultado(),resultadoPartido);
+                // TODO Este codigo se tiene que modificar cuando sean varias representantes
+                  if("".equals(participante))
+                      if(! participante.equals(pronostico.getParticipante().getNombre()))
+                             participante=pronostico.getParticipante().getNombre();
+                
+           }
+           
+          return strGanadorConPuntaje(participante,cantidadPuntos);
       }
+      
+      /*
+       Este metodo retorna 1 si acepto el pronostico y cero sino.
+       // Este metodo se puede utilizar en caso que el puntaje sea dinamico
+           
+      */
+      
+      private int obtenerPuntaje(ResultadoEmun resulPronostico,ResultadoEmun resulPartido){
+          
+         if(resulPronostico == resulPartido)
+             return 1;
+         else
+             return 0;
+      }
+
+    private String strGanadorConPuntaje(String participante, int cantidadPuntos) {
+        
+        return " La participante "+participante+" hizo "+ cantidadPuntos +" punto en el Pronostico";
+    }
+      
+      
 }
         
-     // Recorrer la rondas
-     
-         // recorrer los partidos
-                
-                 // en ese partido puede haber un pronostico o varios si son varios participantes
-                 // analizar la logica de como realizarlo
-   /*         Pronostico pronostico;
-           Partido partido =  pronostico.getPartido();
-          ResultadoEmun resultadoPartido=   partido.getResultado(pronostico.getEquipo());
-          
-              if(pronostico.getResultado()==resultadoPartido)  
-                  1
-     */                     
- 
+    
 
   

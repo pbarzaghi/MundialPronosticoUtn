@@ -32,7 +32,9 @@ public class ProyectoIntegrador {
         // Invocar los metodos para obtebner los resulados una ves cargados los objetos
     
         GanadorPronostico ganador= new GanadorPronostico();
-        ganador.ganadorDelPronostico(listaPronostico);
+        System.out.println( ganador.ganadorDelPronostico(listaPronostico));
+         
+
       
     }
     

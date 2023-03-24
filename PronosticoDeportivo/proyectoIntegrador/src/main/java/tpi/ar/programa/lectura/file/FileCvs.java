@@ -57,6 +57,7 @@ public class FileCvs {
       
       int idEquipo=1;
       int idPartido=1;
+         System.out.println(" Archivo : "+path);
       for ( ServicioResultado suscripcion : listaDeSuscripciones) {
           //  cargar la estruc de ronda partido equipo pers
           
@@ -100,8 +101,12 @@ public class FileCvs {
                  objCreacion.put(Ronda.class+String.valueOf(ronda.getNro()), ronda);
             }else
                  ronda.appendPartido(partido);
-          System.out.println(suscripcion.getNombreEquipo1() + ";" + suscripcion.getCantGoles1Equipo1() + ";" +
-                  suscripcion.getNombreEquipo2() + ";" + suscripcion.getCantGoles1Equipo2()+ ";" + suscripcion.getNroRonda());
+           
+            System.out.println(" Equipo1: "+suscripcion.getNombreEquipo1() +
+                               " GolesEquipo1: " +  suscripcion.getCantGoles1Equipo1() + 
+                                " Equipo2: " + suscripcion.getNombreEquipo2() +
+                                " GolesEquipo1: " + suscripcion.getCantGoles1Equipo2()+ 
+                                " Nro Ronda: " + suscripcion.getNroRonda());
         
       }
       } catch (FileNotFoundException ex) {
@@ -127,6 +132,7 @@ public class FileCvs {
        List<Ronda> rondas=leerArchivoResultado( pathResultado); 
        List <Pronostico> listaPronostico=new ArrayList();   
        List <ServicioPronostico> listaDeSuscripciones;
+        System.out.println(" Archivo : "+pathPronostico);
         try {
             // En esta primera lÃ­nea definimos el archivos que va a ingresar
             listaDeSuscripciones = new CsvToBeanBuilder(new FileReader(pathPronostico))
@@ -159,31 +165,21 @@ public class FileCvs {
            
              pronostico.setEquipo(equipo1);
              pronostico.setPartido(partido);
-             
-              if(partido.getEquipo1().getId()== equipo1.getId() ){
-                  if( partido.getGolesEquipo1() > partido.getGolesEquipo2())
-                     pronostico.setResultado(ResultadoEmun.GANADOR);
-                    else  if( partido.getGolesEquipo1() < partido.getGolesEquipo2())
-                          pronostico.setResultado(ResultadoEmun.PERDEDOR);
-                       else
-                           pronostico.setResultado(ResultadoEmun.EMPATE); 
-              }else {
-                  if( partido.getGolesEquipo1()< partido.getGolesEquipo2())
-                     pronostico.setResultado(ResultadoEmun.GANADOR);
-                    else  if( partido.getGolesEquipo1() > partido.getGolesEquipo2())
-                          pronostico.setResultado(ResultadoEmun.PERDEDOR);
-                       else
-                           pronostico.setResultado(ResultadoEmun.EMPATE);
-                  }  
-             
-              
-         
+             pronostico.setResultado(getResultadoPronostico(suscripcion.getResultadoGanador1(),
+                                                            suscripcion.getResultadoEmpate(),
+                                                            suscripcion.getResultadoGanador2()));
+                     
                Persona participante= new Persona(suscripcion.getNombreParticipante());
                pronostico.setParticipante(participante);
-          listaPronostico.add(pronostico);
-          System.out.println(suscripcion.getNombreEquipo1() + ";" + suscripcion.getNombreEquipo2() + ";" + 
-                  suscripcion.getNombreParticipante()+ ";" + suscripcion.getResultadoGanador1()+ ";" + suscripcion.getResultadoEmpate()+";" + suscripcion.getResultadoGanador2());
-           // TODO Aca hay que implementar la logica para cargar la lista de pronostico
+               listaPronostico.add(pronostico);
+          
+               System.out.println("Equipo1: " +suscripcion.getNombreEquipo1() + 
+                                  "  Equipo2: " + suscripcion.getNombreEquipo2() + 
+                                  " Participante: " +  suscripcion.getNombreParticipante()+ 
+                                  " GanadorEquipo1: " + suscripcion.getResultadoGanador1()+ 
+                                  " Empate : " + suscripcion.getResultadoEmpate()+
+                                  " GanadorEquipo2: " + suscripcion.getResultadoGanador2());
+     
           }
      
       } catch (FileNotFoundException ex) {
@@ -193,8 +189,16 @@ public class FileCvs {
      //TODO: Esto no va esta, tiene que retornar la lista de pronostico cargada por arhivos   
      return listaPronostico;   
     }
-    
-    
-    
-   
+     
+
+
+  private ResultadoEmun getResultadoPronostico(String strGanadorEq1,String strEmpate,String strGanador2){
+
+         if("X".equals(strGanadorEq1))
+             return ResultadoEmun.GANADOR;
+         else if("X".equals(strEmpate))
+                  return ResultadoEmun.EMPATE;
+         else
+                  return ResultadoEmun.PERDEDOR;
+}     
 }

@@ -96,7 +96,7 @@ public class Partido {
                return getResultadoPorGoles(this.golesEquipo2,golesEquipo1);
        
     }
-    private ResultadoEmun getResultadoPorGoles(int goles1,int goles2){
+    public ResultadoEmun getResultadoPorGoles(int goles1,int goles2){
     
       if(goles1 > goles2)
                   return ResultadoEmun.GANADOR;
