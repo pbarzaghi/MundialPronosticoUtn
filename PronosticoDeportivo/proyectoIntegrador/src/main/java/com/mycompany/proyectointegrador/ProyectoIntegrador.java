@@ -18,27 +18,22 @@ import tpi.ar.programa.pronostico.Pronostico;
 public class ProyectoIntegrador {
 
     public static void main(String[] args) {
-        String csvResultado="";         
-        String csvPronostico = ""; 
+        String csvResultado = "src\\main\\resources\\resultado";
+        String csvPronostico = "src\\main\\resources\\pronostico"; 
+        String extension=".csv";
+       
         boolean salida=true;
         String strNrofileResultado;
         do{
-         strNrofileResultado= JOptionPane.showInputDialog(null,"Elija el archivo: 1 - 2 - 3","ARCHIVO RESULTADO", 3);
+         strNrofileResultado=elegirNroDeNombreDeArchivo();
             switch(strNrofileResultado) {
-                case "1":
-                    csvResultado = "src\\main\\resources\\resultado1.csv";
+                case  "1" , "2" , "3":
+                    csvResultado = csvResultado + strNrofileResultado + extension;
                     salida=false;
                     break;
-                  case "2":
-                     csvResultado = "src\\main\\resources\\resultado2.csv";  
-                     salida=false;
-                    break; 
-                   case "3":
-                     csvResultado = "src\\main\\resources\\resultado3.csv";
-                     salida=false;
-                    break;   
+                     
                 default:
-                     strNrofileResultado= JOptionPane.showInputDialog(null,"Elija el archivo: 1 - 2 - 3","ARCHIVO RESULTADO", 3);
+                     strNrofileResultado= elegirNroDeNombreDeArchivo();
         
             }
         
@@ -49,43 +44,45 @@ public class ProyectoIntegrador {
          salida=true;
          String strNrofilePronostico;
         do{
-            strNrofilePronostico= JOptionPane.showInputDialog(null,"Elija el archivo: 1 - 2 - 3)","ARCHIVO PRONOSTICO ",3);
+            strNrofilePronostico= elegirNroDeNombreDeArchivo();
              
-            switch( strNrofilePronostico) {
-                case "1":
-                     csvPronostico = "src\\main\\resources\\pronostico1.csv"; 
-                    salida=false;
-                    break;
-                  case "2":
-                      csvPronostico = "src\\main\\resources\\pronostico2.csv";   
-                     salida=false;
-                    break; 
-                   case "3":
-                      csvPronostico = "src\\main\\resources\\pronostico3.csv"; 
+           switch(strNrofileResultado) {
+                case  "1" , "2" , "3":
+                      csvPronostico =csvPronostico + strNrofileResultado + extension;; 
                      salida=false;
                     break;   
                 default:
-                       strNrofilePronostico= JOptionPane.showInputDialog(null,"Elija el archivo: 1 - 2 - 3)","ARCHIVO PRONOSTICO ",4);
+                       strNrofilePronostico= elegirNroDeNombreDeArchivo();
              
             }
               }while(salida);   
      
     
        FileCvs file= new FileCvs();
-     // tengo que ejecutar primero resultado para poder crear los objetos
-   //   List<Ronda> listaRonda= file.leerArchivoResultado(csvResultdo);
+    
       List<Pronostico> listaPronostico= file.leerArchivoPronostico(csvResultado,csvPronostico);
-        // Invocar los metodos para obtebner los resulados una ves cargados los objetos
+   
+      // Invocar los metodos para obtebner los resulados una ves cargados los objetos
     GanadorPronostico ganador= new GanadorPronostico();
-    System.out.println( ganador.ganadorDelPronostico(listaPronostico));
-         
+    String participanteGanadora=ganador.ganadorDelPronostico(listaPronostico);
+   
+
+   // imprimo por consola y tambien por pantalla
+    System.out.println(participanteGanadora);
+    JOptionPane.showMessageDialog(null, participanteGanadora);
 
       
     }
     
   
     
-    
+   private static String elegirNroDeNombreDeArchivo(){
+   
+   
+     String strNrofile= JOptionPane.showInputDialog(null,"Elija el archivo: 1 - 2 - 3"," ARCHIVO A LEER ",3);
+         
+     return strNrofile;
+   } 
     
     
     
