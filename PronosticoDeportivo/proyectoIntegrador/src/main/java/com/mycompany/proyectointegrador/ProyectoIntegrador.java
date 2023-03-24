@@ -8,7 +8,7 @@ import java.util.List;
 import tpi.ar.programa.lectura.file.FileCvs;
 import tpi.ar.programa.pronostico.GanadorPronostico;
 import tpi.ar.programa.pronostico.Pronostico;
-import tpi.ar.programa.pronostico.deportivo.Ronda;
+
 
 /**
  *
@@ -20,21 +20,10 @@ public class ProyectoIntegrador {
     
         //TODO aca hay que leer los archivos por parametros no como esta ahora
         
-       // System.out.println("args "+ args.length);
+
         String csvResultado = "src\\main\\resources\\resultado.csv";         
         String csvPronostico = "src\\main\\resources\\pronostico.csv"; 
-      //En la variable args va a viajar la ruta del archivo que queremos que abra el programa
-   
-      
-      
-      /*  
- 
-        if(args.length == 0){
-            System.out.println("ERROR: No ingresaste ningÃºn archivo como argumento!");
-            System.exit(88);
-        }
      
-    */
     
        FileCvs file= new FileCvs();
      // tengo que ejecutar primero resultado para poder crear los objetos
@@ -44,11 +33,7 @@ public class ProyectoIntegrador {
     
         GanadorPronostico ganador= new GanadorPronostico();
         ganador.ganadorDelPronostico(listaPronostico);
-        
-        // Imprimir el orden de los ganadores y sus puntos
-          //    ganador.getParticipantePuntos();
-    
-        
+      
     }
     
   
