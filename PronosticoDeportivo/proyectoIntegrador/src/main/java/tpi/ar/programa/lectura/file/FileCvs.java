@@ -27,7 +27,7 @@ import tpi.ar.programa.pronostico.participante.Persona;
  */
 public class FileCvs {
     
-    private static  HashMap objCreacion;
+    private  HashMap objCreacion;
     public FileCvs(){
       
       if(objCreacion == null)
@@ -114,8 +114,7 @@ public class FileCvs {
         }
     
         System.out.println(" ----- F I N CARGAR RESULTADOS -------");
-      //  Esto return null no va. Tiene que retornar la lista de los resultados de los partido 
-      // es decir la ronda 
+    // Se deja preparado para las cuando sean mas de 1 ronda
     return listaRondas;
  
 }
@@ -186,7 +185,7 @@ public class FileCvs {
             System.out.println(ex.getMessage());
         }
       System.out.println(" ----- F I N CARGAR PRONOSTICOS -------");  
-     //TODO: Esto no va esta, tiene que retornar la lista de pronostico cargada por arhivos   
+     
      return listaPronostico;   
     }
      
