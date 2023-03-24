@@ -27,7 +27,7 @@ public class ProyectoIntegrador {
         boolean salida=true;
         String strNrofileResultado;
         do{
-         strNrofileResultado=elegirNroDeNombreDeArchivo();
+         strNrofileResultado=elegirNroDeNombreDeArchivo("RESULTADO");
             switch(strNrofileResultado) {
                 case  "1" , "2" , "3":
                     csvResultado = csvResultado + strNrofileResultado + extension;
@@ -35,7 +35,7 @@ public class ProyectoIntegrador {
                     break;
                      
                 default:
-                     strNrofileResultado= elegirNroDeNombreDeArchivo();
+                     strNrofileResultado= elegirNroDeNombreDeArchivo("RESULTADO");
         
             }
         
@@ -46,7 +46,7 @@ public class ProyectoIntegrador {
          salida=true;
          String strNrofilePronostico;
         do{
-            strNrofilePronostico= elegirNroDeNombreDeArchivo();
+            strNrofilePronostico= elegirNroDeNombreDeArchivo("PRONOSTICO");
              
            switch(strNrofileResultado) {
                 case  "1" , "2" , "3":
@@ -54,7 +54,7 @@ public class ProyectoIntegrador {
                      salida=false;
                     break;   
                 default:
-                       strNrofilePronostico= elegirNroDeNombreDeArchivo();
+                       strNrofilePronostico= elegirNroDeNombreDeArchivo("PRONOSTICO");
              
             }
               }while(salida);   
@@ -78,10 +78,10 @@ public class ProyectoIntegrador {
     
   
     
-   private static String elegirNroDeNombreDeArchivo(){
+   private static String elegirNroDeNombreDeArchivo(String nameFile){
    
    
-     String strNrofile= JOptionPane.showInputDialog(null,"Elija el archivo: 1 - 2 - 3"," ARCHIVO A LEER ",3);
+     String strNrofile= JOptionPane.showInputDialog(null,"Elija el N° de archivo: 1 - 2 - 3"," ARCHIVO "+nameFile+" A LEER ",3);
          
      return strNrofile;
    } 
