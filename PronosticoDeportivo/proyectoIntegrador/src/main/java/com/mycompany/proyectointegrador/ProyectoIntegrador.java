@@ -22,6 +22,8 @@ public class ProyectoIntegrador {
         String csvPronostico = "src\\main\\resources\\pronostico"; 
         String extension=".csv";
        
+        
+   
         boolean salida=true;
         String strNrofileResultado;
         do{
@@ -48,7 +50,7 @@ public class ProyectoIntegrador {
              
            switch(strNrofileResultado) {
                 case  "1" , "2" , "3":
-                      csvPronostico =csvPronostico + strNrofileResultado + extension;; 
+                      csvPronostico =csvPronostico + strNrofilePronostico + extension;; 
                      salida=false;
                     break;   
                 default:
@@ -70,7 +72,7 @@ public class ProyectoIntegrador {
    // imprimo por consola y tambien por pantalla
     System.out.println(participanteGanadora);
     JOptionPane.showMessageDialog(null, participanteGanadora);
-
+    
       
     }
     
