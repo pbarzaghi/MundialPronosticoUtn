@@ -14,6 +14,7 @@ import tpi.ar.programa.pronostico.deportivo.Partido;
  */
 public class GanadorPronostico {
     
+    private  int cantidadPuntos=0;
    
     
     /*
@@ -25,7 +26,7 @@ public class GanadorPronostico {
      cantidad de punto que hizo
     */
       public String ganadorDelPronostico(  List<Pronostico> listaPronostico){ 
-          int cantidadPuntos=0;
+         
           String participante="";
            for ( Pronostico pronostico : listaPronostico) {
            
@@ -61,7 +62,9 @@ public class GanadorPronostico {
         return " La participante "+participante+" hizo "+ cantidadPuntos +" punto en el Pronostico";
     }
       
-      
+    public int getCantidadPuntos(){
+       return this.cantidadPuntos;
+    }  
 }
         
     
