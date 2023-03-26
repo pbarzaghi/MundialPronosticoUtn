@@ -105,7 +105,7 @@ public class FileCvs {
             System.out.println(" Equipo1: "+suscripcion.getNombreEquipo1() +
                                " GolesEquipo1: " +  suscripcion.getCantGoles1Equipo1() + 
                                 " Equipo2: " + suscripcion.getNombreEquipo2() +
-                                " GolesEquipo1: " + suscripcion.getCantGoles1Equipo2()+ 
+                                " GolesEquipo2: " + suscripcion.getCantGoles1Equipo2()+ 
                                 " Nro Ronda: " + suscripcion.getNroRonda());
         
       }
