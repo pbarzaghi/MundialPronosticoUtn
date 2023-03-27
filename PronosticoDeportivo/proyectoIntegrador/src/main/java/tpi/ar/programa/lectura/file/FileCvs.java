@@ -44,7 +44,7 @@ public class FileCvs {
      public List <Ronda> leerArchivoResultado(String path){
     
       List <ServicioResultado> listaDeSuscripciones;
-      List <Ronda> listaRondas =new ArrayList();
+      List <Ronda> listaRondas =new ArrayList<>();
         try {
             // En esta primera lÃ­nea definimos el archivos que va a ingresar
             listaDeSuscripciones = new CsvToBeanBuilder(new FileReader(path))
@@ -129,7 +129,7 @@ public class FileCvs {
     public List<Pronostico> leerArchivoPronostico(String pathResultado,String pathPronostico){
     
        List<Ronda> rondas=leerArchivoResultado( pathResultado); 
-       List <Pronostico> listaPronostico=new ArrayList();   
+       List <Pronostico> listaPronostico=new ArrayList<>();   
        List <ServicioPronostico> listaDeSuscripciones;
         System.out.println(" Archivo : "+pathPronostico);
         try {

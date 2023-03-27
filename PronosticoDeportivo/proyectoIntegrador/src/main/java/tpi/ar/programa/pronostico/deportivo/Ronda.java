@@ -47,8 +47,8 @@ public class Ronda {
     }
     
       public void appendPartido(Partido partido) {
-          if (this.partidos == null)
-              this.partidos= new ArrayList();
+        if (this.partidos == null)
+              this.partidos= new ArrayList<>();
              
           partidos.add(partido);   
       }
