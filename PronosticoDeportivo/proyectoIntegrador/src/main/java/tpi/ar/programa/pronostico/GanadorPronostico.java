@@ -4,69 +4,67 @@
  */
 package tpi.ar.programa.pronostico;
 
+import java.util.ArrayList;
+
 import java.util.List;
-import tpi.ar.programa.enumerado.ResultadoEmun;
-import tpi.ar.programa.pronostico.deportivo.Partido;
+import tpi.ar.programa.pronostico.deportivo.Ronda;
+import tpi.ar.programa.pronostico.participante.Participante;
+
 
 /**
  *
  * @author pbarzaghi
  */
 public class GanadorPronostico {
-    
-    private  int cantidadPuntos=0;
-   
+     
+    private int puntajeTotal=0;
+    private int puntajeAcierto=0;
+        
     
     /*
-     El metodo ganadorDelPronostic: Dada una lista de Pronostico, la recorro
-     obteniendo los partidos y determinando como salieron.
-     Segun el resultado del partido y el pronosticado se determa el puntaje 
-     que se le da.
-     Este metodo retorna un String de la concatenacion del Participante y la
-     cantidad de punto que hizo
+     Este metodo returna los puntos de una participante segun su lista de Pronostico
     */
-      public String ganadorDelPronostico(  List<Pronostico> listaPronostico){ 
+    public String puntajeParticipantePronostico(Participante participante ){
          
-          String participante="";
-           for ( Pronostico pronostico : listaPronostico) {
-           
-                 Partido partido =  pronostico.getPartido();
-                 ResultadoEmun resultadoPartido=   partido.getResultado(pronostico.getEquipo());
-                 cantidadPuntos+=obtenerPuntaje(pronostico.getResultado(),resultadoPartido);
-                // TODO Este codigo se tiene que modificar cuando sean varias representantes
-                  if("".equals(participante))
-                      if(! participante.equals(pronostico.getParticipante().getNombre()))
-                             participante=pronostico.getParticipante().getNombre();
-                
-           }
-           
-          return strGanadorConPuntaje(participante,cantidadPuntos);
-      }
-      
-      /*
-       Este metodo retorna 1 si acepto el pronostico y cero sino.
-       // Este metodo se puede utilizar en caso que el puntaje sea dinamico
-           
-      */
-      
-      private int obtenerPuntaje(ResultadoEmun resulPronostico,ResultadoEmun resulPartido){
-          
-         if(resulPronostico == resulPartido)
-             return 1;
-         else
-             return 0;
-      }
-
-    private String strGanadorConPuntaje(String participante, int cantidadPuntos) {
-        
-        return " La participante "+participante+" hizo "+ cantidadPuntos +" punto en el Pronostico";
+          List<Pronostico> pronosticos=participante.getPronosticos();
+          int cantidadPronosticos=pronosticos.size();
+          puntajeTotal= pronosticos.stream().mapToInt(p -> p.getPuntos()).sum();
+          puntajeAcierto=pronosticos.stream().mapToInt(p -> 
+                p.getResultado().equals(p.getPartido().getResultado(p.getEquipo()))
+                ?1:0).sum();
+        return imprimirGanadorConPuntajePronostico(participante.getNombre()+" "+participante.getApellido(),
+                                       String.valueOf(puntajeAcierto),
+                                       String.valueOf(cantidadPronosticos),
+                                         String.valueOf(puntajeTotal)
+                                       );
     }
-      
-    public int getCantidadPuntos(){
-       return this.cantidadPuntos;
-    }  
-}
-        
     
+    /*
+     Metodo para imprimir el ganador
+    */
+    private String imprimirGanadorConPuntajePronostico(String participante,
+                                                       String puntajeAceptado, 
+                                                       String cantidadPronosticos,
+                                                       String puntajeTotal) {
+        
+        
+   
+        return "Participante: "+participante +
+               " Acerto "+puntajeAceptado +
+               " / "+cantidadPronosticos +
+               "  total Puntos; "+ puntajeTotal +
+               " (sin contabilizar rondas y fases)";
+    
+    
+    }
 
-  
+    /**
+     * @return the puntajeTotal
+     */
+    public int getPuntajeTotal() {
+        return puntajeTotal;
+    }
+
+   
+    
+}

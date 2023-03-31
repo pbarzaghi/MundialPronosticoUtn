@@ -15,9 +15,12 @@ public class Persona {
     private String apellido;
     private int nroDoc;
     private TipoDocumento tipoDoc;
+    
+    
 
        public Persona(String nombre){
       this.nombre=nombre;
+      this.apellido="";
     
     
     }
@@ -48,6 +51,7 @@ public class Persona {
      * @return the apellido
      */
     public String getApellido() {
+        
         return apellido;
     }
 

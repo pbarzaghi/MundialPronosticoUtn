@@ -1,3 +1,6 @@
+
+
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
@@ -7,17 +10,27 @@ package tpi.ar.programa.lectura.file;
 import com.opencsv.bean.CsvToBeanBuilder;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 import java.util.List;
+
 import tpi.ar.programa.enumerado.ResultadoEmun;
 
+import tpi.ar.programa.exception.FileIntegradorException;
+
 import tpi.ar.programa.pronostico.Pronostico;
+
+
+import tpi.ar.programa.pronostico.PuntosResultado;
 import tpi.ar.programa.pronostico.deportivo.Equipo;
 import tpi.ar.programa.pronostico.deportivo.Partido;
 import tpi.ar.programa.pronostico.deportivo.Ronda;
-import tpi.ar.programa.pronostico.participante.Persona;
+import tpi.ar.programa.pronostico.participante.Participante;
+
+
 
 
 
@@ -41,10 +54,49 @@ public class FileCvs {
     
     */
     
-     public List <Ronda> leerArchivoResultado(String path){
+    public  void leerArchivoPuntos(String path) throws FileIntegradorException{
+         System.out.println("path "+ path);
+      List <ServicioPunto> listaDePuntos;
+
+      try{   
+      
+      // En esta primera lÃ­nea definimos el archivos que va a ingresar
+            listaDePuntos = new CsvToBeanBuilder(new FileReader(path))
+                    // Es necesario definir el tipo de dato que va a generar el objeto que estamos queriendo parsear a partir del CSV
+                    .withType(ServicioPunto.class)
+                    .build()
+                    .parse();
+            
+          for (ServicioPunto listaDePunto : listaDePuntos) {
+          
+             PuntosResultado puntosPartidos = new PuntosResultado();
+             
+             puntosPartidos.setPuntoGanar(listaDePunto.getPtosGanar());
+             puntosPartidos.setPuntoEmpatar(listaDePunto.getPtosEmpatar());        
+             puntosPartidos.setPuntoPerder(listaDePunto.getPtosPerder());
+             puntosPartidos.setPuntoAcierto(listaDePunto.getPtosPartido());
+             puntosPartidos.setPuntosRonda(listaDePunto.getPtosRonda());
+             puntosPartidos.setPuntosFase(listaDePunto.getPtosFase());
+            objCreacion.put(PuntosResultado.class,puntosPartidos);  
+           
+       
+            
+              
+          }
+  
+        
+      }catch(FileNotFoundException e){
+            throw new FileIntegradorException("No encontro el Archivo"+path);
+      
+      
+      }  
     
+    }
+    
+     public  void leerArchivoResultado(String path) throws FileIntegradorException{
+         System.out.println("path "+ path);
       List <ServicioResultado> listaDeSuscripciones;
-      List <Ronda> listaRondas =new ArrayList();
+
         try {
             // En esta primera lÃ­nea definimos el archivos que va a ingresar
             listaDeSuscripciones = new CsvToBeanBuilder(new FileReader(path))
@@ -88,7 +140,12 @@ public class FileCvs {
                partido.setEquipo2(equipo2);
                partido.setGolesEquipo1(suscripcion.getCantGoles1Equipo1());
                partido.setGolesEquipo2(suscripcion.getCantGoles1Equipo2());
-               objCreacion.put(Partido.class+equipo1.getNombre()+"_"+equipo2.getNombre(), partido);
+               partido.setPuntos((PuntosResultado)objCreacion.get(PuntosResultado.class));
+               
+             ResultadoEmun resultaPartido=partido.getResultadoPorGoles(suscripcion.getCantGoles1Equipo1(), suscripcion.getCantGoles1Equipo2());
+             partido.setPuntos( (PuntosResultado)objCreacion.get(PuntosResultado.class+resultaPartido.toString()));
+            
+             objCreacion.put(Partido.class+equipo1.getNombre()+"_"+equipo2.getNombre(), partido);
                idPartido++;
             }
           
@@ -97,7 +154,7 @@ public class FileCvs {
                 ronda = new Ronda();
                 ronda.setNro(suscripcion.getNroRonda());
                 ronda.appendPartido(partido);
-                listaRondas.add(ronda);
+           
                  objCreacion.put(Ronda.class+String.valueOf(ronda.getNro()), ronda);
             }else
                  ronda.appendPartido(partido);
@@ -108,29 +165,37 @@ public class FileCvs {
                                 " GolesEquipo2: " + suscripcion.getCantGoles1Equipo2()+ 
                                 " Nro Ronda: " + suscripcion.getNroRonda());
         
+     
       }
+      
       } catch (FileNotFoundException ex) {
-            System.out.println(ex.getMessage());
+             throw new FileIntegradorException("No encontro el Archivo"+path);
         }
     
         System.out.println(" ----- F I N CARGAR RESULTADOS -------");
-    // Se deja preparado para las cuando sean mas de 1 ronda
-    return listaRondas;
+    
  
 }
  //-----------------------------------  Fin del metodo cargar resultados --------------------    
     
     
-    
+     public List<Participante> leerArchivoPronostico(String pathPuntos,String pathResultado,String pathPronostico) throws FileIntegradorException
+     {
+         this.leerArchivoPuntos(pathPuntos);
+         this.leerArchivoResultado( pathResultado); 
+         return this.leerArchivoPronostico(pathPronostico);
+     }
+     
+     
     /*
-      Este metodo lee dado el path del archivo los pronosticos y retorna una lista de pronostico
+      Este metodo lee dado el path del archivo los pronosticos y retorna una lista de Participante con
+     los pronostico realizado
     cargados desde el archivo
     */
-    public List<Pronostico> leerArchivoPronostico(String pathResultado,String pathPronostico){
-    
-       List<Ronda> rondas=leerArchivoResultado( pathResultado); 
-       List <Pronostico> listaPronostico=new ArrayList();   
+    public List<Participante> leerArchivoPronostico(String pathPronostico) throws FileIntegradorException{
+      // List <Pronostico> listaPronostico=new ArrayList();  
        List <ServicioPronostico> listaDeSuscripciones;
+       List<Participante> listaParticipante =new ArrayList();
         System.out.println(" Archivo : "+pathPronostico);
         try {
             // En esta primera lÃ­nea definimos el archivos que va a ingresar
@@ -167,11 +232,28 @@ public class FileCvs {
              pronostico.setResultado(getResultadoPronostico(suscripcion.getResultadoGanador1(),
                                                             suscripcion.getResultadoEmpate(),
                                                             suscripcion.getResultadoGanador2()));
-                     
-               Persona participante= new Persona(suscripcion.getNombreParticipante());
-               pronostico.setParticipante(participante);
-               listaPronostico.add(pronostico);
+            
+             pronostico.setPuntosResultado((PuntosResultado) objCreacion.get(PuntosResultado.class)); 
           
+                                
+          
+             
+             
+             Participante participante=(Participante)  objCreacion.remove(Participante.class+suscripcion.getNombreParticipante());
+              
+             if(participante == null) {
+               participante= new Participante(suscripcion.getNombreParticipante());
+             }else
+                listaParticipante.remove(participante);
+                 
+           
+             
+          
+               participante.addPronostico(pronostico);
+               listaParticipante.add(participante);
+               objCreacion.put(Participante.class+participante.getNombre(),participante);
+               
+               
                System.out.println("Equipo1: " +suscripcion.getNombreEquipo1() + 
                                   "  Equipo2: " + suscripcion.getNombreEquipo2() + 
                                   " Participante: " +  suscripcion.getNombreParticipante()+ 
@@ -182,15 +264,16 @@ public class FileCvs {
           }
      
       } catch (FileNotFoundException ex) {
-            System.out.println(ex.getMessage());
+          throw new FileIntegradorException("No encontro el Archivo"+pathPronostico);
+          
         }
       System.out.println(" ----- F I N CARGAR PRONOSTICOS -------");  
      
-     return listaPronostico;   
+     return listaParticipante;   
     }
      
-
-
+    
+// Este metodo va quedar sin efecto cuanto este activado la Clase PuntosResultado
   private ResultadoEmun getResultadoPronostico(String strGanadorEq1,String strEmpate,String strGanador2){
 
          if("X".equals(strGanadorEq1))
@@ -199,5 +282,7 @@ public class FileCvs {
                   return ResultadoEmun.EMPATE;
          else
                   return ResultadoEmun.PERDEDOR;
-}     
+}  
+  
+   
 }

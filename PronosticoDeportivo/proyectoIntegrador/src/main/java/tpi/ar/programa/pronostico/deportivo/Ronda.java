@@ -15,6 +15,7 @@ public class Ronda {
     
     private List <Partido> partidos;
     private int nro;
+    
 
    
 
@@ -48,11 +49,22 @@ public class Ronda {
     
       public void appendPartido(Partido partido) {
           if (this.partidos == null)
-              this.partidos= new ArrayList();
+              this.partidos= new ArrayList<>();
              
           partidos.add(partido);   
       }
     
-    
-    
+     public int getNroRonda(Partido partido){
+           return (partidos.contains(partido)?getNro():0);
+     } 
+
+     public boolean validarPartidoEnARonda(Partido partido){
+         return partidos.contains(partido);
+      }
+     
+     public Ronda getRonda(Partido partido){
+        return (this.partidos.contains(partido)? this: null);
+     }
 }
+
+

@@ -7,7 +7,6 @@ package tpi.ar.programa.pronostico;
 import tpi.ar.programa.enumerado.ResultadoEmun;
 import tpi.ar.programa.pronostico.deportivo.Equipo;
 import tpi.ar.programa.pronostico.deportivo.Partido;
-import tpi.ar.programa.pronostico.participante.Persona;
 
 /**
  *
@@ -17,7 +16,14 @@ public class Pronostico {
     private Partido partido;
     private Equipo equipo;
     private ResultadoEmun resultado;
-    private Persona participante;
+//    private Persona participante;
+    // esto va reemplazar el "private ResultadoEmun resultado;"
+    private PuntosResultado puntosResultado;
+   
+    
+   
+    
+    
 
     /**
      * @return the partido
@@ -62,17 +68,45 @@ public class Pronostico {
     }
 
     /**
-     * @return the participante
+
+    
+    /*
+       Este metodo retorna 1 si acepto el pronostico y cero sino.
+       // Este metodo se puede utilizar en caso que el puntaje sea dinamico
+           
+      */
+      
+      public int getPuntos(){
+          
+         ResultadoEmun resultadoReal=   this.partido.getResultado(this.equipo);
+         // en caso que haciente el pronostico con el resultado del partido obtengo los puntos
+         // por aceptar. En caso negativo 0
+         if(this.resultado.equals(resultadoReal))
+            return   this.getPuntosResultado().getPuntoAcierto();
+         
+      return 0;
+        
+      }
+
+   
+
+    /**
+     * @return the puntosResultado
      */
-    public Persona getParticipante() {
-        return participante;
+    public PuntosResultado getPuntosResultado() {
+        return puntosResultado;
     }
 
     /**
-     * @param participante the participante to set
+     * @param puntosResultado the puntosResultado to set
      */
-    public void setParticipante(Persona participante) {
-        this.participante = participante;
+    public void setPuntosResultado(PuntosResultado puntosResultado) {
+        this.puntosResultado = puntosResultado;
     }
+
+
+   
+
+  
     
 }

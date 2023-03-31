@@ -4,7 +4,9 @@
  */
 package tpi.ar.programa.pronostico.deportivo;
 
+import java.util.List;
 import tpi.ar.programa.enumerado.ResultadoEmun;
+import tpi.ar.programa.pronostico.PuntosResultado;
 
 /**
  *
@@ -17,6 +19,10 @@ public class Partido {
    private Equipo equipo2;
    private int golesEquipo1;
    private int golesEquipo2;
+   
+   
+   // Clase PuntosResultado
+    private PuntosResultado puntos;
 
     /**
      * @return the equipo1
@@ -107,7 +113,28 @@ public class Partido {
     
     }
    
+   public Ronda getRonda(List<Ronda> rondas){
+       for (Ronda ronda : rondas ) {
+          if (ronda.getPartidos().contains(this))
+           return ronda;
+       }
+       return null;
    
+   }
+
+    /**
+     * @return the puntos
+     */
+    public PuntosResultado getPuntos() {
+        return puntos;
+    }
+
+    /**
+     * @param puntos the puntos to set
+     */
+    public void setPuntos(PuntosResultado puntos) {
+        this.puntos = puntos;
+    }
    
     
 }
