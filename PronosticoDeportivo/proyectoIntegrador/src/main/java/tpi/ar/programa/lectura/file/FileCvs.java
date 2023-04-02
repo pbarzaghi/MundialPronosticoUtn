@@ -264,6 +264,7 @@ public class FileCvs {
           }
      
       } catch (FileNotFoundException ex) {
+          System.out.print(ex.toString());
           throw new FileIntegradorException("No encontro el Archivo"+pathPronostico);
           
         }

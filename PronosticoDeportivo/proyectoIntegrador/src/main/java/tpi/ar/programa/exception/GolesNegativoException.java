@@ -4,16 +4,15 @@
  */
 package tpi.ar.programa.exception;
 
-import java.io.IOException;
-
 /**
  *
  * @author pbarzaghi
  */
-public class FileIntegradorException extends IOException{
-    private String mensajeError;
+public class GolesNegativoException extends RuntimeException{
+    
+       private String mensajeError;
 
-     public FileIntegradorException(String msgError){
+     public GolesNegativoException(String msgError){
         mensajeError=msgError;
      }   
 
@@ -23,6 +22,6 @@ public class FileIntegradorException extends IOException{
     public String getMensajeError() {
         return mensajeError;
     }
-     
-     
+
+    
 }

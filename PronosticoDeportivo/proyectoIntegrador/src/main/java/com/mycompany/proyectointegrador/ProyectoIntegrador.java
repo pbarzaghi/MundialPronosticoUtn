@@ -6,9 +6,13 @@ package com.mycompany.proyectointegrador;
 
 import java.awt.HeadlessException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import tpi.ar.programa.exception.FileIntegradorException;
+import tpi.ar.programa.exception.GolesNegativoException;
 import tpi.ar.programa.lectura.file.FileCvs;
+import tpi.ar.programa.lectura.file.ReadAllFileCvs;
 import tpi.ar.programa.pronostico.GanadorPronostico;
 import tpi.ar.programa.pronostico.participante.Participante;
 
@@ -20,89 +24,55 @@ import tpi.ar.programa.pronostico.participante.Participante;
 public class ProyectoIntegrador {
 
     public static void main(String[] args) {
-        try {
-            String csvResultado = "src\\main\\resources\\resultado";
-            String csvPronostico = "src\\main\\resources\\pronostico";
-            String extension=".csv";
-            boolean salida=true;
-            String csvPuntos = "src\\main\\resources\\puntos"+extension;
-            String strNrofileResultado;
-            do{
-                strNrofileResultado=elegirNroDeNombreDeArchivo("RESULTADO");
-                switch(strNrofileResultado) {
-                    case  "1" , "2" , "3":
-                        csvResultado = csvResultado +
-                                strNrofileResultado
-                                
-                                + extension;
-                        salida=false;
-                        break;
-                        
-                    default:
-                        strNrofileResultado= elegirNroDeNombreDeArchivo("RESULTADO");
-                        
-                }
-                
-            }while(salida);
-            salida=true;
-            String strNrofilePronostico;
-            do{
-                strNrofilePronostico= elegirNroDeNombreDeArchivo("PRONOSTICO");
-                
-                switch(strNrofileResultado) {
-                    case  "1" , "2" , "3":
-                        csvPronostico =csvPronostico +
-                                strNrofilePronostico
-                                + extension;;
-                                salida=false;
-                                break;
-                    default:
-                        strNrofilePronostico= elegirNroDeNombreDeArchivo("PRONOSTICO");
-                        
-                }
-            }while(salida);
-            
-            
-            FileCvs file= new FileCvs();
-        
-            
-           
-            List<Participante> listaParticipante= file.leerArchivoPronostico(csvPuntos,csvResultado,csvPronostico);
-            // Invocar los metodos para obtebner los resulados una ves cargados los objetos
-            GanadorPronostico ganador= new GanadorPronostico();
+      try {
+    
+        System.out.println("Path de archivo 1 .. "+args[0]);
+        System.out.println("Path de archivo 2 .."+args[1]);
+        System.out.println("Path de archivo 3 .."+args[2]);
+        String csvResultado = args[0];
+        String csvPronostico  = args[1];
+        String csvPuntos = args[2];
+       // Se dejo de unsar esta clase porque no podia realizar el empaquetamiento
+       // con la dependencia que esta en el pom
+       // FileCvs file= new FileCvs();
+       
+       ReadAllFileCvs file = new ReadAllFileCvs();
+       
+        List<Participante> listaParticipante;
+        listaParticipante = file.leerArchivoPronostico(csvPuntos,
+                    csvResultado,
+                    csvPronostico);
+         
+        // Invocar los metodos para obtebner los resulados una ves cargados los objetos
+          GanadorPronostico ganador= new GanadorPronostico();
+          
            
          //  Esta es mi logica, uds traten de implementar la suya para etapa 2
-         /*   String cadenaSalida="";
+           
             for (Participante participante : listaParticipante) {
-                cadenaSalida+= ganador.puntajeParticipantePronostico(participante) +
-                        "\n";
-                System.out.println(ganador.puntajeParticipantePronostico(participante));
+                 System.out.println(ganador.puntajeParticipantePronostico(participante));
             }
-            JOptionPane.showMessageDialog(null,cadenaSalida);
-          */
-        } catch (FileIntegradorException ex) {
-                System.out.println( ex.toString()  );
+               
+            
+        } catch(GolesNegativoException ex1){
+             System.out.println( ex1.getMensajeError() );
+             System.exit(1);
+         }
+      
+          catch (FileIntegradorException ex) {
+                System.out.println( ex.getMensajeError() );
+                System.exit(1);
         
         } catch (NullPointerException e){
              System.out.println( "El sistema cerro de forma Abrupta" +e.getMessage() );
+             System.exit(1);
+             
         
         }catch (HeadlessException e){
-         System.out.println( "El sistema sufrio un error inesperado"  );
+           System.out.println( "El sistema sufrio un error inesperado"  );
+           System.exit(1);
         }
     
-      
+    
     }
-    
-  
-    
-   private static String elegirNroDeNombreDeArchivo(String nameFile){
-   
-   
-     String strNrofile= JOptionPane.showInputDialog(null,"Elija el N° de archivo: 1 - 2 - 3"," ARCHIVO "+nameFile+" A LEER ",3);
-         
-     return strNrofile;
-   } 
-    
-    
-    
 }
