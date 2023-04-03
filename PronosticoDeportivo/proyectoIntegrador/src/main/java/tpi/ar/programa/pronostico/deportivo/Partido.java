@@ -20,6 +20,7 @@ public class Partido {
    private Equipo equipo2;
    private int golesEquipo1;
    private int golesEquipo2;
+   private Ronda ronda;
    
    
    // Clase PuntosResultado
@@ -119,14 +120,7 @@ public class Partido {
     
     }
    
-   public Ronda getRonda(List<Ronda> rondas){
-       for (Ronda ronda : rondas ) {
-          if (ronda.getPartidos().contains(this))
-           return ronda;
-       }
-       return null;
-   
-   }
+  
 
     /**
      * @return the puntos
@@ -140,6 +134,20 @@ public class Partido {
      */
     public void setPuntos(PuntosResultado puntos) {
         this.puntos = puntos;
+    }
+
+    /**
+     * @return the ronda
+     */
+    public Ronda getRonda() {
+        return ronda;
+    }
+
+    /**
+     * @param ronda the ronda to set
+     */
+    public void setRonda(Ronda ronda) {
+        this.ronda = ronda;
     }
    
     

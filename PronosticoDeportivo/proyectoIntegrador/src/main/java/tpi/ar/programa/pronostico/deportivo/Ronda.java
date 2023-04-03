@@ -6,6 +6,7 @@ package tpi.ar.programa.pronostico.deportivo;
 
 import java.util.ArrayList;
 import java.util.List;
+import tpi.ar.programa.enumerado.ResultadoEmun;
 
 /**
  *
@@ -64,6 +65,14 @@ public class Ronda {
      
      public Ronda getRonda(Partido partido){
         return (this.partidos.contains(partido)? this: null);
+     }
+     
+     public boolean esRondaGanada(Equipo equipo){
+
+         
+        return this.partidos.stream().allMatch( p -> ResultadoEmun.GANADOR.equals(
+                                                 ( p.getResultado(p.getEquipo1()))));
+        
      }
 }
 

@@ -4,10 +4,18 @@
  */
 package tpi.ar.programa.pronostico;
 
-import java.util.ArrayList;
 
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import tpi.ar.programa.enumerado.ResultadoEmun;
+import tpi.ar.programa.pronostico.deportivo.Equipo;
+import tpi.ar.programa.pronostico.deportivo.Partido;
 import tpi.ar.programa.pronostico.deportivo.Ronda;
+
 import tpi.ar.programa.pronostico.participante.Participante;
 
 
@@ -32,12 +40,63 @@ public class GanadorPronostico {
           puntajeAcierto=pronosticos.stream().mapToInt(p -> 
                 p.getResultado().equals(p.getPartido().getResultado(p.getEquipo()))
                 ?1:0).sum();
-        return imprimirGanadorConPuntajePronostico(participante.getNombre()+" "+participante.getApellido(),
+          
+          
+          // TODO: falta distinguir que pronostico pertenece a que ronda
+          // dado que todos los pronosticos vienen juntos
+          // Abria que hacer una collection por cada ronda de Pronosticos
+          // y ahi preguntar si isPronosticoDeUnaRonda
+          
+          int puntoExtraRonda=0; 
+          if(this.isPronosticoDeUnaRonda(pronosticos)){
+                puntoExtraRonda+=this.puntoExtraPorRonda(pronosticos.get(0));
+          }
+          
+          
+         
+      // int puntosExtraRonda= this.reglaPuntoExtraRonda(pronosticos);
+                  
+          System.out.println(" lista de ronda "+puntoExtraRonda);
+              return imprimirGanadorConPuntajePronostico(participante.getNombre()+" "+participante.getApellido(),
                                        String.valueOf(puntajeAcierto),
                                        String.valueOf(cantidadPronosticos),
                                          String.valueOf(puntajeTotal)
+                                       
                                        );
     }
+    
+    
+    
+    
+    public int puntoExtraPorRonda(Pronostico pronostico){
+      if( pronostico.getPartido().getRonda().esRondaGanada(pronostico.getEquipo()))
+            return pronostico.getPuntosResultado().getPuntosRonda();
+      return 0;
+    
+    }
+    
+    
+    
+    
+    
+    public boolean isPronosticoDeUnaRonda(List<Pronostico> pronosticos){
+      
+        
+        boolean aceptaron=false;
+        for (Pronostico pronostico : pronosticos) {
+            Partido partido=pronostico.getPartido();
+            if(partido.getRonda().esRondaGanada(pronostico.getEquipo()))
+                if(pronostico.getResultado().equals(partido.getResultado(pronostico.getEquipo())))  
+                    aceptaron=true;
+                 else
+                    aceptaron=false;
+            else
+                aceptaron=false;
+        }
+        return aceptaron;
+    
+    }
+ 
     
     /*
      Metodo para imprimir el ganador
@@ -45,15 +104,21 @@ public class GanadorPronostico {
     private String imprimirGanadorConPuntajePronostico(String participante,
                                                        String puntajeAceptado, 
                                                        String cantidadPronosticos,
-                                                       String puntajeTotal) {
+                                                       String puntajeTotal){
+                                                      // String extraRonda,
+                                                      // String cantidadRondaGanada) {
         
         
    
         return "Participante: "+participante +
                " Acerto "+puntajeAceptado +
                " / "+cantidadPronosticos +
-               "  total Puntos; "+ puntajeTotal +
-               " (sin contabilizar rondas y fases)";
+               "  total Puntos; "+ puntajeTotal
+             //  " + " +cantidadRondaGanada +" Rondas Ganadas sumo  "
+             //   +  extraRonda+" Puntos " 
+            //    + " Sumanto  Puntaje de "+(Integer.sum(Integer.parseInt(extraRonda),
+            //                                           Integer.parseInt(puntajeAceptado)))
+                + " sin contabilizar Rondas Ni fases)";
     
     
     }
@@ -66,5 +131,8 @@ public class GanadorPronostico {
     }
 
    
-    
 }
+    
+    
+
+   

@@ -4,13 +4,9 @@
  */
 package tpi.ar.programa.lectura.file;
 
-import com.opencsv.bean.CsvToBeanBuilder;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
+
 import java.io.IOException;
 import java.nio.file.Files;
-import static java.nio.file.Files.readAllLines;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -132,10 +128,14 @@ public class ReadAllFileCvs {
                         if(ronda == null){
                             ronda = new Ronda();
                             ronda.setNro(Integer.parseInt(campo[0]));
+                            partido.setRonda(ronda);
                             ronda.appendPartido(partido);
                             objCreacion.put(Ronda.class+String.valueOf(ronda.getNro()), ronda);
-                        }else
-                             ronda.appendPartido(partido);
+                        }else{
+                             partido.setRonda(ronda); 
+                            ronda.appendPartido(partido);
+                             
+                        }
 
                    /*     System.out.println(" Equipo1: "+campo[1] +
                                            " GolesEquipo1: " +  campo[2] + 

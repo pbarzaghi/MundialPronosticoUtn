@@ -16,8 +16,6 @@ public class Pronostico {
     private Partido partido;
     private Equipo equipo;
     private ResultadoEmun resultado;
-//    private Persona participante;
-    // esto va reemplazar el "private ResultadoEmun resultado;"
     private PuntosResultado puntosResultado;
    
     
@@ -105,7 +103,10 @@ public class Pronostico {
     }
 
 
+   public boolean acertoResultado(ResultadoEmun resultado){
    
+       return this.resultado.equals(resultado);
+   }
 
   
     

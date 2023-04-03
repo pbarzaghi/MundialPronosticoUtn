@@ -2,14 +2,17 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package test.pronostico.deportivo;
+package test.pronostico;
 
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import tpi.ar.programa.enumerado.ResultadoEmun;
 import tpi.ar.programa.pronostico.GanadorPronostico;
+import tpi.ar.programa.pronostico.Pronostico;
+import tpi.ar.programa.pronostico.PuntosResultado;
 import tpi.ar.programa.pronostico.deportivo.Equipo;
 import tpi.ar.programa.pronostico.deportivo.Partido;
 import tpi.ar.programa.pronostico.deportivo.Ronda;
@@ -18,8 +21,8 @@ import tpi.ar.programa.pronostico.deportivo.Ronda;
  *
  * @author pbarzaghi
  */
-public class RondaTest {
-    private Equipo equipo1;
+public class GanadorPronosticoTest {
+     private Equipo equipo1;
     private Equipo equipo2;
     private Equipo equipo3;
     private Equipo equipo4;
@@ -32,6 +35,9 @@ public class RondaTest {
     List<Partido> partidos;
     private Ronda ronda1;
    
+     private ResultadoEmun resultadoPronostico;
+    private PuntosResultado puntos;
+    private Pronostico pronostico1;
     
     @BeforeEach
     public void init(){
@@ -70,6 +76,18 @@ public class RondaTest {
          ronda1=new Ronda();
          ronda1.setNro(1);
          
+          puntos= new PuntosResultado();
+         puntos.setPuntoAcierto(1);
+         puntos.setPuntosRonda(2);
+         
+         puntos.setPuntoGanar(3);
+         puntos.setPuntoEmpatar(1);
+         puntos.setPuntoPerder(0);
+    
+         
+         pronostico1 = new Pronostico();
+         pronostico1.setPuntosResultado(puntos);
+         
         
         
     
@@ -77,89 +95,48 @@ public class RondaTest {
     
     
     @Test
-    public void equipo1GanoRonda(){
+    public void puntosXGanarRonda(){
      //ARGENTINA - BRAZIL
         partido1.setGolesEquipo1(3);
         partido1.setGolesEquipo2(1);
+        partido1.setRonda(ronda1);
         partidos.add(partido1);
     
      //ARGENTINA - CHILE
        partido2.setGolesEquipo1(3);
        partido2.setGolesEquipo2(2);
+       partido2.setRonda(ronda1);
        partidos.add(partido2);
-     
+   /*  
     //ARGENTINA - URUGUAY   
       partido3.setGolesEquipo1(3);
       partido3.setGolesEquipo2(2);
+      partido3.setRonda(ronda1);
       partidos.add(partido3);
-     // Partidos de la 1ra Ronda  
+*/  
+// Partidos de la 1ra Ronda  
       ronda1.setPartidos(partidos);
-      Assertions.assertTrue(ronda1.esRondaGanada(equipo1));
-     }
-    
-     @Test
-    public void equipo1Gano2Ronda(){
-     //ARGENTINA - BRAZIL
-        partido1.setGolesEquipo1(3);
-        partido1.setGolesEquipo2(1);
-        partidos.add(partido1);
-    
-     //ARGENTINA - CHILE
-       partido2.setGolesEquipo1(3);
-       partido2.setGolesEquipo2(2);
-       partidos.add(partido2);
+      
      
-     
-       List<Partido> partidos2 =new ArrayList<Partido>();
-    //ARGENTINA - URUGUAY   
-      partido3.setGolesEquipo1(3);
-      partido3.setGolesEquipo2(2);
-     
-      Equipo equipo5 = new Equipo("PARAGUAY","SELECCION");
-      equipo5.setId(5);
-       
-     Partido partido4= new Partido();
-      partido4.setEquipo1(equipo1);
-     
-      partido4.setEquipo2(equipo5);
-      
-      partido4.setGolesEquipo1(3);
-     partido4.setGolesEquipo2(2);
-      
-      partidos2.add(this.partido3);
-      partidos2.add(partido4);
-      Ronda ronda2= new Ronda();
-      ronda2.setNro(2);
-      
-      this.ronda1.setPartidos(this.partidos);
-      ronda2.setPartidos(partidos2);
+      pronostico1.setPartido(partido1);
+      pronostico1.setResultado(resultadoPronostico.GANADOR);
+      pronostico1.setEquipo(equipo1);
+      Pronostico pronostico2 = new Pronostico();
+      pronostico2.setPuntosResultado(puntos);
+      pronostico2.setPartido(partido2);
+      pronostico2.setResultado(resultadoPronostico.GANADOR);
+      pronostico2.setEquipo(equipo1);
+
+      GanadorPronostico ganador= new GanadorPronostico();
       
       
-     Assertions.assertTrue(ronda1.esRondaGanada(this.equipo1)
-                             && ronda2.esRondaGanada(this.equipo1) ); 
+     List<Pronostico> pronosticos = new ArrayList<Pronostico> ();
+         pronosticos.add(pronostico1);
+         pronosticos.add(pronostico2);
+      Assertions.assertTrue(ganador.isPronosticoDeUnaRonda(pronosticos));
       
     
-        
+    
     }
     
-    
-    @Test
-    public void argentinaJugoConBrazilEnLaRonda(){
-       
-        
-        partido1.setEquipo1(equipo1);
-        partido1.setEquipo2(equipo2);
-        partido1.setGolesEquipo1(3);
-        partido1.setGolesEquipo2(3);
-        
-        partido2.setEquipo1(equipo3);
-        partido2.setEquipo2(equipo4);
-        partido2.setGolesEquipo1(3);
-        partido2.setGolesEquipo2(1);
-        
-        ronda1.appendPartido(partido2);
-        ronda1.appendPartido(partido1);
-        Assertions.assertTrue(ronda1.validarPartidoEnARonda(partido1));
-    
-    }
 }

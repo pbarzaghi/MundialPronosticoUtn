@@ -45,15 +45,11 @@ public class ProyectoIntegrador {
          
         // Invocar los metodos para obtebner los resulados una ves cargados los objetos
           GanadorPronostico ganador= new GanadorPronostico();
-          
-           
-         //  Esta es mi logica, uds traten de implementar la suya para etapa 2
-           
-            for (Participante participante : listaParticipante) {
+         
+           for (Participante participante : listaParticipante) {
                  System.out.println(ganador.puntajeParticipantePronostico(participante));
             }
-               
-            
+                
         } catch(GolesNegativoException ex1){
              System.out.println( ex1.getMensajeError() );
              System.exit(1);
