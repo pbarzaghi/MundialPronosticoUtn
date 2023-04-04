@@ -103,7 +103,9 @@ public class Partido {
    
     public ResultadoEmun getResultado(Equipo equipo){
         
-          if(equipo.getId()== this.equipo1.getId())
+        if(equipo == null)
+            return ResultadoEmun.EMPATE;
+        if(equipo.getId()== this.equipo1.getId())
                  return getResultadoPorGoles(this.golesEquipo1,golesEquipo2);
           else       
                return getResultadoPorGoles(this.golesEquipo2,golesEquipo1);
@@ -150,5 +152,14 @@ public class Partido {
         this.ronda = ronda;
     }
    
-    
-}
+    public Equipo getEquipoGanador(){
+       if(ResultadoEmun.GANADOR.equals(
+                this.getResultadoPorGoles(golesEquipo1, golesEquipo2)))
+               return this.equipo1;
+        else if(ResultadoEmun.GANADOR.equals(
+                this.getResultadoPorGoles(golesEquipo2, golesEquipo1)))
+               return this.equipo2;
+         return null; 
+       }
+              
+}                  

@@ -7,6 +7,7 @@ package tpi.ar.programa.pronostico;
 
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -48,19 +49,26 @@ public class GanadorPronostico {
           // y ahi preguntar si isPronosticoDeUnaRonda
           
           int puntoExtraRonda=0; 
-          if(this.isPronosticoDeUnaRonda(pronosticos)){
-                puntoExtraRonda+=this.puntoExtraPorRonda(pronosticos.get(0));
+          
+           Map map = (Map) this.listPronosticoPorRonda(pronosticos);
+           Iterator entries = map.entrySet().iterator();
+          while (entries.hasNext()) {
+                Map.Entry entry = (Map.Entry) entries.next();
+                Ronda key = (Ronda)entry.getKey();
+                List<Pronostico> value = (List<Pronostico>)entry.getValue(); 
+          
+                if(this.isPronosticoDeUnaRonda(value)){
+                        puntoExtraRonda+=this.puntoExtraPorRonda(value.get(0));
+                 }
           }
           
-          
          
-      // int puntosExtraRonda= this.reglaPuntoExtraRonda(pronosticos);
-                  
-          System.out.println(" lista de ronda "+puntoExtraRonda);
+    
               return imprimirGanadorConPuntajePronostico(participante.getNombre()+" "+participante.getApellido(),
                                        String.valueOf(puntajeAcierto),
                                        String.valueOf(cantidadPronosticos),
-                                         String.valueOf(puntajeTotal)
+                                         String.valueOf(puntajeTotal),
+                                         String.valueOf(puntoExtraRonda)
                                        
                                        );
     }
@@ -84,14 +92,22 @@ public class GanadorPronostico {
         
         boolean aceptaron=false;
         for (Pronostico pronostico : pronosticos) {
+           
             Partido partido=pronostico.getPartido();
-            if(partido.getRonda().esRondaGanada(pronostico.getEquipo()))
-                if(pronostico.getResultado().equals(partido.getResultado(pronostico.getEquipo())))  
-                    aceptaron=true;
-                 else
-                    aceptaron=false;
-            else
-                aceptaron=false;
+            Equipo equipo=partido.getEquipoGanador();
+            if(ResultadoEmun.EMPATE.equals(pronostico.getResultado()) && equipo == null){
+               if(!aceptaron)
+                 aceptaron=true;
+            } else if(pronostico.getEquipo().equals(equipo)&&
+                    pronostico.getResultado().equals(partido.getResultado(equipo)) ){
+               if(!aceptaron)
+                 aceptaron=true;
+            } else
+                if(! pronostico.getResultado().equals(partido.getResultado(equipo)))   
+                { if(aceptaron)
+                    aceptaron=false;  
+                }
+                
         }
         return aceptaron;
     
@@ -104,17 +120,19 @@ public class GanadorPronostico {
     private String imprimirGanadorConPuntajePronostico(String participante,
                                                        String puntajeAceptado, 
                                                        String cantidadPronosticos,
-                                                       String puntajeTotal){
-                                                      // String extraRonda,
+                                                       String puntajeTotal,
+                                                       String extraRonda){
                                                       // String cantidadRondaGanada) {
         
-        
+        int valor= Integer.parseInt(puntajeTotal)+
+                   Integer.parseInt(extraRonda);
    
         return "Participante: "+participante +
                " Acerto "+puntajeAceptado +
-               " / "+cantidadPronosticos +
-               "  total Puntos; "+ puntajeTotal
-             //  " + " +cantidadRondaGanada +" Rondas Ganadas sumo  "
+               " / "+ cantidadPronosticos +
+               "  total Puntos; "+ puntajeTotal +
+               " + " +extraRonda +" de Rondas Ganadas suma total de  "+
+                valor + " "
              //   +  extraRonda+" Puntos " 
             //    + " Sumanto  Puntaje de "+(Integer.sum(Integer.parseInt(extraRonda),
             //                                           Integer.parseInt(puntajeAceptado)))
@@ -129,8 +147,27 @@ public class GanadorPronostico {
     public int getPuntajeTotal() {
         return puntajeTotal;
     }
-
-   
+    
+    
+    public Map listPronosticoPorRonda(List<Pronostico> pronosticos){
+      Map tablaRonda = new HashMap();
+        for (Pronostico pronostico : pronosticos) {
+            Ronda ronda=pronostico.getPartido().getRonda();
+            List<Pronostico> auxPronostico;
+            if(!tablaRonda.containsKey(ronda)){
+                auxPronostico= new ArrayList<Pronostico>();
+                auxPronostico.add(pronostico);
+                tablaRonda.put(ronda, auxPronostico );
+               }else{
+                  auxPronostico=(ArrayList<Pronostico>)tablaRonda.remove(ronda);
+                  auxPronostico.add(pronostico);
+                  tablaRonda.put(ronda, auxPronostico );
+                }
+        }
+    
+       return tablaRonda;
+    }
+     
 }
     
     

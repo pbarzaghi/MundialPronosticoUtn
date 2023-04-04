@@ -68,11 +68,15 @@ public class Ronda {
      }
      
      public boolean esRondaGanada(Equipo equipo){
-
-         
-        return this.partidos.stream().allMatch( p -> ResultadoEmun.GANADOR.equals(
-                                                 ( p.getResultado(p.getEquipo1()))));
-        
+         boolean ganoRonda=false;
+         for (Partido partido : partidos) {
+            if(partido.getEquipo1().equals(equipo))
+                    ganoRonda= partido.getEquipoGanador().equals(equipo);
+            else
+               if(partido.getEquipo2().equals(equipo))
+                    ganoRonda= partido.getEquipoGanador().equals(equipo);
+         }
+     return ganoRonda;
      }
 }
 
