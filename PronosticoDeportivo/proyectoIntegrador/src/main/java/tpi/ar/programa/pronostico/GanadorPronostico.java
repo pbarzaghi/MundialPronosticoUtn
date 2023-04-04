@@ -134,12 +134,12 @@ public class GanadorPronostico {
                    Integer.parseInt(extraRonda)+totalRonda;
         return "---------------------------------- \n " +
                 "Participante: "+participante +
-               "\n Acerto "+puntajeAceptado + "/"+ cantidadPronosticos +
-               "\n Total Puntos; "+ puntajeTotal +
+               "\n Acerto: "+puntajeAceptado + "/"+ cantidadPronosticos +
+               "\n Total Puntos: "+ puntajeTotal +
                "\n "+
-                " Total de rondas ganadas "+cantRonda +"\n"
-                + " Puntos extra por ganar ronda " +extraRonda + " total extra "+totalRonda + 
-               "\n Suma total de  "+
+                "Total de rondas ganadas: "+cantRonda +"\n"
+                + " Puntos extra por ganar ronda: " +extraRonda + " total extra: "+totalRonda + 
+               "\n Suma total de : "+
                 valoTotal + " Puntos"
              //   +  extraRonda+" Puntos " 
             //    + " Sumanto  Puntaje de "+(Integer.sum(Integer.parseInt(extraRonda),

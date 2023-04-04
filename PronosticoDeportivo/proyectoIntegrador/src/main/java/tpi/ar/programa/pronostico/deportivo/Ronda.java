@@ -6,12 +6,16 @@ package tpi.ar.programa.pronostico.deportivo;
 
 import java.util.ArrayList;
 import java.util.List;
-import tpi.ar.programa.enumerado.ResultadoEmun;
+
 
 /**
  *
  * @author pbarzaghi
  */
+@lombok.Getter
+@lombok.Setter
+@lombok.NoArgsConstructor
+@lombok.AllArgsConstructor
 public class Ronda {
     
     private List <Partido> partidos;
@@ -19,35 +23,6 @@ public class Ronda {
     
 
    
-
-    /**
-     * @return the nro
-     */
-    public int getNro() {
-        return nro;
-    }
-
-    /**
-     * @param nro the nro to set
-     */
-    public void setNro(int nro) {
-        this.nro = nro;
-    }
-
-    /**
-     * @return the partidos
-     */
-    public List <Partido> getPartidos() {
-        return partidos;
-    }
-
-    /**
-     * @param partidos the partidos to set
-     */
-    public void setPartidos(List <Partido> partidos) {
-        this.partidos = partidos;
-    }
-    
       public void appendPartido(Partido partido) {
           if (this.partidos == null)
               this.partidos= new ArrayList<>();

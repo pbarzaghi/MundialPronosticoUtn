@@ -12,6 +12,10 @@ import tpi.ar.programa.pronostico.Pronostico;
  *
  * @author Usuario
  */
+
+
+@lombok.Getter
+@lombok.Setter
 public class Participante extends Persona{
     
     private List<Pronostico> pronosticos;
@@ -20,20 +24,7 @@ public class Participante extends Persona{
        this.pronosticos=new ArrayList<>();
     }
 
-    /**
-     * @return the pronosticos
-     */
-    public List<Pronostico> getPronosticos() {
-        return pronosticos;
-    }
-
-    /**
-     * @param pronosticos the pronosticos to set
-     */
-    public void setPronosticos(List<Pronostico> pronosticos) {
-        this.pronosticos = pronosticos;
-    }
-    
+   
     public void addPronostico(Pronostico pronostico){
        this.pronosticos.add(pronostico);
     }
