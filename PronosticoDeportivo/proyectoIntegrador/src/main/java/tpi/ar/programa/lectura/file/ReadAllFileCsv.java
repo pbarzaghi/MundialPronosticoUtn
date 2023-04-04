@@ -26,10 +26,10 @@ import tpi.ar.programa.pronostico.participante.Participante;
  *
  * @author pbarzaghi
  */
-public class ReadAllFileCvs {
+public class ReadAllFileCsv {
      private  HashMap objCreacion;
     
-     public ReadAllFileCvs(){
+     public ReadAllFileCsv(){
       
       if(objCreacion == null)
          objCreacion=new HashMap();

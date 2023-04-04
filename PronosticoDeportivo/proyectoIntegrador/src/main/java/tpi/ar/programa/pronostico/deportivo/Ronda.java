@@ -66,6 +66,11 @@ public class Ronda {
      public Ronda getRonda(Partido partido){
         return (this.partidos.contains(partido)? this: null);
      }
+     /*
+      Este metodo se fija si el equipo ingresado gano en esa ronda
+      devolviendo un boolean.
+      
+     */
      
      public boolean esRondaGanada(Equipo equipo){
          boolean ganoRonda=false;

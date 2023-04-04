@@ -6,13 +6,9 @@ package com.mycompany.proyectointegrador;
 
 import java.awt.HeadlessException;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.JOptionPane;
 import tpi.ar.programa.exception.FileIntegradorException;
 import tpi.ar.programa.exception.GolesNegativoException;
-import tpi.ar.programa.lectura.file.FileCvs;
-import tpi.ar.programa.lectura.file.ReadAllFileCvs;
+import tpi.ar.programa.lectura.file.ReadAllFileCsv;
 import tpi.ar.programa.pronostico.GanadorPronostico;
 import tpi.ar.programa.pronostico.participante.Participante;
 
@@ -36,7 +32,7 @@ public class ProyectoIntegrador {
        // con la dependencia que esta en el pom
        // FileCvs file= new FileCvs();
        
-       ReadAllFileCvs file = new ReadAllFileCvs();
+       ReadAllFileCsv file = new ReadAllFileCsv();
        
         List<Participante> listaParticipante;
         listaParticipante = file.leerArchivoPronostico(csvPuntos,

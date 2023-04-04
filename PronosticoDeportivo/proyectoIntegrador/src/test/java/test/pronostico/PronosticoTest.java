@@ -4,19 +4,16 @@
  */
 package test.pronostico;
 
-import java.util.ArrayList;
-import java.util.List;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import tpi.ar.programa.enumerado.ResultadoEmun;
-import tpi.ar.programa.lectura.file.FileCvs;
-import tpi.ar.programa.pronostico.GanadorPronostico;
+
 import tpi.ar.programa.pronostico.Pronostico;
 import tpi.ar.programa.pronostico.PuntosResultado;
 import tpi.ar.programa.pronostico.deportivo.Equipo;
 import tpi.ar.programa.pronostico.deportivo.Partido;
-import tpi.ar.programa.pronostico.deportivo.Ronda;
+
 
 
 /**

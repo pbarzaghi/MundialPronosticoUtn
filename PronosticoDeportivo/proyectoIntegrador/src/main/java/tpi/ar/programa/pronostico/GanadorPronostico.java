@@ -7,7 +7,6 @@ package tpi.ar.programa.pronostico;
 
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -42,24 +41,22 @@ public class GanadorPronostico {
                 p.getResultado().equals(p.getPartido().getResultado(p.getEquipo()))
                 ?1:0).sum();
           
-          
-          // TODO: falta distinguir que pronostico pertenece a que ronda
-          // dado que todos los pronosticos vienen juntos
-          // Abria que hacer una collection por cada ronda de Pronosticos
-          // y ahi preguntar si isPronosticoDeUnaRonda
-          
+          // funcionalidad: separo la lista de pronostico en <ronda, list<Pronostico>> para chequear
+          // que cada list<Pronostico> de una ronda acerto el participante y poder obtener
+          // los puntos extras por ronda
           int puntoExtraRonda=0; 
-          
-           Map map = (Map) this.listPronosticoPorRonda(pronosticos);
+          Map map = (Map) this.listPronosticoPorRonda(pronosticos);
            Iterator entries = map.entrySet().iterator();
-          while (entries.hasNext()) {
+         int nroRonda=0;
+           while (entries.hasNext()) {
                 Map.Entry entry = (Map.Entry) entries.next();
                 Ronda key = (Ronda)entry.getKey();
                 List<Pronostico> value = (List<Pronostico>)entry.getValue(); 
           
                 if(this.isPronosticoDeUnaRonda(value)){
                         puntoExtraRonda+=this.puntoExtraPorRonda(value.get(0));
-                 }
+                         nroRonda++;
+                }
           }
           
          
@@ -68,13 +65,16 @@ public class GanadorPronostico {
                                        String.valueOf(puntajeAcierto),
                                        String.valueOf(cantidadPronosticos),
                                          String.valueOf(puntajeTotal),
-                                         String.valueOf(puntoExtraRonda)
-                                       
+                                         String.valueOf(puntoExtraRonda),
+                                         String.valueOf(nroRonda)
                                        );
     }
     
     
     
+    /*
+     Este metodo devuelve el valor extra que se tiene por ganar el Pronostico una ronda
+    */
     
     public int puntoExtraPorRonda(Pronostico pronostico){
       if( pronostico.getPartido().getRonda().esRondaGanada(pronostico.getEquipo()))
@@ -85,31 +85,33 @@ public class GanadorPronostico {
     
     
     
+    /*
+     Este metodo retorna un booleano si todos los pronosticos esta
+    aceptados.
+    La lista de pronostico que ingresan pertenecen a un ronda
+    */
     
     
     public boolean isPronosticoDeUnaRonda(List<Pronostico> pronosticos){
       
-        
-        boolean aceptaron=false;
+         boolean okRonda=true;
+       
         for (Pronostico pronostico : pronosticos) {
            
             Partido partido=pronostico.getPartido();
             Equipo equipo=partido.getEquipoGanador();
-            if(ResultadoEmun.EMPATE.equals(pronostico.getResultado()) && equipo == null){
-               if(!aceptaron)
-                 aceptaron=true;
-            } else if(pronostico.getEquipo().equals(equipo)&&
-                    pronostico.getResultado().equals(partido.getResultado(equipo)) ){
-               if(!aceptaron)
-                 aceptaron=true;
-            } else
-                if(! pronostico.getResultado().equals(partido.getResultado(equipo)))   
-                { if(aceptaron)
-                    aceptaron=false;  
-                }
-                
+              if (ResultadoEmun.EMPATE.equals(pronostico.getResultado()) && equipo == null)
+                 okRonda=true;
+            else
+                if(pronostico.getEquipo().equals(equipo)&&
+                    pronostico.getResultado().equals(partido.getResultado(equipo)) )
+                  okRonda=true;
+                else if (pronostico.getResultado().equals(partido.getResultado(equipo)) )
+                   okRonda=true;
+                else return false;     
+         
         }
-        return aceptaron;
+        return okRonda;
     
     }
  
@@ -121,22 +123,29 @@ public class GanadorPronostico {
                                                        String puntajeAceptado, 
                                                        String cantidadPronosticos,
                                                        String puntajeTotal,
-                                                       String extraRonda){
+                                                       String extraRonda,
+                                                       String cantRonda){
                                                       // String cantidadRondaGanada) {
         
-        int valor= Integer.parseInt(puntajeTotal)+
-                   Integer.parseInt(extraRonda);
+        
+        int totalRonda = Integer.parseInt(extraRonda)*Integer.parseInt(cantRonda);
    
-        return "Participante: "+participante +
-               " Acerto "+puntajeAceptado +
-               " / "+ cantidadPronosticos +
-               "  total Puntos; "+ puntajeTotal +
-               " + " +extraRonda +" de Rondas Ganadas suma total de  "+
-                valor + " "
+        int valoTotal= Integer.parseInt(puntajeTotal)+
+                   Integer.parseInt(extraRonda)+totalRonda;
+        return "---------------------------------- \n " +
+                "Participante: "+participante +
+               "\n Acerto "+puntajeAceptado + "/"+ cantidadPronosticos +
+               "\n Total Puntos; "+ puntajeTotal +
+               "\n "+
+                " Total de rondas ganadas "+cantRonda +"\n"
+                + " Puntos extra por ganar ronda " +extraRonda + " total extra "+totalRonda + 
+               "\n Suma total de  "+
+                valoTotal + " Puntos"
              //   +  extraRonda+" Puntos " 
             //    + " Sumanto  Puntaje de "+(Integer.sum(Integer.parseInt(extraRonda),
             //                                           Integer.parseInt(puntajeAceptado)))
-                + " sin contabilizar Rondas Ni fases)";
+                + " \n(FASES NO CONTABILIZADAS)"+
+              "\n ---------------------------------- "  ;
     
     
     }
@@ -148,6 +157,13 @@ public class GanadorPronostico {
         return puntajeTotal;
     }
     
+    /*
+     En este metodo ingresa una List<Pronostico> y devuelve
+    una Map<Ronda,List<Pronostico>
+    Lo que realiza este metodo separar cada pronostico segun su ronda
+    dado que varios pronostico pueden serde una ronda
+    
+    */
     
     public Map listPronosticoPorRonda(List<Pronostico> pronosticos){
       Map tablaRonda = new HashMap();
