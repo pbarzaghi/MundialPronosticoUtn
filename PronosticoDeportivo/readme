@@ -1,0 +1,36 @@
+ETAPA 2
+Repositorio:
+https://github.com/pbarzaghi/proyectoPronostico/new/EntregaNro2/PronosticoDeportivo
+
+FUNCIONAMIENTO:
+Estan cargado por parametro los tres Archivos: resultado1.csv,pronostico1.csv y \puntos.csv
+El Archivo puntos.csv tiene los siguientes campos
+PtosGanar,PtosEmpatar,PtosPerder,PtosPartido,PtosRonda,PtosFase
+Los primeros 3 correspontes a los puntos que se le puede dar al Partido,
+Los ultimos 3 corresponde:
+  -PtosPartido : Puntos que se le da al pronostico por acertar un partido.
+  -PtosRonda : Puntos extras que se le otorga al pronostico por acertar una ronda de partidos.
+  -PtosFase: Puntos que se le otorga al Pronostico por acertar una varias rondas.
+
+Salida por consola del Programa:
+E:\UTN\ProyectoEntregas\proyectoPronostico\PronosticoDeportivo>java -cp proyectoIntegrador\target\proyectoIntegrador-1.0-SNAPSHOT.jar com.mycompany.proyectointegrador.ProyectoIntegrador proyectoIntegrador\src\main\resources\resultado1.csv proyectoIntegrador\src\main\resources\pronostico1.csv  proyectoIntegrador\src\main\resources\puntos.csv
+Path de archivo 1 .. proyectoIntegrador\src\main\resources\resultado1.csv
+Path de archivo 2 ..proyectoIntegrador\src\main\resources\pronostico1.csv
+Path de archivo 3 ..proyectoIntegrador\src\main\resources\puntos.csv
+----------------------------------
+ Participante: PABLO
+ Acerto: 5/6
+ Total Puntos: 10
+ Total de rondas ganadas: 2
+ Puntos extra por ganar una ronda: 3 Total en ronda: 6
+ Suma total de : 19 Puntos
+(FASES NO CONTABILIZADAS)
+----------------------------------
+Estan cargado por parametro los tres Archivos
+ Participante: CELINA
+ Acerto: 1/6
+ Total Puntos: 2
+ Total de rondas ganadas: 0
+ Puntos extra por ganar una ronda: 0 Total en ronda: 0
+ Suma total de : 2 Puntos
+(FASES NO CONTABILIZADAS)
