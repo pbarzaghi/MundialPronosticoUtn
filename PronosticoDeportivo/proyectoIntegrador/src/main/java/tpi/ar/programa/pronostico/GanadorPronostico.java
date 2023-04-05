@@ -138,14 +138,13 @@ public class GanadorPronostico {
                "\n Total Puntos: "+ puntajeTotal +
                "\n "+
                 "Total de rondas ganadas: "+cantRonda +"\n"
-                + " Puntos extra por ganar ronda: " +extraRonda + " total extra: "+totalRonda + 
+                + " Puntos extra por ganar una ronda: " +extraRonda + " Total en ronda: "+totalRonda + 
                "\n Suma total de : "+
                 valoTotal + " Puntos"
              //   +  extraRonda+" Puntos " 
             //    + " Sumanto  Puntaje de "+(Integer.sum(Integer.parseInt(extraRonda),
             //                                           Integer.parseInt(puntajeAceptado)))
-                + " \n(FASES NO CONTABILIZADAS)"+
-              "\n ---------------------------------- "  ;
+                + " \n(FASES NO CONTABILIZADAS)" ;
     
     
     }

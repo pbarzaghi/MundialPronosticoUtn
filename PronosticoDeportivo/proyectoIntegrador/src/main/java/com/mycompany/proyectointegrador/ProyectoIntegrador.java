@@ -7,6 +7,7 @@ package com.mycompany.proyectointegrador;
 import java.awt.HeadlessException;
 import java.util.List;
 import tpi.ar.programa.exception.FileIntegradorException;
+import tpi.ar.programa.exception.FormatoIncorrectoException;
 import tpi.ar.programa.exception.GolesNegativoException;
 import tpi.ar.programa.lectura.file.ReadAllFileCsv;
 import tpi.ar.programa.pronostico.GanadorPronostico;
@@ -55,7 +56,10 @@ public class ProyectoIntegrador {
                 System.out.println( ex.getMensajeError() );
                 System.exit(1);
         
-        } catch (NullPointerException e){
+        }catch(FormatoIncorrectoException e1) {
+             System.out.println( "Se cargo mal el Archivo" +e1.getMessage() );
+             System.exit(1);
+        }catch (NullPointerException e){
              System.out.println( "El sistema cerro de forma Abrupta" +e.getMessage() );
              System.exit(1);
              

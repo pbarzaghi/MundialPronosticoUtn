@@ -15,6 +15,7 @@ import java.util.List;
 
 import tpi.ar.programa.enumerado.ResultadoEmun;
 import tpi.ar.programa.exception.FileIntegradorException;
+import tpi.ar.programa.exception.FormatoIncorrectoException;
 import tpi.ar.programa.pronostico.Pronostico;
 import tpi.ar.programa.pronostico.PuntosResultado;
 import tpi.ar.programa.pronostico.deportivo.Equipo;
@@ -41,38 +42,45 @@ public class ReadAllFileCsv {
     
     */
     
-    public  void leerArchivoPuntos(String path)throws FileIntegradorException{
+    public  void leerArchivoPuntos(String path)throws FileIntegradorException,FormatoIncorrectoException{
          
             Path pathPuntos= Paths.get(path);
             List<String> listaPuntos=null;
+            boolean primeraLineaArchivo=true;
          try {
-             boolean primeraLineaArchivo=true;
+           
              listaPuntos= Files.readAllLines(pathPuntos);
              for (String listaPunto : listaPuntos) {
                     PuntosResultado puntos = new PuntosResultado();
                     
              String[] campo=listaPunto.split(",");
+          
+                
              if(primeraLineaArchivo)
                 primeraLineaArchivo=false;
              else{
-             puntos.setPuntoGanar(Integer.parseInt(campo[0]));
-             puntos.setPuntoEmpatar(Integer.parseInt(campo[1]));        
-             puntos.setPuntoPerder(Integer.parseInt(campo[2]));
-             puntos.setPuntoAcierto(Integer.parseInt(campo[3]));
-             puntos.setPuntosRonda(Integer.parseInt(campo[4]));
-             puntos.setPuntosFase(Integer.parseInt(campo[5]));
-             objCreacion.put(PuntosResultado.class,puntos);
-             }           
+                    puntos.setPuntoGanar(Integer.parseInt(campo[0]));
+                    puntos.setPuntoEmpatar(Integer.parseInt(campo[1]));        
+                    puntos.setPuntoPerder(Integer.parseInt(campo[2]));
+                    puntos.setPuntoAcierto(Integer.parseInt(campo[3]));
+                    puntos.setPuntosRonda(Integer.parseInt(campo[4]));
+                    puntos.setPuntosFase(Integer.parseInt(campo[5]));
+                    objCreacion.put(PuntosResultado.class,puntos);
+                    }           
             }
-         } catch (IOException ex) { 
-             throw new FileIntegradorException("No encontro el Archivo"+path);
+         } catch(NumberFormatException e1){
+              System.out.println(" EEE"+e1.getMessage());
+            throw new FormatoIncorrectoException(e1.getMessage());
+         }
+            catch (IOException ex) { 
+             throw new FileIntegradorException("No encontro el Archivo"+path + "ERROR : "+ex.getMessage());
          }
     }
     
    //-------------------------------------------------------------
    // Levantar el archivo  Resultado
    //----------------------------------------
-     public  void leerArchivoResultado(String path) throws FileIntegradorException{
+     public  void leerArchivoResultado(String path) throws FileIntegradorException,FormatoIncorrectoException{
      
          
           Path pathResultados= Paths.get(path);
@@ -84,6 +92,7 @@ public class ReadAllFileCsv {
              for (String lineaResultado : listaResultado) {
                 
                  String[] campo=lineaResultado.split(",");
+                 
                  if(primeraLineaArchivo)
                     primeraLineaArchivo=false;
                  else{
@@ -137,21 +146,18 @@ public class ReadAllFileCsv {
                              
                         }
 
-                   /*     System.out.println(" Equipo1: "+campo[1] +
-                                           " GolesEquipo1: " +  campo[2] + 
-                                            " Equipo2: " + campo[4] +
-                                            " GolesEquipo2: " + campo[3]+ 
-                                            " Nro Ronda: " + campo[0]);
-*/
-
                   }
              }
       
-      } catch (IOException ex) {
+      } 
+         catch(NumberFormatException e1){
+              throw new FormatoIncorrectoException(e1.getMessage());
+         }
+         catch (IOException ex) {
              throw new FileIntegradorException("No encontro el Archivo"+path);
         }
     
-        System.out.println(" ----- F I N CARGAR RESULTADOS -------");
+      
     
  
 }
@@ -164,7 +170,7 @@ public class ReadAllFileCsv {
      los pronostico realizado
     cargados desde el archivo
     */
-    public List<Participante> leerArchivoPronostico(String path) throws FileIntegradorException{
+    public List<Participante> leerArchivoPronostico(String path) throws FileIntegradorException, FormatoIncorrectoException{
       
              List<Participante> listaParticipante =new ArrayList();
          try {
@@ -175,11 +181,12 @@ public class ReadAllFileCsv {
              
              boolean primeraLineaArchivo=true;
              listaPronosticos= Files.readAllLines(pathPronostico);
-             
+            
              
              
              for (String lineaPronostico : listaPronosticos) {
                  String[] campo=lineaPronostico.split(",");
+                   
                  if(primeraLineaArchivo)
                      primeraLineaArchivo=false;
                  else{
@@ -209,11 +216,7 @@ public class ReadAllFileCsv {
                              campo[4]));
                      
                      pronostico.setPuntosResultado((PuntosResultado) objCreacion.get(PuntosResultado.class));
-                     
-                     
-                     
-                     
-                     
+                        
                      Participante participante=(Participante)  objCreacion.remove(Participante.class+campo[0]);
                      
                      if(participante == null) {
@@ -224,21 +227,15 @@ public class ReadAllFileCsv {
                      participante.addPronostico(pronostico);
                      listaParticipante.add(participante);
                      objCreacion.put(Participante.class+participante.getNombre(),participante);
-                
-                 /*    System.out.println("Equipo1: " +campo[1] +
-                             "  Equipo2: " + campo[5] +
-                             " Participante: " +   campo[0]+
-                             " GanadorEquipo1: " + campo[2]+
-                             " Empate : " + campo[3]+
-                             " GanadorEquipo2: " +  campo[4]);
-                     
-             */
-           
+              
                  }
             }
-// Este metodo va quedar sin efecto cuanto este activado la Clase PuntosResultado
+          } 
+         catch(NumberFormatException e1){
+             
+            throw new FormatoIncorrectoException(e1.getMessage());
          } catch (IOException ex) {
-             throw new FileIntegradorException("No encontro el Archivo"+path);
+             throw new FileIntegradorException("No encontro el Archivo "+path +" Error: "+ex.getMessage());
          }
          
         return listaParticipante;  
@@ -259,7 +256,9 @@ private ResultadoEmun getResultadoPronostico(String strGanadorEq1,String strEmpa
                                                     String pathPronostico) throws FileIntegradorException
      {
          this.leerArchivoPuntos(pathPuntos);
+         
          this.leerArchivoResultado( pathResultado); 
+         
          return this.leerArchivoPronostico(pathPronostico);
      }
     
