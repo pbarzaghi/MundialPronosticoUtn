@@ -13,6 +13,7 @@ import tpi.ar.programa.pronostico.deportivo.Partido;
  * @author pbarzaghi
  */
 public class Pronostico {
+    private int id;
     private Partido partido;
     private Equipo equipo;
     private ResultadoEmun resultado;
@@ -107,6 +108,20 @@ public class Pronostico {
    
        return this.resultado.equals(resultado);
    }
+
+    /**
+     * @return the id
+     */
+    public int getId() {
+        return id;
+    }
+
+    /**
+     * @param id the id to set
+     */
+    public void setId(int id) {
+        this.id = id;
+    }
 
   
     

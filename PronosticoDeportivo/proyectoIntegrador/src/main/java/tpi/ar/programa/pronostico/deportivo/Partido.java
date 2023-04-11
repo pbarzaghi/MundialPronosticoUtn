@@ -33,8 +33,6 @@ public class Partido {
      */
     public void setGolesEquipo1(int golesEquipo1) {
         
-        if(golesEquipo1 <0)
-            throw new GolesNegativoException("Intento ingresar un gol negativo");
         this.golesEquipo1 = golesEquipo1;
     }
 
@@ -43,8 +41,7 @@ public class Partido {
      * @param golesEquipo2 the golesEquipo2 to set
      */
     public void setGolesEquipo2(int golesEquipo2) {
-       if(golesEquipo2 <0)
-            throw new GolesNegativoException("Intento ingresar un gol negativo");
+      
         this.golesEquipo2 = golesEquipo2;
     }
 

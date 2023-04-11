@@ -16,12 +16,14 @@ import java.util.List;
 import tpi.ar.programa.enumerado.ResultadoEmun;
 import tpi.ar.programa.exception.FileIntegradorException;
 import tpi.ar.programa.exception.FormatoIncorrectoException;
+import tpi.ar.programa.exception.GolesNegativoException;
 import tpi.ar.programa.pronostico.Pronostico;
 import tpi.ar.programa.pronostico.PuntosResultado;
 import tpi.ar.programa.pronostico.deportivo.Equipo;
 import tpi.ar.programa.pronostico.deportivo.Partido;
 import tpi.ar.programa.pronostico.deportivo.Ronda;
 import tpi.ar.programa.pronostico.participante.Participante;
+import tpi.ar.programa.validador.ValidadorCampo;
 
 /**
  *
@@ -29,12 +31,13 @@ import tpi.ar.programa.pronostico.participante.Participante;
  */
 public class ReadAllFileCsv {
      private  HashMap objCreacion;
+     private  ValidadorCampo validador;
     
      public ReadAllFileCsv(){
       
       if(objCreacion == null)
          objCreacion=new HashMap();
-      
+      validador=new ValidadorCampo();
     }
 
  /*
@@ -80,7 +83,7 @@ public class ReadAllFileCsv {
    //-------------------------------------------------------------
    // Levantar el archivo  Resultado
    //----------------------------------------
-     public  void leerArchivoResultado(String path) throws FileIntegradorException,FormatoIncorrectoException{
+     public  void leerArchivoResultado(String path) throws FileIntegradorException,FormatoIncorrectoException,GolesNegativoException{
      
          
           Path pathResultados= Paths.get(path);
@@ -99,7 +102,11 @@ public class ReadAllFileCsv {
                       int idEquipo=1;
                       int idPartido=1;
                       Equipo equipo1= (Equipo)  objCreacion.get(Equipo.class+campo[1]);
+                     // VALIDACION DE CAMPO
                       if(equipo1 == null){
+                          if(!validador.validar(campo[1],"EQUIPO")){
+                               throw new FormatoIncorrectoException("FORMATO INCORRECTO NOMBRE EQUIPO");
+                          }
                          equipo1= new Equipo(campo[1], "SELECCIONADO");
                          equipo1.setId(idEquipo);
                          objCreacion.put(Equipo.class+campo[1], equipo1);
@@ -112,22 +119,30 @@ public class ReadAllFileCsv {
                           objCreacion.put(Equipo.class+campo[4], equipo2);
                           idEquipo++;
                       }
-                       Partido partido= (Partido)  objCreacion.get(Partido.class+String.valueOf(equipo1.getId())+
+                       Partido partido= (Partido)  objCreacion.get(Partido.class+equipo1.getNombre()+
                                                                                                 "_"+
-                                                                                 String.valueOf(equipo2.getId()) );
+                                                                                 equipo2.getNombre() );
                        if(partido == null){
                            partido =new Partido();
                            partido.setIdPartido(idPartido);
                            partido.setEquipo1(equipo1);
                            partido.setEquipo2(equipo2);
+                          // VALIDACION DE CAMPO
+                           if(!  ( validador.validar(campo[2],"GOLES") &&
+                                    validador.validar(campo[3],"GOLES") 
+                                    )){
+                               throw new GolesNegativoException("FORMATO INCORRECTO DE GOLES");
+                          }
+                        
+                           
                            partido.setGolesEquipo1(Integer.parseInt(campo[2]));
                            partido.setGolesEquipo2(Integer.parseInt(campo[3]));
                            partido.setPuntos((PuntosResultado)objCreacion.get(PuntosResultado.class));
 
-                         ResultadoEmun resultaPartido=partido.getResultadoPorGoles(Integer.parseInt(campo[2]),
-                                                                                   Integer.parseInt(campo[3]));
+                      //   ResultadoEmun resultaPartido=partido.getResultadoPorGoles(Integer.parseInt(campo[2]),
+                        //                                                           Integer.parseInt(campo[3]));
                          
-                         partido.setPuntos( (PuntosResultado)objCreacion.get(PuntosResultado.class+resultaPartido.toString()));
+                   //      partido.setPuntos( (PuntosResultado)objCreacion.get(PuntosResultado.class+resultaPartido.toString()));
 
                          objCreacion.put(Partido.class+equipo1.getNombre()+"_"+equipo2.getNombre(), partido);
                            idPartido++;
@@ -253,7 +268,9 @@ private ResultadoEmun getResultadoPronostico(String strGanadorEq1,String strEmpa
      
      public List<Participante> leerArchivoPronostico(String pathPuntos,
                                                     String pathResultado,
-                                                    String pathPronostico) throws FileIntegradorException
+                                                    String pathPronostico) 
+                                        throws
+                                                FileIntegradorException,GolesNegativoException,FormatoIncorrectoException
      {
          this.leerArchivoPuntos(pathPuntos);
          

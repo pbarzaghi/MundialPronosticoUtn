@@ -100,15 +100,18 @@ public class GanadorPronostico {
            
             Partido partido=pronostico.getPartido();
             Equipo equipo=partido.getEquipoGanador();
-              if (ResultadoEmun.EMPATE.equals(pronostico.getResultado()) && equipo == null)
-                 okRonda=true;
-            else
+           
+          
                 if(pronostico.getEquipo().equals(equipo)&&
                     pronostico.getResultado().equals(partido.getResultado(equipo)) )
                   okRonda=true;
                 else if (pronostico.getResultado().equals(partido.getResultado(equipo)) )
                    okRonda=true;
-                else return false;     
+                else
+                   if (ResultadoEmun.EMPATE.equals(pronostico.getResultado()) || equipo == null)
+                      okRonda=true;
+                   else 
+                    return false;     
          
         }
         return okRonda;

@@ -38,7 +38,17 @@
         <exec.mainClass>com.mycompany.proyectointegrador.ProyectoIntegrador</exec.mainClass>
     </properties>
      <dependencies>
-     
+     <dependency>
+        <groupId>mysql</groupId>
+        <artifactId>mysql-connector-java</artifactId>
+        <version>8.0.32</version>
+     </dependency>
+        <dependency>
+            <groupId>com.mysql</groupId>
+            <artifactId>mysql-connector-j</artifactId>
+            <version>8.0.32</version>
+            <type>jar</type>
+        </dependency>
          
          <!-- https://mvnrepository.com/artifact/com.opencsv/opencsv -->
         <dependency>
