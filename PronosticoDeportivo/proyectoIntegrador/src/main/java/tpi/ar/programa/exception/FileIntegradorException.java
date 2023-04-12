@@ -4,25 +4,32 @@
  */
 package tpi.ar.programa.exception;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.sql.SQLException;
+import java.util.Properties;
+
 
 /**
  *
  * @author pbarzaghi
  */
-public class FileIntegradorException extends IOException{
+public class FileIntegradorException  extends Exception {
     private String mensajeError;
 
-     public FileIntegradorException(String msgError){
-        mensajeError=msgError;
-     }   
+    
+public FileIntegradorException(String msg){
 
-    /**
-     * @return the mensajeError
-     */
-    public String getMensajeError() {
-        return mensajeError;
+    this.mensajeError=msg;
+}
+     
+     
+    
+    @Override
+    public String getMessage() {
+      return this.mensajeError;   
     }
      
-     
+  
 }

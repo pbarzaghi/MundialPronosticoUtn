@@ -4,14 +4,16 @@
  */
 package tpi.ar.programa.conexion;
 
+import tpi.ar.programa.exception.FileIntegradorException;
+
 /**
  *
  * @author pbarzaghi
  */
 public interface Conexion {
-    
-    public Object abrirConexion(Object path) throws Exception;
-     public void  cerrarConexion(Object path) throws Exception;;
+    public void setConection(Object obj);
+    public Object abrirConexion() throws FileIntegradorException;
+     public void  cerrarConexion() throws FileIntegradorException;
     
     
 }

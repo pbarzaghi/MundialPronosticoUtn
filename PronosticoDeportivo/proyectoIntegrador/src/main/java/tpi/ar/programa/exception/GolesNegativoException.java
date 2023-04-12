@@ -10,17 +10,20 @@ package tpi.ar.programa.exception;
  */
 public class GolesNegativoException extends RuntimeException{
     
-       private String mensajeError;
+       private final String mensajeError;
 
      public GolesNegativoException(String msgError){
         mensajeError=msgError;
      }   
 
-    /**
-     * @return the mensajeError
-     */
-    public String getMensajeError() {
-        return mensajeError;
+   
+
+    
+   
+
+    @Override
+    public String getMessage() {
+      return this.mensajeError;   
     }
 
     

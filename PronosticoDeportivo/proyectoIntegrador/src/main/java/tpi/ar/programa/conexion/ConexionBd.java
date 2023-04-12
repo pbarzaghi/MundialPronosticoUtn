@@ -4,16 +4,17 @@
  */
 package tpi.ar.programa.conexion;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import tpi.ar.programa.exception.FileIntegradorException;
+import tpi.ar.programa.lectura.file.MsgProperty;
 
 /**
  *
@@ -22,46 +23,47 @@ import tpi.ar.programa.exception.FileIntegradorException;
 public class ConexionBd implements Conexion{
 
      public PreparedStatement stmt = null;
-      public ResultSet rs = null;
-      private Connection conn = null;
-      private  final String PROPERTIES_JDBC = "jdbc.properties"; 
-    
-
-  
-
-    @Override
-    public void cerrarConexion(Object object) throws Exception{
-       this.conn=(Connection) object;
+     public ResultSet rs = null;
+     private Connection conn = null;
+   
+     @Override
+    public void cerrarConexion() throws FileIntegradorException{
+      
         try {
                if (rs != null) rs.close();
                if (stmt != null) stmt.close();
                if (conn != null) this.conn.close();
            } catch (SQLException ex) {
-                  throw new FileIntegradorException(ex.getMessage());
+                  throw new FileIntegradorException(MsgProperty.getMensaje("error.sentenciaSql"));
            }
     }
 
     @Override
-    public Object abrirConexion(Object object) throws Exception{
-      
-            String url,user,pass;
-        
-            Properties properties=null;
-        try {
-             properties =(Properties) object;
-             url =properties.getProperty("jdbc.url");
-             user =properties.getProperty("jdbc.user");
-             pass =properties.getProperty("jdbc.pass");
-             Class.forName(properties.getProperty( "jdbc.driver"));
-             conn= DriverManager.getConnection(url, user, pass);
-           
+    public Object abrirConexion() throws FileIntegradorException {
+      String url,user,pass;
+         try {
             
-        } catch (ClassNotFoundException ex) {
-                throw new FileIntegradorException(ex.getMessage());
-      
-       }
-        
-         return conn;
+             url = MsgProperty.getMensaje("jdbc.url");
+             user =MsgProperty.getMensaje("jdbc.user");
+             pass =MsgProperty.getMensaje("jdbc.pass");
+             Class.forName(MsgProperty.getMensaje("jdbc.driver"));
+             conn= DriverManager.getConnection(url, user, pass);
+            
+         } catch (FileIntegradorException ex) {
+            throw new FileIntegradorException(MsgProperty.getMensaje("error.abrirBd"));
+         }catch (ClassNotFoundException ex) {
+           throw new FileIntegradorException(MsgProperty.getMensaje("error.driverManager"));
+          } catch (SQLException ex) {
+              throw new FileIntegradorException(MsgProperty.getMensaje("error.sentenciaSql"));
+         }
+         
+          return conn;
     }
+    
+    
+     @Override
+      public void setConection(Object obj){
+         this.conn=(Connection)obj;
+      }
     
 }

@@ -4,21 +4,12 @@
  */
 package tpi.ar.programa.lectura.file;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-
 import java.util.HashMap;
 import java.util.List;
 import tpi.ar.programa.conexion.Conexion;
 import tpi.ar.programa.conexion.ConexionFileCsv;
-
-import tpi.ar.programa.enumerado.ResultadoEmun;
 import tpi.ar.programa.exception.FileIntegradorException;
 import tpi.ar.programa.exception.FormatoIncorrectoException;
-import tpi.ar.programa.exception.GolesNegativoException;
-
 import tpi.ar.programa.pronostico.PuntosResultado;
 import tpi.ar.programa.pronostico.deportivo.Equipo;
 import tpi.ar.programa.pronostico.deportivo.Partido;
@@ -46,14 +37,17 @@ public class FileCsv {
    //-------------------------------------------------------------
    // Levantar el archivo  Resultado
    //----------------------------------------
-     public  void leerArchivoResultado(String path) throws Exception {
+     public  void leerArchivoResultado() throws FileIntegradorException {
          
          // Path pathResultados= Paths.get(path);
-          List<String> listaResultado=null;
-         try {
-             boolean primeraLineaArchivo=true;
+              List<String> listaResultado=null;
+             String pathResultado=MsgProperty.getMensaje("file.path")+
+                                     MsgProperty.getMensaje("file.resultado") ;
+              
+              boolean primeraLineaArchivo=true;
               Conexion conexion= new ConexionFileCsv();
-             listaResultado= ( List<String> ) conexion.abrirConexion(path);
+              conexion.setConection(pathResultado);
+             listaResultado= ( List<String> ) conexion.abrirConexion();
           
              for (String lineaResultado : listaResultado) {
                 
@@ -68,14 +62,17 @@ public class FileCsv {
                      // VALIDACION DE CAMPO
                       if(equipo1 == null){
                           if(!validador.validar(campo[1],"EQUIPO")){
-                               throw new FormatoIncorrectoException("FORMATO INCORRECTO NOMBRE EQUIPO");
-                          }
+                           throw  new FormatoIncorrectoException(MsgProperty.getMensaje("error.equipoMayuscula"));
+                   }
                          equipo1= new Equipo(campo[1], "SELECCIONADO");
                          equipo1.setId(idEquipo);
                          objCreacion.put(Equipo.class+campo[1], equipo1);
                          idEquipo++;
                       }
                        Equipo equipo2= (Equipo)  objCreacion.get(Equipo.class+campo[4]);
+                         if(!validador.validar(campo[4],"EQUIPO")){
+                           throw  new FormatoIncorrectoException(MsgProperty.getMensaje("error.equipoMayuscula"));
+                         }
                        if(equipo2 == null){
                           equipo2= new Equipo(campo[4], "SELECCIONADO");
                           equipo2.setId(idEquipo);
@@ -94,14 +91,12 @@ public class FileCsv {
                            if(!  ( validador.validar(campo[2],"GOLES") &&
                                     validador.validar(campo[3],"GOLES") 
                                     )){
-                               throw new GolesNegativoException("FORMATO INCORRECTO DE GOLES");
-                          }
-                           
-                           
-                           partido.setGolesEquipo1(Integer.parseInt(campo[2]));
-                           partido.setGolesEquipo2(Integer.parseInt(campo[3]));
-                         partido.setPuntos((PuntosResultado)objCreacion.get(PuntosResultado.class));
-                          objCreacion.put(Partido.class+equipo1.getNombre()+"_"+equipo2.getNombre(), partido);
+                               throw  new FormatoIncorrectoException(MsgProperty.getMensaje("error.gol"));
+                       }
+                        partido.setGolesEquipo1(Integer.parseInt(campo[2]));
+                        partido.setGolesEquipo2(Integer.parseInt(campo[3]));
+                        partido.setPuntos((PuntosResultado)objCreacion.get(PuntosResultado.class));
+                       objCreacion.put(Partido.class+equipo1.getNombre()+"_"+equipo2.getNombre(), partido);
                            idPartido++;
                         }
 
@@ -121,23 +116,9 @@ public class FileCsv {
                   }
              }
       
-      } 
-         catch(NumberFormatException e1){
-              throw new FormatoIncorrectoException(e1.getMessage());
          }
-         catch (IOException ex) {
-             throw new FileIntegradorException("No encontro el Archivo"+path);
-        }
 
-    
-}
-  
-     
-     
-     
-    
-     
-     
+   
      public void setearPuntosResultado(PuntosResultado puntos){
        objCreacion.put(PuntosResultado.class,puntos);   
         

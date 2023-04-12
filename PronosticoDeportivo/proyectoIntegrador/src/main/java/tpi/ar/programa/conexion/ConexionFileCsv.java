@@ -9,8 +9,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import tpi.ar.programa.exception.FileIntegradorException;
 
 
@@ -21,11 +19,13 @@ import tpi.ar.programa.exception.FileIntegradorException;
 public class ConexionFileCsv implements Conexion{
 
      private  List<String> listStr=null;
+     private String path;
   
     @Override
-    public Object abrirConexion(Object object) throws FileIntegradorException {
+    public Object abrirConexion() throws FileIntegradorException {
         try {
-          Path pathString= Paths.get((String) object); 
+        
+          Path pathString= Paths.get(this.path); 
          
            this.listStr = Files.readAllLines(pathString);
 
@@ -40,11 +40,14 @@ public class ConexionFileCsv implements Conexion{
     
 
     @Override
-    public void cerrarConexion(Object path) {
+    public void cerrarConexion() throws FileIntegradorException{
       //TODO: no hace nada
            
     }
-
+     @Override
+     public void setConection(Object obj){
+         this.path=(String)obj;
+     }
    
     
 }

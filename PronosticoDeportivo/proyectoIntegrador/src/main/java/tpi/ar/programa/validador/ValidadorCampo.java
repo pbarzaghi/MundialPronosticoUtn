@@ -17,18 +17,27 @@ public class ValidadorCampo {
         
        switch (tipo) {
             case "EQUIPO":
+                        // realizar expresion regular para validar
+                       //ok=false;  
                        break;
            case "GOLES":
-                       break; 
+                                    
+                     // realizar expresion regular para validar
+                     //ok=false;
+                      break; 
                        
            case "PARTICIPANTE":
+                      // realizar expresion regular para validar
+                       //ok=false;
                        break; 
             
-           case "TEL":
-                       break; 
-           case "RDO_PRONOSTICO" :           
-                       break;  
-           case "NOMBRE_MAYUSCULA" :   
+         
+           case "PRONOSTICO" :  
+                        // realizar expresion regular para validar
+                         //ok=false;
+                         break;  
+           case "NOMBRE_MAYUSCULA" : 
+              //ok=false;
                break; 
         }
         return ok;

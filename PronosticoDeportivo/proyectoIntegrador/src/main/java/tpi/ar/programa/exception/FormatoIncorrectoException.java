@@ -8,7 +8,7 @@ package tpi.ar.programa.exception;
  *
  * @author pbarzaghi
  */
-public class FormatoIncorrectoException  extends IllegalArgumentException{
+public class FormatoIncorrectoException  extends RuntimeException{
     
        private String mensajeError;
 
@@ -16,11 +16,8 @@ public class FormatoIncorrectoException  extends IllegalArgumentException{
         mensajeError=msgError;
      }   
 
-    /**
-     * @return the mensajeError
-     */
-    public String getMensajeError() {
-        return mensajeError;
+    @Override
+    public String getMessage() {
+      return this.mensajeError;   
     }
-    
 }
