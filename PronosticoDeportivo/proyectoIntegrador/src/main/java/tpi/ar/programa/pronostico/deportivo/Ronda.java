@@ -20,6 +20,7 @@ public class Ronda {
     
     private List <Partido> partidos;
     private int nro;
+    private Fase fase;
     
 
    

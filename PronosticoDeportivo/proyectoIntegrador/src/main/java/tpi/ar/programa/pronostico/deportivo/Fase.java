@@ -17,7 +17,7 @@ import java.util.List;
 @lombok.AllArgsConstructor
 public class Fase {
     private List <Ronda> rondas;
-    private int nro;
+    private Integer nro;
     
     
       public void appendRonda(Ronda ronda) {

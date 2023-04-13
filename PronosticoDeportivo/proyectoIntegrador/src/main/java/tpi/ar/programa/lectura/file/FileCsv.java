@@ -12,6 +12,7 @@ import tpi.ar.programa.exception.FileIntegradorException;
 import tpi.ar.programa.exception.FormatoIncorrectoException;
 import tpi.ar.programa.pronostico.PuntosResultado;
 import tpi.ar.programa.pronostico.deportivo.Equipo;
+import tpi.ar.programa.pronostico.deportivo.Fase;
 import tpi.ar.programa.pronostico.deportivo.Partido;
 import tpi.ar.programa.pronostico.deportivo.Ronda;
 
@@ -112,7 +113,17 @@ public class FileCsv {
                             ronda.appendPartido(partido);
                              
                         }
-
+                         Fase fase= (Fase)  objCreacion.get(Fase.class+campo[5]); 
+                          if(fase == null){
+                            fase = new Fase();
+                            fase.setNro(new Integer(campo[5]));
+                            fase.appendRonda(ronda);
+                            objCreacion.put(Fase.class+String.valueOf(fase.getNro()), fase);
+                        }else{
+                             fase.appendRonda(ronda);
+                             
+                        }
+                        ronda.setFase(fase);
                   }
              }
       

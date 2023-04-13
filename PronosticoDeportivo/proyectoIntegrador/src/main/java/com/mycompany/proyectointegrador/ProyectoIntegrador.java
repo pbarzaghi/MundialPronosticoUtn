@@ -10,8 +10,6 @@ import java.util.List;
 import tpi.ar.programa.exception.FileIntegradorException;
 
 import tpi.ar.programa.exception.GolesNegativoException;
-import tpi.ar.programa.lectura.file.MsgProperty;
-
 import tpi.ar.programa.lectura.file.ServicesFileCsvBd;
 import tpi.ar.programa.lectura.file.ReadAllFileCsv;
 import tpi.ar.programa.pronostico.GanadorPronostico;
@@ -29,7 +27,7 @@ public class ProyectoIntegrador {
      
       try {
          
-          imprimirEtapa2(args);
+         // imprimirEtapa2(args);
        
          imprimirEtapa3();
            
@@ -51,9 +49,7 @@ public class ProyectoIntegrador {
     private static void imprimirEtapa3() throws FileIntegradorException,GolesNegativoException{
       ServicesFileCsvBd services = new ServicesFileCsvBd();
           GanadorPronostico ganador= new GanadorPronostico();
-         
-       
-            for (Participante participante : services.obtenerListaParticipante()) {
+              for (Participante participante : services.obtenerListaParticipante()) {
                 System.out.println(ganador.puntajeParticipantePronostico(participante));   
             }
        

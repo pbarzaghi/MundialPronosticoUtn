@@ -4,7 +4,6 @@
  */
 package tpi.ar.programa.lectura.file;
 
-import java.io.IOException;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -14,9 +13,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Properties;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
 
 import tpi.ar.programa.conexion.Conexion;
 import tpi.ar.programa.conexion.ConexionBd;

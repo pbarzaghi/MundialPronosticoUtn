@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Map;
 import tpi.ar.programa.enumerado.ResultadoEmun;
 import tpi.ar.programa.pronostico.deportivo.Equipo;
+import tpi.ar.programa.pronostico.deportivo.Fase;
 import tpi.ar.programa.pronostico.deportivo.Partido;
 import tpi.ar.programa.pronostico.deportivo.Ronda;
 
@@ -24,15 +25,14 @@ import tpi.ar.programa.pronostico.participante.Participante;
  * @author pbarzaghi
  */
 public class GanadorPronostico {
-     
-    private int puntajeTotal=0;
-    private int puntajeAcierto=0;
-        
-    
+  private Map tablaSumaDeFase;
     /*
      Este metodo returna los puntos de una participante segun su lista de Pronostico
     */
     public String puntajeParticipantePronostico(Participante participante ){
+         int puntajeTotal=0;
+         int puntajeAcierto=0;
+        
          
           List<Pronostico> pronosticos=participante.getPronosticos();
           int cantidadPronosticos=pronosticos.size();
@@ -45,28 +45,44 @@ public class GanadorPronostico {
           // que cada list<Pronostico> de una ronda acerto el participante y poder obtener
           // los puntos extras por ronda
           int puntoExtraRonda=0; 
+          
+          //----------------------------------------------------------------
+          // 
           Map map = (Map) this.listPronosticoPorRonda(pronosticos);
+           tablaSumaDeFase= new HashMap();
+          
+          
            Iterator entries = map.entrySet().iterator();
          int nroRonda=0;
            while (entries.hasNext()) {
                 Map.Entry entry = (Map.Entry) entries.next();
                 Ronda key = (Ronda)entry.getKey();
                 List<Pronostico> value = (List<Pronostico>)entry.getValue(); 
-          
-                if(this.isPronosticoDeUnaRonda(value)){
+             
+       
+             if(this.isPronosticoDeUnaRonda(value)){
                         puntoExtraRonda+=this.puntoExtraPorRonda(value.get(0));
-                         nroRonda++;
+                        nroRonda++;
+                 this.sumarPuntosEnFase(key.getFase()); 
                 }
           }
           
-         
-    
+          // fin de obtencion de los puntos extras y aciertos de Fase
+           HashMap mapCantidadRondaEnFase= (HashMap) this.listcantidadRondaPorFase(pronosticos);
+          int aciertoFase=this.cantidaDeAciertoFase(mapCantidadRondaEnFase);
+          int ptosExtraPorFase=(pronosticos.get(0)).getPuntosResultado().getPuntosFase();
+          int totalFases=mapCantidadRondaEnFase.size();
+              
+            
               return imprimirGanadorConPuntajePronostico(participante.getNombre()+" "+participante.getApellido(),
                                        String.valueOf(puntajeAcierto),
                                        String.valueOf(cantidadPronosticos),
                                          String.valueOf(puntajeTotal),
                                          String.valueOf(puntoExtraRonda),
-                                         String.valueOf(nroRonda)
+                                         String.valueOf(nroRonda),
+                                         String.valueOf(aciertoFase),
+                                         String.valueOf(ptosExtraPorFase),
+                                          String.valueOf(totalFases)
                                        );
     }
     
@@ -108,7 +124,7 @@ public class GanadorPronostico {
                 else if (pronostico.getResultado().equals(partido.getResultado(equipo)) )
                    okRonda=true;
                 else
-                   if (ResultadoEmun.EMPATE.equals(pronostico.getResultado()) || equipo == null)
+                   if (ResultadoEmun.EMPATE.equals(pronostico.getResultado()) && equipo == null)
                       okRonda=true;
                    else 
                     return false;     
@@ -127,38 +143,32 @@ public class GanadorPronostico {
                                                        String cantidadPronosticos,
                                                        String puntajeTotal,
                                                        String extraRonda,
-                                                       String cantRonda){
-                                                      // String cantidadRondaGanada) {
-        
-        
+                                                       String cantRonda,
+                                                       String cantidadFase,
+                                                       String extraFase,
+                                                       String cantTotalFase
+                                                      
+                                                       ){
+                                                   
         int totalRonda = Integer.parseInt(extraRonda)*Integer.parseInt(cantRonda);
-   
-        int valoTotal= Integer.parseInt(puntajeTotal)+
-                   Integer.parseInt(extraRonda)+totalRonda;
+        int cantTotalDeFase= Integer.decode(cantTotalFase);
+        int cantidadAciertoFase =Integer.parseInt(cantidadFase);
+        
+        int ptosFase=Integer.parseInt(extraFase)*cantidadAciertoFase;
+        
+        int valoTotal= Integer.parseInt(puntajeTotal)+totalRonda +ptosFase;
         return "---------------------------------- \n " +
-                "Participante: "+participante +
-               "\n Acerto: "+puntajeAceptado + "/"+ cantidadPronosticos +
-               "\n Total Puntos: "+ puntajeTotal +
-               "\n "+
-                "Total de rondas ganadas: "+cantRonda +"\n"
-                + " Puntos extra por ganar una ronda: " +extraRonda + " Total en ronda: "+totalRonda + 
-               "\n Suma total de : "+
-                valoTotal + " Puntos"
-             //   +  extraRonda+" Puntos " 
-            //    + " Sumanto  Puntaje de "+(Integer.sum(Integer.parseInt(extraRonda),
-            //                                           Integer.parseInt(puntajeAceptado)))
-                + " \n(FASES NO CONTABILIZADAS)" ;
-    
-    
+                "Participante: "+participante +"\n"+
+                "Acerto: "+puntajeAceptado + "/"+ cantidadPronosticos +"\n"+
+                "Total Puntos: "+ puntajeTotal + "\n"+
+                "Total de rondas ganadas: "+cantRonda +"\n"+
+                "Puntos extra por ganar una ronda: " +extraRonda + " Total en ronda: "+totalRonda + "\n"+
+                "Total de fases ganadas: "+cantidadAciertoFase + "/"+ cantTotalDeFase +"\n"+
+                "Puntos extra por ganar una fase: " +extraFase + " Total en fase: "+ptosFase+ "\n"+
+                "Suma total de : "+      valoTotal + " Puntos";
+        
     }
-
-    /**
-     * @return the puntajeTotal
-     */
-    public int getPuntajeTotal() {
-        return puntajeTotal;
-    }
-    
+        
     /*
      En este metodo ingresa una List<Pronostico> y devuelve
     una Map<Ronda,List<Pronostico>
@@ -166,28 +176,77 @@ public class GanadorPronostico {
     dado que varios pronostico pueden serde una ronda
     
     */
-    
     public Map listPronosticoPorRonda(List<Pronostico> pronosticos){
       Map tablaRonda = new HashMap();
         for (Pronostico pronostico : pronosticos) {
             Ronda ronda=pronostico.getPartido().getRonda();
             List<Pronostico> auxPronostico;
             if(!tablaRonda.containsKey(ronda)){
-                auxPronostico= new ArrayList<Pronostico>();
+                
+                auxPronostico = new ArrayList<Pronostico>();
                 auxPronostico.add(pronostico);
                 tablaRonda.put(ronda, auxPronostico );
-               }else{
-                  auxPronostico=(ArrayList<Pronostico>)tablaRonda.remove(ronda);
+               
+            }else{
+                auxPronostico  =(ArrayList<Pronostico>) tablaRonda.remove(ronda);
                   auxPronostico.add(pronostico);
                   tablaRonda.put(ronda, auxPronostico );
                 }
         }
-    
        return tablaRonda;
     }
-     
-}
     
     
-
+       /*
+           Este metodo me retorna la cantidad de ronda que tiene  cada Fase
+        */
+    
+       public Map listcantidadRondaPorFase(List<Pronostico> pronosticos){
+         
+          Map tableFase=new HashMap();
+        for (Pronostico pronostico : pronosticos) {
+            Fase fase=pronostico.getPartido().getRonda().getFase();
+              if(! tableFase.containsKey(fase.getNro())){
+                int cantidadRondas=fase.getRondas().size();
+                 tableFase.put(fase.getNro(), new Integer(cantidadRondas) );
+               }
+        }
+       
+        return tableFase;
+    
+      }
    
+       
+    private void sumarPuntosEnFase(Fase fase) {
+      
+         if(this.tablaSumaDeFase.containsKey(fase.getNro())){
+             int aux= ((Integer)tablaSumaDeFase.remove(fase.getNro())).intValue()+1;
+             tablaSumaDeFase.put(fase.getNro(),new Integer(aux));
+         }else{
+                 tablaSumaDeFase.put(fase.getNro(),new Integer(1));
+         }
+       
+    }   
+         
+         
+         private int cantidaDeAciertoFase(Map tabla){
+             int cantidadFase=0;
+            
+            Iterator entries = tabla.entrySet().iterator();
+        
+           while (entries.hasNext()) {
+                Map.Entry entry = (Map.Entry) entries.next();
+                Integer keyFase = (Integer)entry.getKey();
+                Integer valueInteger = (Integer)entry.getValue();
+                Integer total=(Integer) tablaSumaDeFase.get(keyFase);
+                 if(total != null)
+                     cantidadFase++;
+             }
+               
+             return cantidadFase;
+         
+         }
+    
+    }
+     
+    
