@@ -51,6 +51,9 @@ public class Ronda {
      public boolean esRondaGanada(Equipo equipo){
          boolean ganoRonda=false;
          for (Partido partido : partidos) {
+             if(partido.getEquipoGanador()== null || equipo == null)
+                 return false;
+             
             if(partido.getEquipo1().equals(equipo))
                     ganoRonda= partido.getEquipoGanador().equals(equipo);
             else

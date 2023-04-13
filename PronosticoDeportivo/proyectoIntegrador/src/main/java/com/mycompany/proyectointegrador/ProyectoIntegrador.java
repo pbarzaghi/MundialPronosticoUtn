@@ -11,7 +11,6 @@ import tpi.ar.programa.exception.FileIntegradorException;
 
 import tpi.ar.programa.exception.GolesNegativoException;
 import tpi.ar.programa.lectura.file.ServicesFileCsvBd;
-import tpi.ar.programa.lectura.file.ReadAllFileCsv;
 import tpi.ar.programa.pronostico.GanadorPronostico;
 import tpi.ar.programa.pronostico.participante.Participante;
 
@@ -26,10 +25,7 @@ public class ProyectoIntegrador {
    
      
       try {
-         
-         // imprimirEtapa2(args);
-       
-         imprimirEtapa3();
+             imprimirEtapa3();
            
        } catch (FileIntegradorException ex) {
             System.err.println( ex.getMessage());
@@ -37,9 +33,7 @@ public class ProyectoIntegrador {
        }catch (GolesNegativoException ex) {
           
              System.err.println( ex.getMessage());
-          
-       
-            System.exit(1);
+              System.exit(1);
        }      
       
       
@@ -56,38 +50,7 @@ public class ProyectoIntegrador {
     
     }  
     
-    private static void imprimirEtapa2(String[] args ) throws FileIntegradorException   {
-
-        System.out.println("Path de archivo 1 .. "+args[0]);
-        System.out.println("Path de archivo 2 .."+args[1]);
-        System.out.println("Path de archivo 3 .."+args[2]);
-        String csvResultado = args[0];
-        String csvPronostico  = args[1];
-        String csvPuntos = args[2];
-       // Se dejo de unsar esta clase porque no podia realizar el empaquetamiento
-       // con la dependencia que esta en el pom
-       // FileCvs file= new FileCvs();
-       
-       ReadAllFileCsv file = new ReadAllFileCsv();
-       
-        List<Participante> listaParticipante;
-        listaParticipante = file.leerArchivoPronostico(csvPuntos,
-                    csvResultado,
-                    csvPronostico);
-         
-        // Invocar los metodos para obtebner los resulados una ves cargados los objetos
-          GanadorPronostico ganador= new GanadorPronostico();
-         
-           for (Participante participante : listaParticipante) {
-                 System.out.println(ganador.puntajeParticipantePronostico(participante));
-            }
-              
-          
-          
-          
-    
-    
-    }
+  
     
     
 }
