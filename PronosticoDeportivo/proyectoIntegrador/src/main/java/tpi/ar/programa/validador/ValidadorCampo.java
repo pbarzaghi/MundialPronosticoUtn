@@ -29,7 +29,7 @@ public class ValidadorCampo {
                 break;
            case "GOLES":
                     // Expresion regular. Cadena numeros de 0 a 99       
-                    patron="[0-9]+{1,2}";
+                    patron="[0-9]{1,2}";
                     ok=this.patternMmatcher(patron, campo);  
                     break; 
                        
