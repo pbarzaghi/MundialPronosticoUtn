@@ -6,7 +6,7 @@ INSERT INTO `prueba`.`puntos` (`id`, `ptosGanar`, `ptosEmpatar`, `ptosPerder`, `
 INSERTAR PRONOSTICOS
 
 INSERT INTO `prueba`.`pronostico` (`Participante`, `equipo1`, `ganado`, `empatado`, `perdido`, `equipo2`) VALUES ('PABLO', 'ARGENTINA', 'X', 'O', 'O', 'ARABIA SAUDITA');
-INSERT INTO `prueba`.`pronostico` (`Participante`, `equipo1`, `ganado`, `empatado`, `perdido`, `equipo2`) VALUES ('PABLO', 'POLONIA', '0', 'X', 'O', 'MEXICO');
+INSERT INTO `prueba`.`pronostico` (`Participante`, `equipo1`, `ganado`, `empatado`, `perdido`, `equipo2`) VALUES ('PABLO', 'POLONIA', 'O', 'X', 'O', 'MEXICO');
 INSERT INTO `prueba`.`pronostico` (`Participante`, `equipo1`, `ganado`, `empatado`, `perdido`, `equipo2`) VALUES ('PABLO', 'ARGENTINA', 'X', 'O', 'O', 'POLONIA');
 INSERT INTO `prueba`.`pronostico` (`Participante`, `equipo1`, `ganado`, `empatado`, `perdido`, `equipo2`) VALUES ('PABLO', 'ARABIA SAUDITA', 'O', 'O', 'X', 'MEXICO');
 INSERT INTO `prueba`.`pronostico` (`Participante`, `equipo1`, `ganado`, `empatado`, `perdido`, `equipo2`) VALUES ('PABLO', 'MEXICO', 'O', 'O', 'X', 'ARGENTINA');

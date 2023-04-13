@@ -1,5 +1,5 @@
 # TABLA PRONOSTICO
-
+## prueba es el nombre de mi bd
 CREATE TABLE `prueba`.`pronostico` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `Participante` VARCHAR(45) NULL,

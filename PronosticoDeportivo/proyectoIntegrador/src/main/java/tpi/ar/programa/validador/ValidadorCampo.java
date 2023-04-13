@@ -4,6 +4,8 @@
  */
 package tpi.ar.programa.validador;
 
+import java.util.regex.Pattern;
+
 /**
  *
  * @author pbarzaghi
@@ -12,38 +14,49 @@ public class ValidadorCampo {
     
             
     public boolean validar(String campo,String tipo){
-    
-        boolean ok=true;
+     
+       
+       String patron;
+       boolean ok=true;
         
        switch (tipo) {
             case "EQUIPO":
-                        // realizar expresion regular para validar
-                       //ok=false;  
-                       break;
+                  // Expresion regular. Cadena con mayuscula y puede aceptar espacio       
+                patron="[A-Z ]+";
+                ok=this.patternMmatcher(patron, campo);  
+                
+              
+                break;
            case "GOLES":
-                                    
-                     // realizar expresion regular para validar
-                     //ok=false;
-                      break; 
+                    // Expresion regular. Cadena numeros de 0 a 99       
+                    patron="[0-9]+{1,2}";
+                    ok=this.patternMmatcher(patron, campo);  
+                    break; 
                        
            case "PARTICIPANTE":
-                      // realizar expresion regular para validar
-                       //ok=false;
-                       break; 
-            
-         
+                    patron="([A-Z ]+|[a-z ])+";
+                    ok =this.patternMmatcher(patron, campo); 
+                  
+                    break; 
+                  
            case "PRONOSTICO" :  
-                        // realizar expresion regular para validar
-                         //ok=false;
-                         break;  
+                    patron="([X]|[O])";
+                    ok =this.patternMmatcher(patron, campo);  
+                    break; 
            case "NOMBRE_MAYUSCULA" : 
-              //ok=false;
-               break; 
+               // Expresion regular. Cadena con mayuscula.       
+                patron="[A-Z]+";
+                ok=this.patternMmatcher(patron, campo);  
+                break;
         }
         return ok;
- 
-        
-        
-    
     }
+    
+    
+    
+    private boolean patternMmatcher(String patron,String cadena){
+       
+        final Pattern pattern = Pattern.compile(patron);
+        return pattern.matcher(cadena).matches();
+    }   
 }

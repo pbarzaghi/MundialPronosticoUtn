@@ -129,9 +129,9 @@ public class FileBd {
                 
                pronostico.setEquipo(equipo1Obj);
                
-                if(!(validador.validar(rs.getString("Ganado"), "PRONOSTICO")&&
-                     validador.validar(rs.getString("Empatado"), "PRONOSTICO")&&
-                     validador.validar(rs.getString("Perdido"), "PRONOSTICO")
+                if(!(validador.validar(rs.getString("ganado"), "PRONOSTICO")&&
+                     validador.validar(rs.getString("empatado"), "PRONOSTICO")&&
+                     validador.validar(rs.getString("perdido"), "PRONOSTICO")
                         ) )
                     throw  new  FormatoIncorrectoException(MsgProperty.getMensaje("error.pronosticoInvalido"));  
                 
