@@ -1,6 +1,6 @@
 # TABLA PRONOSTICO
-## prueba es el nombre de mi bd
-CREATE TABLE `prueba`.`pronostico` (
+## proyecto es el nombre de mi bd
+CREATE TABLE `proyecto`.`pronostico` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `Participante` VARCHAR(45) NULL,
   `equipo1` VARCHAR(45) NOT NULL,
@@ -11,7 +11,7 @@ CREATE TABLE `prueba`.`pronostico` (
   PRIMARY KEY (`id`));
 
 
-CREATE TABLE `prueba`.`puntos` (
+CREATE TABLE `proyecto`.`puntos` (
   `id` INT NOT NULL,
   `ptosGanar` INT NULL,
   `ptosEmpatar` INT NULL,
