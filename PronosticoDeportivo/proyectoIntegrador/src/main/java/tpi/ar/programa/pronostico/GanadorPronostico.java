@@ -26,12 +26,14 @@ import tpi.ar.programa.pronostico.participante.Participante;
  */
 public class GanadorPronostico {
   private Map tablaSumaDeFase;
+  private ArrayList<Fase> listaFaseConRondaPerdida;
     /*
      Este metodo returna los puntos de una participante segun su lista de Pronostico
     */
     public String puntajeParticipantePronostico(Participante participante ){
          int puntajeTotal=0;
          int puntajeAcierto=0;
+           int puntoExtraRonda=0; 
         
          
           List<Pronostico> pronosticos=participante.getPronosticos();
@@ -44,13 +46,13 @@ public class GanadorPronostico {
           // funcionalidad: separo la lista de pronostico en <ronda, list<Pronostico>> para chequear
           // que cada list<Pronostico> de una ronda acerto el participante y poder obtener
           // los puntos extras por ronda
-          int puntoExtraRonda=0; 
+        
           
           //----------------------------------------------------------------
           // 
           Map map = (Map) this.listPronosticoPorRonda(pronosticos);
            tablaSumaDeFase= new HashMap();
-          
+           listaFaseConRondaPerdida=new ArrayList<>();
           
            Iterator entries = map.entrySet().iterator();
          int nroRonda=0;
@@ -61,10 +63,12 @@ public class GanadorPronostico {
              
        
              if(this.isPronosticoDeUnaRonda(value)){
-                        puntoExtraRonda+=this.puntoExtraPorRonda(value.get(0));
-                        nroRonda++;
+                     puntoExtraRonda = value.get(0).getPuntosResultado().getPuntosRonda(); 
+                      nroRonda++;
                  this.sumarPuntosEnFase(key.getFase()); 
-                }
+              }else
+                   this.sacarFase(key.getFase());
+               
           }
           
           // fin de obtencion de los puntos extras y aciertos de Fase
@@ -87,20 +91,6 @@ public class GanadorPronostico {
     }
     
     
-    
-    /*
-     Este metodo devuelve el valor extra que se tiene por ganar el Pronostico una ronda
-    */
-    
-    public int puntoExtraPorRonda(Pronostico pronostico){
-      if( pronostico.getPartido().getRonda().esRondaGanada(pronostico.getEquipo()))
-            return pronostico.getPuntosResultado().getPuntosRonda();
-      return 0;
-    
-    }
-    
-    
-    
     /*
      Este metodo retorna un booleano si todos los pronosticos esta
     aceptados.
@@ -118,17 +108,17 @@ public class GanadorPronostico {
             Equipo equipo=partido.getEquipoGanador();
            
           
-                if(pronostico.getEquipo().equals(equipo)&&
-                    pronostico.getResultado().equals(partido.getResultado(equipo)) )
-                  okRonda=true;
-                else if (pronostico.getResultado().equals(partido.getResultado(equipo)) )
-                   okRonda=true;
+           // Si el equipo Ganador es null --> resultado partido dio Empate
+            if(equipo==null) // El partido fue un empate tenemos que analizar el pronostico
+              okRonda= ResultadoEmun.EMPATE.equals(pronostico.getResultado());            
+            
+            else
+                // Si el equipo que elegi es el mismo que gano el partido
+                if(equipo.equals(pronostico.getEquipo()))
+                   okRonda= pronostico.getResultado().equals(partido.getResultado(equipo));
                 else
-                   if (ResultadoEmun.EMPATE.equals(pronostico.getResultado()) && equipo == null)
-                      okRonda=true;
-                   else 
-                    return false;     
-         
+                    okRonda=( pronostico.getResultado().equals(partido.getResultado(pronostico.getEquipo())));
+          
         }
         return okRonda;
     
@@ -216,19 +206,7 @@ public class GanadorPronostico {
     
       }
    
-       
-    private void sumarPuntosEnFase(Fase fase) {
-      
-         if(this.tablaSumaDeFase.containsKey(fase.getNro())){
-             int aux= ((Integer)tablaSumaDeFase.remove(fase.getNro())).intValue()+1;
-             tablaSumaDeFase.put(fase.getNro(),new Integer(aux));
-         }else{
-                 tablaSumaDeFase.put(fase.getNro(),new Integer(1));
-         }
-       
-    }   
-         
-         
+        
          private int cantidaDeAciertoFase(Map tabla){
              int cantidadFase=0;
             
@@ -246,7 +224,32 @@ public class GanadorPronostico {
              return cantidadFase;
          
          }
-    
+
+         
+     private void sumarPuntosEnFase(Fase fase) {
+      
+          // Si la face se NO se encuentra en la ListaDeFasePerdida entonces la agrego en la tabla de fase
+         if(! listaFaseConRondaPerdida.contains(fase)){  // 
+                if(this.tablaSumaDeFase.containsKey(fase.getNro())){
+                 int aux= ((Integer)tablaSumaDeFase.remove(fase.getNro())).intValue()+1;
+                 tablaSumaDeFase.put(fase.getNro(),new Integer(aux));
+             }else{
+                     tablaSumaDeFase.put(fase.getNro(),new Integer(1));
+             }
+         }
+       
+    }   
+              
+         
+         
+    private void sacarFase(Fase fase) {
+       // if(this.tablaSumaDeFase.containsKey(fase.getNro()))
+          tablaSumaDeFase.remove(fase);
+          listaFaseConRondaPerdida.add(fase);
+                  
+    }  
+        
+       
     }
      
     

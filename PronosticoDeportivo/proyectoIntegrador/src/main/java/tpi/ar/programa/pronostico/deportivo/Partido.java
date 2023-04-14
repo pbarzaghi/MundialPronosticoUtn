@@ -50,7 +50,7 @@ public class Partido {
         
         if(equipo == null)
             return ResultadoEmun.EMPATE;
-        if(equipo.getId()== this.equipo1.getId())
+        if(equipo.getNombre().equals(this.equipo1.getNombre()))
                  return getResultadoPorGoles(this.golesEquipo1,golesEquipo2);
           else       
                return getResultadoPorGoles(this.golesEquipo2,golesEquipo1);
