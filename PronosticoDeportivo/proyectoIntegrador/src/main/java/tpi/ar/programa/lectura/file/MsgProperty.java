@@ -35,22 +35,22 @@ public class MsgProperty {
    
     public static String getMensaje(String codigo) throws FileIntegradorException{
        
-      String msg="No hay ningun mensaje de Error cargado en el archivo error.properties";
-      String salida;
+      String msgNoCargolaProperties="No hay ningun mensaje de Error cargado en el archivo error.properties";
+      String salidaMsjCargado;
       try{
         
         if(instancia==null)
             instancia=new MsgProperty();
         
-            salida= MsgProperty.properties.getProperty(codigo);
+            salidaMsjCargado= MsgProperty.properties.getProperty(codigo);
            
-            if (salida == null)
-                return msg;
+            if (salidaMsjCargado == null)
+                return msgNoCargolaProperties;
           
         } catch (IOException ex) {
             throw new FileIntegradorException("Error no se puede cargar el Archivo properties con la configuracion ");
         }
-        return salida ;
+        return salidaMsjCargado ;
     }
     
     
@@ -61,12 +61,12 @@ public class MsgProperty {
             String PROPERTIES_ERROR= "error.properties";
             String PROPERTIES_JDBC = "jdbc.properties"; 
             String PROPERTIES_CONFIG= "configuracion.properties";
-            String PROPERTIES_MSG= "msg.properties";
+            
             properties= new Properties();
             properties.load(new FileInputStream(pathProperties+PROPERTIES_ERROR));
             properties.load(new FileInputStream(pathProperties+PROPERTIES_CONFIG));
             properties.load(new FileInputStream(pathProperties+PROPERTIES_JDBC));
-            properties.load(new FileInputStream(pathProperties+PROPERTIES_MSG));    
+         
     
     }
     
