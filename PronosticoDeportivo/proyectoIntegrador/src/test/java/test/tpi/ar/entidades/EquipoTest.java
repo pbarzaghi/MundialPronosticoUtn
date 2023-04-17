@@ -2,11 +2,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package test.pronostico.deportivo;
+package test.tpi.ar.entidades;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import tpi.ar.programa.pronostico.deportivo.Equipo;
+import tpi.ar.programa.entidades.Equipo;
 
 /**
  *

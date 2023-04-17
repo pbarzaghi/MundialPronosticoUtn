@@ -2,11 +2,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package tpi.ar.programa.pronostico.participante;
+package tpi.ar.programa.entidades;
 
 import java.util.ArrayList;
 import java.util.List;
-import tpi.ar.programa.pronostico.Pronostico;
 
 /**
  *

@@ -1,6 +1,6 @@
-package test.participante;
+package test.tpi.ar.entidades;
 
-import tpi.ar.programa.pronostico.participante.Persona;
+import tpi.ar.programa.entidades.Persona;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license

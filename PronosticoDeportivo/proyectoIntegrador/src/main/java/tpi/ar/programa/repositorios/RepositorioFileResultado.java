@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package tpi.ar.programa.lectura.file;
+package tpi.ar.programa.repositorios;
 
 import java.util.HashMap;
 import java.util.List;
@@ -10,11 +10,12 @@ import tpi.ar.programa.conexion.Conexion;
 import tpi.ar.programa.conexion.ConexionFileCsv;
 import tpi.ar.programa.exception.FileIntegradorException;
 import tpi.ar.programa.exception.FormatoIncorrectoException;
-import tpi.ar.programa.pronostico.PuntosResultado;
-import tpi.ar.programa.pronostico.deportivo.Equipo;
-import tpi.ar.programa.pronostico.deportivo.Fase;
-import tpi.ar.programa.pronostico.deportivo.Partido;
-import tpi.ar.programa.pronostico.deportivo.Ronda;
+import tpi.ar.programa.enumerado.PuntosResultado;
+import tpi.ar.programa.entidades.Equipo;
+import tpi.ar.programa.entidades.Fase;
+import tpi.ar.programa.entidades.Partido;
+import tpi.ar.programa.entidades.Ronda;
+import resources.MsgProperty;
 
 import tpi.ar.programa.validador.ValidadorCampo;
 
@@ -22,11 +23,11 @@ import tpi.ar.programa.validador.ValidadorCampo;
  *
  * @author pbaraghi
  */
-public class FileCsv {
+public class RepositorioFileResultado {
     private  HashMap objCreacion;
     private  ValidadorCampo validador;
     
-     public FileCsv(){
+     public RepositorioFileResultado(){
       
       if(objCreacion == null)
          objCreacion=new HashMap();
@@ -38,7 +39,7 @@ public class FileCsv {
    //-------------------------------------------------------------
    // Levantar el archivo  Resultado
    //----------------------------------------
-     public  void leerArchivoResultado() throws FileIntegradorException {
+     public  void getResultadoPartidos() throws FileIntegradorException {
          
          // Path pathResultados= Paths.get(path);
               List<String> listaResultado=null;
@@ -135,7 +136,7 @@ public class FileCsv {
         
     }
      
-     public HashMap obtenerTablaPartidos(){
+     public HashMap getResultadosTablaPartidos(){
        return objCreacion;
      }
 }

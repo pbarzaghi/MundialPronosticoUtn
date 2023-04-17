@@ -2,13 +2,13 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package tpi.ar.programa.lectura.file;
+package tpi.ar.programa.repositorios;
 
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
+
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -18,73 +18,33 @@ import java.util.List;
 import tpi.ar.programa.conexion.Conexion;
 import tpi.ar.programa.conexion.ConexionBd;
 import tpi.ar.programa.enumerado.ResultadoEmun;
-import tpi.ar.programa.exception.FileIntegradorException;
-import tpi.ar.programa.exception.FormatoIncorrectoException;
-import tpi.ar.programa.exception.GolesNegativoException;
-import tpi.ar.programa.pronostico.Pronostico;
 
-import tpi.ar.programa.pronostico.PuntosResultado;
-import tpi.ar.programa.pronostico.deportivo.Equipo;
-import tpi.ar.programa.pronostico.deportivo.Partido;
-import tpi.ar.programa.pronostico.participante.Participante;
+import tpi.ar.programa.exception.FormatoIncorrectoException;
+
+import tpi.ar.programa.entidades.Pronostico;
+
+import tpi.ar.programa.enumerado.PuntosResultado;
+import tpi.ar.programa.entidades.Equipo;
+import tpi.ar.programa.entidades.Partido;
+import tpi.ar.programa.entidades.Participante;
+import resources.MsgProperty;
 import tpi.ar.programa.validador.ValidadorCampo;
 
 /**
  *
  * @author pbarzaghi
  */
-public class FileBd {
+public class RepositorioBdPronostico {
     
   
-   
-    
-    public  PuntosResultado leerArchivoPuntos() throws FileIntegradorException {
-       
-     
-        
-            PreparedStatement stmt = null;
-            ResultSet rs = null;
-            Connection conn = null;
-            Conexion conexion= new ConexionBd();
-            PuntosResultado puntos=null;
-            String qry="Select * from puntos";
-        try{
-            conn = (Connection) conexion.abrirConexion();
-            stmt = conn.prepareStatement(qry);
-            rs = stmt.executeQuery(qry);
-            // Procesa los resultados
-            if (rs.next()) {
-                puntos= new PuntosResultado();
-                puntos.setPuntoGanar(rs.getInt("ptosGanar"));
-                puntos.setPuntoEmpatar(rs.getInt("ptosEmpatar"));  
-                puntos.setPuntoPerder(rs.getInt("ptosPerder"));
-                puntos.setPuntoAcierto(rs.getInt("ptosAcertar"));
-                puntos.setPuntosRonda(rs.getInt("ptosRonda"));
-                puntos.setPuntosFase(rs.getInt("ptosFase"));
-            }
-         
-            conexion.cerrarConexion();
-             
-        } catch (SQLException ex) {
-            throw new FileIntegradorException(MsgProperty.getMensaje("error.sentenciaSql"));
-        }
-     return puntos;
-
-    }
-    
-    
-     /*
-      Este metodo lee dado el path del archivo los pronosticos y retorna una lista de Participante con
-     los pronostico realizado
-    cargados desde el archivo
-    */    
+  
     
      /*
       Este metodo lee dado el path del archivo los pronosticos y retorna una lista de Participante con
      los pronostico realizado
     cargados desde el archivo
     */
-    public List<Participante> leerArchivoPronostico(HashMap object) throws  Exception{
+    public List<Participante> getParticipantesConPronostico(HashMap object) throws  Exception{
              ValidadorCampo validador= new ValidadorCampo();
             HashMap objCreacion=( HashMap)object;
             List<Participante> listaParticipante =new ArrayList();

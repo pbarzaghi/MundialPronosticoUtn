@@ -2,17 +2,13 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  */
 
-package com.mycompany.proyectointegrador;
-
-
-import java.util.List;
+package tpi.ar.programa.proyectointegrador;
 
 import tpi.ar.programa.exception.FileIntegradorException;
-
 import tpi.ar.programa.exception.GolesNegativoException;
-import tpi.ar.programa.lectura.file.ServicesFileCsvBd;
-import tpi.ar.programa.pronostico.GanadorPronostico;
-import tpi.ar.programa.pronostico.participante.Participante;
+import tpi.ar.programa.services.ServicesParticipante;
+import tpi.ar.programa.model.ParticipanteModel;
+import tpi.ar.programa.entidades.Participante;
 
 
 /**
@@ -41,10 +37,10 @@ public class ProyectoIntegrador {
     }
     
     private static void imprimirEtapa3() throws FileIntegradorException,GolesNegativoException{
-      ServicesFileCsvBd services = new ServicesFileCsvBd();
-          GanadorPronostico ganador= new GanadorPronostico();
-              for (Participante participante : services.obtenerListaParticipante()) {
-                System.out.println(ganador.puntajeParticipantePronostico(participante));   
+      ServicesParticipante servicesParticipante = new ServicesParticipante();
+          ParticipanteModel participanteGanador= new ParticipanteModel();
+              for (Participante participante : servicesParticipante.getListaParticipante()) {
+                System.out.println(participanteGanador.puntajeTotalDelParticipante(participante));   
             }
        
     

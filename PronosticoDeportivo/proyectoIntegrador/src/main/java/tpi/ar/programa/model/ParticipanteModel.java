@@ -2,35 +2,36 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package tpi.ar.programa.pronostico;
+package tpi.ar.programa.model;
 
 
 
+import tpi.ar.programa.entidades.Pronostico;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import tpi.ar.programa.enumerado.ResultadoEmun;
-import tpi.ar.programa.pronostico.deportivo.Equipo;
-import tpi.ar.programa.pronostico.deportivo.Fase;
-import tpi.ar.programa.pronostico.deportivo.Partido;
-import tpi.ar.programa.pronostico.deportivo.Ronda;
+import tpi.ar.programa.entidades.Equipo;
+import tpi.ar.programa.entidades.Fase;
+import tpi.ar.programa.entidades.Partido;
+import tpi.ar.programa.entidades.Ronda;
 
-import tpi.ar.programa.pronostico.participante.Participante;
+import tpi.ar.programa.entidades.Participante;
 
 
 /**
  *
  * @author pbarzaghi
  */
-public class GanadorPronostico {
+public class ParticipanteModel {
   private Map tablaSumaDeFase;
   private ArrayList<Fase> listaFaseConRondaPerdida;
     /*
      Este metodo returna los puntos de una participante segun su lista de Pronostico
     */
-    public String puntajeParticipantePronostico(Participante participante ){
+    public String puntajeTotalDelParticipante(Participante participante ){
          int puntajeTotal=0;
          int puntajeAcierto=0;
            int puntoExtraRonda=0; 

@@ -10,11 +10,8 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Properties;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import tpi.ar.programa.exception.FileIntegradorException;
-import tpi.ar.programa.lectura.file.MsgProperty;
+import resources.MsgProperty;
 
 /**
  *
@@ -24,15 +21,15 @@ public class ConexionBd implements Conexion{
 
      public PreparedStatement stmt = null;
      public ResultSet rs = null;
-     private Connection conn = null;
+     private static Connection conn = null;
    
      @Override
     public void cerrarConexion() throws FileIntegradorException{
       
         try {
-               if (rs != null) rs.close();
-               if (stmt != null) stmt.close();
-               if (conn != null) this.conn.close();
+               if ( rs != null && !rs.isClosed()) {rs.close();rs=null;}
+               if (stmt != null && !stmt.isClosed()) {stmt.close(); stmt=null;}
+               if (conn != null && !conn.isClosed()){ this.conn.close(); conn=null;}
            } catch (SQLException ex) {
                   throw new FileIntegradorException(MsgProperty.getMensaje("error.sentenciaSql"));
            }
@@ -47,6 +44,7 @@ public class ConexionBd implements Conexion{
              user =MsgProperty.getMensaje("jdbc.user");
              pass =MsgProperty.getMensaje("jdbc.pass");
              Class.forName(MsgProperty.getMensaje("jdbc.driver"));
+             if (conn != null && !conn.isClosed()){ this.conn.close(); conn=null;}
              conn= DriverManager.getConnection(url, user, pass);
             
          } catch (FileIntegradorException ex) {

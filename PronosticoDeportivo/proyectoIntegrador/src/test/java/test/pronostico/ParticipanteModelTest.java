@@ -12,18 +12,18 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import tpi.ar.programa.enumerado.ResultadoEmun;
-import tpi.ar.programa.pronostico.GanadorPronostico;
-import tpi.ar.programa.pronostico.Pronostico;
-import tpi.ar.programa.pronostico.PuntosResultado;
-import tpi.ar.programa.pronostico.deportivo.Equipo;
-import tpi.ar.programa.pronostico.deportivo.Partido;
-import tpi.ar.programa.pronostico.deportivo.Ronda;
+import tpi.ar.programa.model.ParticipanteModel;
+import tpi.ar.programa.entidades.Pronostico;
+import tpi.ar.programa.enumerado.PuntosResultado;
+import tpi.ar.programa.entidades.Equipo;
+import tpi.ar.programa.entidades.Partido;
+import tpi.ar.programa.entidades.Ronda;
 
 /**
  *
  * @author pbarzaghi
  */
-public class GanadorPronosticoTest {
+public class ParticipanteModelTest {
      private Equipo equipo1;
     private Equipo equipo2;
     private Equipo equipo3;
@@ -122,7 +122,7 @@ public class GanadorPronosticoTest {
       pronostico2.setResultado(resultadoPronostico.GANADOR);
       pronostico2.setEquipo(equipo1);
 
-      GanadorPronostico ganador= new GanadorPronostico();
+      ParticipanteModel ganador= new ParticipanteModel();
       
       
      List<Pronostico> pronosticos = new ArrayList<Pronostico> ();
@@ -194,7 +194,7 @@ public class GanadorPronosticoTest {
       pronostico4.setEquipo(equipo4);
 
       
-      GanadorPronostico ganador= new GanadorPronostico();
+      ParticipanteModel ganador= new ParticipanteModel();
       
       
      ArrayList<Pronostico>  pronosticosAux = new ArrayList<Pronostico> ();
