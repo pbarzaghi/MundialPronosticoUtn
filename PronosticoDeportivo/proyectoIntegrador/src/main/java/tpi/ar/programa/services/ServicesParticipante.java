@@ -33,12 +33,14 @@ public class ServicesParticipante {
            RepositorioBdPunto repositorioPunto=new RepositorioBdPunto(); 
            PuntosResultado tablaDePuntos=repositorioPunto.getTablaDePuntos();
             
-            // SETEO LOS PUNTOS EN LA CLASE FILE PARA CUANDO CARGUE LOS RESULTADOS AGREGAR LOS PUNTOS
+          
             RepositorioFileResultado resultadoPartidos= new RepositorioFileResultado();
+          // Seteo los TablaPuntos para que se carguen en los resultados de los partidos
             resultadoPartidos.setearPuntosResultado(tablaDePuntos);
             resultadoPartidos.getResultadoPartidos();
             
             RepositorioBdPronostico repositorioPronostico=new RepositorioBdPronostico();  
+            // obtengo la tabla de resultados obtenida de metodo getResultadoPartidos
             participantes= repositorioPronostico.getParticipantesConPronostico(resultadoPartidos.getResultadosTablaPartidos());
           
         } catch (RuntimeException ex) {

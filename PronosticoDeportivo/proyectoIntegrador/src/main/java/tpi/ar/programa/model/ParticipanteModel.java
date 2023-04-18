@@ -39,6 +39,7 @@ public class ParticipanteModel {
          
           List<Pronostico> pronosticos=participante.getPronosticos();
           int cantidadPronosticos=pronosticos.size();
+          
           puntajeTotal= pronosticos.stream().mapToInt(p -> p.getPuntos()).sum();
           puntajeAcierto=pronosticos.stream().mapToInt(p -> 
                 p.getResultado().equals(p.getPartido().getResultado(p.getEquipo()))
@@ -51,24 +52,24 @@ public class ParticipanteModel {
           
           //----------------------------------------------------------------
           // 
-          Map map = (Map) this.listPronosticoPorRonda(pronosticos);
+          Map mapPronosticoRonda = (Map) this.listPronosticoPorRonda(pronosticos);
            tablaSumaDeFase= new HashMap();
            listaFaseConRondaPerdida=new ArrayList<>();
           
-           Iterator entries = map.entrySet().iterator();
-         int nroRonda=0;
+          int nroRonda=0;
+          Iterator entries = mapPronosticoRonda.entrySet().iterator();
            while (entries.hasNext()) {
                 Map.Entry entry = (Map.Entry) entries.next();
-                Ronda key = (Ronda)entry.getKey();
-                List<Pronostico> value = (List<Pronostico>)entry.getValue(); 
+                Ronda keyRonda = (Ronda)entry.getKey();
+                List<Pronostico> valuePronosticos = (List<Pronostico>)entry.getValue(); 
              
        
-             if(this.isPronosticoDeUnaRonda(value)){
-                     puntoExtraRonda = value.get(0).getPuntosResultado().getPuntosRonda(); 
+             if(this.isPronosticoDeUnaRonda(valuePronosticos)){
+                     puntoExtraRonda = valuePronosticos.get(0).getPuntosResultado().getPuntosRonda(); 
                       nroRonda++;
-                 this.sumarPuntosEnFase(key.getFase()); 
+                 this.sumarPuntosEnFase(keyRonda.getFase()); 
               }else
-                   this.sacarFase(key.getFase());
+                   this.sacarFase(keyRonda.getFase());
                
           }
           

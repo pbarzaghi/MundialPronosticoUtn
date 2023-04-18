@@ -79,7 +79,8 @@ public class RepositorioBdPronostico {
                  
                  if(equipo2Obj == null)
                           throw  new FormatoIncorrectoException(MsgProperty.getMensaje("error.noExisteEquipo"));
-                Partido partido= (Partido)  objCreacion.get(Partido.class+ equipo1Obj.getNombre()+"_"+equipo2Obj.getNombre() );
+               
+                 Partido partido= (Partido)  objCreacion.get(Partido.class+ equipo1Obj.getNombre()+"_"+equipo2Obj.getNombre() );
             
                if(partido== null)
                   partido= (Partido)  objCreacion.get(Partido.class+equipo2Obj.getNombre()+ "_"+

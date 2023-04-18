@@ -65,7 +65,7 @@ public class RepositorioFileResultado {
                       if(equipo1 == null){
                           if(!validador.validar(campo[1],"EQUIPO")){
                            throw  new FormatoIncorrectoException(MsgProperty.getMensaje("error.equipoMayuscula"));
-                   }
+                        }
                          equipo1= new Equipo(campo[1], "SELECCIONADO");
                          equipo1.setId(idEquipo);
                          objCreacion.put(Equipo.class+campo[1], equipo1);

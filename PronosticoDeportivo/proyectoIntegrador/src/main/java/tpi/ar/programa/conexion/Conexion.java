@@ -13,7 +13,7 @@ import tpi.ar.programa.exception.FileIntegradorException;
 public interface Conexion {
     public void setConection(Object obj);
     public Object abrirConexion() throws FileIntegradorException;
-     public void  cerrarConexion() throws FileIntegradorException;
+    public void  cerrarConexion() throws FileIntegradorException;
     
     
 }

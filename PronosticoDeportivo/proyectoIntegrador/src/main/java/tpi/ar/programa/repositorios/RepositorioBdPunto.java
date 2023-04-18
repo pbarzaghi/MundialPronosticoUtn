@@ -19,9 +19,10 @@ import tpi.ar.programa.enumerado.PuntosResultado;
  * @author pbarzaghi
  */
 public class RepositorioBdPunto {
+    
+    
+    
       public  PuntosResultado getTablaDePuntos() throws FileIntegradorException {
-       
-     
         
             PreparedStatement stmt = null;
             ResultSet rs = null;

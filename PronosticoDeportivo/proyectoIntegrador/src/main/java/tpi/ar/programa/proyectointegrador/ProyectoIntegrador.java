@@ -37,9 +37,13 @@ public class ProyectoIntegrador {
     }
     
     private static void imprimirEtapa3() throws FileIntegradorException,GolesNegativoException{
-      ServicesParticipante servicesParticipante = new ServicesParticipante();
+     
+          ServicesParticipante servicesParticipante = new ServicesParticipante();
+         
           ParticipanteModel participanteGanador= new ParticipanteModel();
+          
               for (Participante participante : servicesParticipante.getListaParticipante()) {
+                  
                 System.out.println(participanteGanador.puntajeTotalDelParticipante(participante));   
             }
        
