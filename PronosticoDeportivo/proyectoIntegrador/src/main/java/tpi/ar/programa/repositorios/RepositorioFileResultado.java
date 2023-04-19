@@ -39,7 +39,7 @@ public class RepositorioFileResultado {
    //-------------------------------------------------------------
    // Levantar el archivo  Resultado
    //----------------------------------------
-     public  void getResultadoPartidos() throws FileIntegradorException {
+     public HashMap getResultadoPartidos() throws FileIntegradorException {
          
          // Path pathResultados= Paths.get(path);
               List<String> listaResultado=null;
@@ -127,7 +127,7 @@ public class RepositorioFileResultado {
                         ronda.setFase(fase);
                   }
              }
-      
+      return objCreacion;
          }
 
    
@@ -136,7 +136,5 @@ public class RepositorioFileResultado {
         
     }
      
-     public HashMap getResultadosTablaPartidos(){
-       return objCreacion;
-     }
+   
 }

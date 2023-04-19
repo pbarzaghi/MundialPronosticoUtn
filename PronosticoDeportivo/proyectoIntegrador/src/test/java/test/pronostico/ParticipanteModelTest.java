@@ -96,7 +96,7 @@ public class ParticipanteModelTest {
     }
     
     
-   
+   @Test
     public void puntosXGanarRonda(){
      //ARGENTINA - BRAZIL
         partido1.setGolesEquipo1(3);

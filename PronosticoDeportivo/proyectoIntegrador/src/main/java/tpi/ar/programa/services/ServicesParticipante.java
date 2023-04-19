@@ -8,7 +8,9 @@ package tpi.ar.programa.services;
 import tpi.ar.programa.repositorios.RepositorioFileResultado;
 import tpi.ar.programa.repositorios.RepositorioBdPronostico;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import tpi.ar.programa.exception.FileIntegradorException;
 import tpi.ar.programa.exception.GolesNegativoException;
 import tpi.ar.programa.enumerado.PuntosResultado;
@@ -37,11 +39,12 @@ public class ServicesParticipante {
             RepositorioFileResultado resultadoPartidos= new RepositorioFileResultado();
           // Seteo los TablaPuntos para que se carguen en los resultados de los partidos
             resultadoPartidos.setearPuntosResultado(tablaDePuntos);
-            resultadoPartidos.getResultadoPartidos();
+            HashMap tablaResultadoPartido=resultadoPartidos.getResultadoPartidos();
             
             RepositorioBdPronostico repositorioPronostico=new RepositorioBdPronostico();  
             // obtengo la tabla de resultados obtenida de metodo getResultadoPartidos
-            participantes= repositorioPronostico.getParticipantesConPronostico(resultadoPartidos.getResultadosTablaPartidos());
+            participantes= repositorioPronostico.getParticipantesConPronostico(tablaResultadoPartido);
+           
           
         } catch (RuntimeException ex) {
             
