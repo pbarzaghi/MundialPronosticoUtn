@@ -10,7 +10,6 @@ import tpi.ar.programa.repositorios.RepositorioBdPronostico;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import tpi.ar.programa.exception.FileIntegradorException;
 import tpi.ar.programa.exception.GolesNegativoException;
 import tpi.ar.programa.enumerado.PuntosResultado;
