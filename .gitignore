@@ -1,0 +1,8 @@
+# Ignorar la carpeta target
+target/
+
+# Ignorar las configuraciones de Netbeans
+nbproject/private/
+build/
+nbbuild/
+dist/
