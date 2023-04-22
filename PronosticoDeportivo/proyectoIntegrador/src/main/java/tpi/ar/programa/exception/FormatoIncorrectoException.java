@@ -10,14 +10,10 @@ package tpi.ar.programa.exception;
  */
 public class FormatoIncorrectoException  extends RuntimeException{
     
-       private String mensajeError;
+      
 
      public FormatoIncorrectoException(String msgError){
-        mensajeError=msgError;
-     }   
-
-    @Override
-    public String getMessage() {
-      return this.mensajeError;   
+           super(msgError);
     }
-}
+}   
+
