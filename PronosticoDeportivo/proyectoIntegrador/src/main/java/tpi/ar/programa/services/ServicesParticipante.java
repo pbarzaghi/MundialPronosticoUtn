@@ -29,7 +29,7 @@ public class ServicesParticipante {
           List<Participante> participantes;
         
         try {
-                // CARGO LOS PUNTOS DE LA BD
+               
           
             ClaseUtil.inizializar();
            // Cargo los punto de la BD y dejo los objetos en la HashMap de ClaseUtil     
