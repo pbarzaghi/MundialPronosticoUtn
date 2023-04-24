@@ -16,15 +16,17 @@ public class ClaseUtil {
     
     private static Map tablaObjetosIntegrador;
     
-    public ClaseUtil(){
-      tablaObjetosIntegrador= new HashMap();
-    } 
+   
     
+    public static void inizializar(){
+       tablaObjetosIntegrador= new HashMap();
+
+    }
     
     public static Object obtenerObjeto(String clave){
       
          if(tablaObjetosIntegrador==null)
-             new ClaseUtil();
+             inizializar();
         return tablaObjetosIntegrador.get(clave);
         
     }
@@ -32,7 +34,7 @@ public class ClaseUtil {
     public static Object eliminarObjeto(String clave){
       
          if(tablaObjetosIntegrador==null)
-             new ClaseUtil();
+            inizializar();
         return tablaObjetosIntegrador.remove(clave);
         
     }
@@ -40,7 +42,7 @@ public class ClaseUtil {
      public static Object remplazarObjeto(String clave,Object objeto){
       
          if(tablaObjetosIntegrador==null)
-             new ClaseUtil();
+            inizializar();
         return tablaObjetosIntegrador.replace(clave,objeto);
         
     }
@@ -48,7 +50,7 @@ public class ClaseUtil {
       public static Object agregarObjeto(String clave,Object objeto){
       
          if(tablaObjetosIntegrador==null)
-             new ClaseUtil();
+            inizializar();
         return tablaObjetosIntegrador.put(clave,objeto);
         
     }
@@ -57,10 +59,13 @@ public class ClaseUtil {
       public static Map obtenerTabla(){
       
          if(tablaObjetosIntegrador==null)
-             new ClaseUtil();
+            inizializar();
         return tablaObjetosIntegrador;
         
     }
      
-    
+     public static void cerrar(){
+        if(tablaObjetosIntegrador!=null)
+              tablaObjetosIntegrador.clear();
+     } 
 }

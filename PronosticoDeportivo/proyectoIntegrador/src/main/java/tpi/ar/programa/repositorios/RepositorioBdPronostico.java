@@ -132,6 +132,7 @@ public class RepositorioBdPronostico {
                  
               }
         conexion.cerrarConexion();
+       
         return listaParticipante;  
     }     
     

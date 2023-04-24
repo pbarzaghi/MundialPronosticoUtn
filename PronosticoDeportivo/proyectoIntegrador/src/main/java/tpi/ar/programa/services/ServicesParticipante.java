@@ -14,6 +14,7 @@ import tpi.ar.programa.exception.GolesNegativoException;
 import tpi.ar.programa.entidades.PuntosResultado;
 import tpi.ar.programa.entidades.Participante;
 import tpi.ar.programa.repositorios.RepositorioBdPunto;
+import tpi.ar.programa.util.ClaseUtil;
 
 /**
  *
@@ -30,15 +31,20 @@ public class ServicesParticipante {
         try {
                 // CARGO LOS PUNTOS DE LA BD
           
+            ClaseUtil.inizializar();
+                
            RepositorioBdPunto repositorioPunto=new RepositorioBdPunto(); 
            repositorioPunto.mapearPtosDeTablaPunto();
             
-           
+           // CARGO LOS RESULTADOS DE LA BD
             RepositorioFileResultado resultadoPartidos= new RepositorioFileResultado();
             resultadoPartidos.mapearPartidosDeTablaResultado();
-            
+           
+            // CARGO LOS PRONOSTICOS DEL ARCHIVOD
             RepositorioBdPronostico repositorioPronostico=new RepositorioBdPronostico();  
             participantes= repositorioPronostico.getParticipantesConPronostico();
+            
+            ClaseUtil.cerrar();
           
         } catch (RuntimeException ex) {
             
