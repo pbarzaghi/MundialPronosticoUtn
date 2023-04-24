@@ -11,7 +11,7 @@ CREATE TABLE `proyecto`.`pronostico` (
   PRIMARY KEY (`id`));
 
 
-CREATE TABLE `proyecto`.`puntos` (
+CREATE TABLE `proyecto`.`punto` (
   `id` INT NOT NULL,
   `ptosGanar` INT NULL,
   `ptosEmpatar` INT NULL,

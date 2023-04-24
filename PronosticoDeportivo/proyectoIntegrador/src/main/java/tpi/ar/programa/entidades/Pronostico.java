@@ -17,7 +17,7 @@ public class Pronostico {
     private Partido partido;
     private Equipo equipo;
     private ResultadoEmun resultado;
-    private PuntosResultado puntosResultado;
+    private Punto puntosResultado;
    
     
    
@@ -92,14 +92,14 @@ public class Pronostico {
     /**
      * @return the puntosResultado
      */
-    public PuntosResultado getPuntosResultado() {
+    public Punto getPuntosResultado() {
         return puntosResultado;
     }
 
     /**
      * @param puntosResultado the puntosResultado to set
      */
-    public void setPuntosResultado(PuntosResultado puntosResultado) {
+    public void setPuntosResultado(Punto puntosResultado) {
         this.puntosResultado = puntosResultado;
     }
 

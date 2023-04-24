@@ -14,7 +14,7 @@ import org.junit.jupiter.api.Test;
 import tpi.ar.programa.enumerado.ResultadoEmun;
 import tpi.ar.programa.model.ParticipanteModel;
 import tpi.ar.programa.entidades.Pronostico;
-import tpi.ar.programa.entidades.PuntosResultado;
+import tpi.ar.programa.entidades.Punto;
 import tpi.ar.programa.entidades.Equipo;
 import tpi.ar.programa.entidades.Partido;
 import tpi.ar.programa.entidades.Ronda;
@@ -38,7 +38,7 @@ public class ParticipanteModelTest {
     private Ronda ronda1;
    
      private ResultadoEmun resultadoPronostico;
-    private PuntosResultado puntos;
+    private Punto puntos;
     private Pronostico pronostico1;
     
     @BeforeEach
@@ -78,7 +78,7 @@ public class ParticipanteModelTest {
          ronda1=new Ronda();
          ronda1.setNro(1);
          
-          puntos= new PuntosResultado();
+          puntos= new Punto();
          puntos.setPuntoAcierto(1);
          puntos.setPuntosRonda(2);
          

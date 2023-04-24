@@ -23,7 +23,7 @@ public class Partido {
    private int golesEquipo1;
    private int golesEquipo2;
    private Ronda ronda;
-   private PuntosResultado puntos;
+   private Punto puntos;
 
    
 

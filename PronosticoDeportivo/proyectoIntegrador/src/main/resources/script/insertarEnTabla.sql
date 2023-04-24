@@ -1,6 +1,7 @@
 
-// INSERTAR PUNTOS
-INSERT INTO `proyecto`.`puntos` (`id`, `ptosGanar`, `ptosEmpatar`, `ptosPerder`, `ptosAcertar`, `ptosRonda`, `ptosFase`) VALUES ('1', '3', '1', '0', '2', '3', '4');
+// INSERTAR PUNTO
+// proyecto es el nombre de la bd
+INSERT INTO `proyecto`.`punto` (`id`, `ptosGanar`, `ptosEmpatar`, `ptosPerder`, `ptosAcertar`, `ptosRonda`, `ptosFase`) VALUES ('1', '3', '1', '0', '2', '3', '4');
 
 
 INSERTAR PRONOSTICOS

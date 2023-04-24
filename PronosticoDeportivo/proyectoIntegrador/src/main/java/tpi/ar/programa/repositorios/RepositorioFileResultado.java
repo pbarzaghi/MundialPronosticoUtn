@@ -10,7 +10,7 @@ import tpi.ar.programa.conexion.Conexion;
 import tpi.ar.programa.conexion.ConexionFileCsv;
 import tpi.ar.programa.exception.FileIntegradorException;
 import tpi.ar.programa.exception.FormatoIncorrectoException;
-import tpi.ar.programa.entidades.PuntosResultado;
+import tpi.ar.programa.entidades.Punto;
 import tpi.ar.programa.entidades.Equipo;
 import tpi.ar.programa.entidades.Fase;
 import tpi.ar.programa.entidades.Partido;
@@ -40,7 +40,7 @@ public class RepositorioFileResultado {
      */
   
      
-     public  void mapearPartidosDeTablaResultado() throws FileIntegradorException {
+     public  void obtenerPartidosDeTablaResultado() throws FileIntegradorException {
          
          // Path pathResultados= Paths.get(path);
               List<String> listaResultado=null;
@@ -98,7 +98,7 @@ public class RepositorioFileResultado {
                        }
                         partido.setGolesEquipo1(Integer.parseInt(campo[2]));
                         partido.setGolesEquipo2(Integer.parseInt(campo[3]));
-                        partido.setPuntos((PuntosResultado) ClaseUtil.obtenerObjeto("PuntosResultado.class"));
+                        partido.setPuntos((Punto) ClaseUtil.obtenerObjeto(Punto.class.toString()));
                         ClaseUtil.agregarObjeto(Partido.class+equipo1.getNombre()+"_"+equipo2.getNombre(), partido);
                            idPartido++;
                         }

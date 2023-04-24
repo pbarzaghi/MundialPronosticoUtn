@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.util.List;
 import tpi.ar.programa.exception.FileIntegradorException;
 import tpi.ar.programa.exception.GolesNegativoException;
-import tpi.ar.programa.entidades.PuntosResultado;
+import tpi.ar.programa.entidades.Punto;
 import tpi.ar.programa.entidades.Participante;
 import tpi.ar.programa.repositorios.RepositorioBdPunto;
 import tpi.ar.programa.util.ClaseUtil;
@@ -32,17 +32,17 @@ public class ServicesParticipante {
                 // CARGO LOS PUNTOS DE LA BD
           
             ClaseUtil.inizializar();
-                
+           // Cargo los punto de la BD y dejo los objetos en la HashMap de ClaseUtil     
            RepositorioBdPunto repositorioPunto=new RepositorioBdPunto(); 
-           repositorioPunto.mapearPtosDeTablaPunto();
+           repositorioPunto.obtenerPtosDeTablaPunto();
             
-           // CARGO LOS RESULTADOS DE LA BD
+           // Cargo los resultados de la BD y dejo los objetos en la HashMap de ClaseUtil
             RepositorioFileResultado resultadoPartidos= new RepositorioFileResultado();
-            resultadoPartidos.mapearPartidosDeTablaResultado();
+            resultadoPartidos.obtenerPartidosDeTablaResultado();
            
-            // CARGO LOS PRONOSTICOS DEL ARCHIVOD
+            // Cargo los pronosticos del archivo y obtengo los objetos en la HashMap de ClaseUtil   
             RepositorioBdPronostico repositorioPronostico=new RepositorioBdPronostico();  
-            participantes= repositorioPronostico.getParticipantesConPronostico();
+            participantes= repositorioPronostico.obtenerParticipantesConPronostico();
             
             ClaseUtil.cerrar();
           

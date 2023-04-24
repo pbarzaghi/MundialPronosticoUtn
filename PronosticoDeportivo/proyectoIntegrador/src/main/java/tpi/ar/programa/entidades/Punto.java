@@ -14,7 +14,7 @@ package tpi.ar.programa.entidades;
 @lombok.Setter
 @lombok.NoArgsConstructor
 
-public class PuntosResultado {
+public class Punto {
     private int puntoGanar;
     private int puntoEmpatar;
     private int puntoPerder;

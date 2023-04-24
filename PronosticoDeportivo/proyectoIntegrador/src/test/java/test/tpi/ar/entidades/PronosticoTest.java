@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 import tpi.ar.programa.enumerado.ResultadoEmun;
 
 import tpi.ar.programa.entidades.Pronostico;
-import tpi.ar.programa.entidades.PuntosResultado;
+import tpi.ar.programa.entidades.Punto;
 import tpi.ar.programa.entidades.Equipo;
 import tpi.ar.programa.entidades.Partido;
 
@@ -32,7 +32,7 @@ public class PronosticoTest {
     private Partido partido2;
     
     private ResultadoEmun resultadoPronostico;
-    private PuntosResultado puntos;
+    private Punto puntos;
     private Pronostico pronostico1;
 
     
@@ -66,7 +66,7 @@ public class PronosticoTest {
          partido2.setEquipo1(equipo1);
          partido2.setEquipo2(equipo3);
          
-         puntos= new PuntosResultado();
+         puntos= new Punto();
          puntos.setPuntoAcierto(1);
          puntos.setPuntosRonda(2);
          
