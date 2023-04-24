@@ -6,7 +6,6 @@ package tpi.ar.programa.entidades;
 
 import tpi.ar.programa.enumerado.ResultadoEmun;
 import tpi.ar.programa.exception.GolesNegativoException;
-import tpi.ar.programa.enumerado.PuntosResultado;
 
 /**
  *

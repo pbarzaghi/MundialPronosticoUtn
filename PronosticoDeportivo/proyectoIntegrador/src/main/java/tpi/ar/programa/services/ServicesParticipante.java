@@ -8,11 +8,10 @@ package tpi.ar.programa.services;
 import tpi.ar.programa.repositorios.RepositorioFileResultado;
 import tpi.ar.programa.repositorios.RepositorioBdPronostico;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.List;
 import tpi.ar.programa.exception.FileIntegradorException;
 import tpi.ar.programa.exception.GolesNegativoException;
-import tpi.ar.programa.enumerado.PuntosResultado;
+import tpi.ar.programa.entidades.PuntosResultado;
 import tpi.ar.programa.entidades.Participante;
 import tpi.ar.programa.repositorios.RepositorioBdPunto;
 
@@ -32,18 +31,14 @@ public class ServicesParticipante {
                 // CARGO LOS PUNTOS DE LA BD
           
            RepositorioBdPunto repositorioPunto=new RepositorioBdPunto(); 
-           PuntosResultado tablaDePuntos=repositorioPunto.getTablaDePuntos();
+           repositorioPunto.mapearPtosDeTablaPunto();
             
-          
+           
             RepositorioFileResultado resultadoPartidos= new RepositorioFileResultado();
-          // Seteo los TablaPuntos para que se carguen en los resultados de los partidos
-            resultadoPartidos.setearPuntosResultado(tablaDePuntos);
-            HashMap tablaResultadoPartido=resultadoPartidos.getResultadoPartidos();
+            resultadoPartidos.mapearPartidosDeTablaResultado();
             
             RepositorioBdPronostico repositorioPronostico=new RepositorioBdPronostico();  
-            // obtengo la tabla de resultados obtenida de metodo getResultadoPartidos
-            participantes= repositorioPronostico.getParticipantesConPronostico(tablaResultadoPartido);
-           
+            participantes= repositorioPronostico.getParticipantesConPronostico();
           
         } catch (RuntimeException ex) {
             

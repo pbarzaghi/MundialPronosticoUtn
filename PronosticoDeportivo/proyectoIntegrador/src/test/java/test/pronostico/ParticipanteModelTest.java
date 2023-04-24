@@ -14,7 +14,7 @@ import org.junit.jupiter.api.Test;
 import tpi.ar.programa.enumerado.ResultadoEmun;
 import tpi.ar.programa.model.ParticipanteModel;
 import tpi.ar.programa.entidades.Pronostico;
-import tpi.ar.programa.enumerado.PuntosResultado;
+import tpi.ar.programa.entidades.PuntosResultado;
 import tpi.ar.programa.entidades.Equipo;
 import tpi.ar.programa.entidades.Partido;
 import tpi.ar.programa.entidades.Ronda;

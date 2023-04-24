@@ -10,12 +10,13 @@ import tpi.ar.programa.conexion.Conexion;
 import tpi.ar.programa.conexion.ConexionFileCsv;
 import tpi.ar.programa.exception.FileIntegradorException;
 import tpi.ar.programa.exception.FormatoIncorrectoException;
-import tpi.ar.programa.enumerado.PuntosResultado;
+import tpi.ar.programa.entidades.PuntosResultado;
 import tpi.ar.programa.entidades.Equipo;
 import tpi.ar.programa.entidades.Fase;
 import tpi.ar.programa.entidades.Partido;
 import tpi.ar.programa.entidades.Ronda;
 import resources.MsgProperty;
+import tpi.ar.programa.util.ClaseUtil;
 
 import tpi.ar.programa.validador.ValidadorCampo;
 
@@ -24,22 +25,22 @@ import tpi.ar.programa.validador.ValidadorCampo;
  * @author pbaraghi
  */
 public class RepositorioFileResultado {
-    private  HashMap objCreacion;
+
     private  ValidadorCampo validador;
     
      public RepositorioFileResultado(){
-      
-      if(objCreacion == null)
-         objCreacion=new HashMap();
-      validador=new ValidadorCampo();
+          validador=new ValidadorCampo();
     }
 
  
-    
-   //-------------------------------------------------------------
-   // Levantar el archivo  Resultado
-   //----------------------------------------
-     public HashMap getResultadoPartidos() throws FileIntegradorException {
+    /*
+     Este metodo se conecta a la bd, ejecuta la consulta Sql, obteniendo todos los resultados de los partidos
+     disputados. Por cada partido se va generando los objetos Equipo1,Equipo2,Partido,Ronda,Fase y
+     cargardo en un HashMap que se encuentra en la ClaseUtil el cual tiene una variable de clase Map.
+     */
+  
+     
+     public  void mapearPartidosDeTablaResultado() throws FileIntegradorException {
          
          // Path pathResultados= Paths.get(path);
               List<String> listaResultado=null;
@@ -60,28 +61,28 @@ public class RepositorioFileResultado {
                  else{
                       int idEquipo=1;
                       int idPartido=1;
-                      Equipo equipo1= (Equipo)  objCreacion.get(Equipo.class+campo[1]);
+                      Equipo equipo1= (Equipo) ClaseUtil.obtenerObjeto(Equipo.class+campo[1]);
                      // VALIDACION DE CAMPO
                       if(equipo1 == null){
                           if(!validador.validar(campo[1],"EQUIPO")){
                            throw  new FormatoIncorrectoException(MsgProperty.getMensaje("error.equipoMayuscula"));
-                        }
+                   }
                          equipo1= new Equipo(campo[1], "SELECCIONADO");
                          equipo1.setId(idEquipo);
-                         objCreacion.put(Equipo.class+campo[1], equipo1);
+                          ClaseUtil.agregarObjeto(Equipo.class+campo[1], equipo1);
                          idEquipo++;
                       }
-                       Equipo equipo2= (Equipo)  objCreacion.get(Equipo.class+campo[4]);
+                       Equipo equipo2= (Equipo)  ClaseUtil.obtenerObjeto(Equipo.class+campo[4]);
                          if(!validador.validar(campo[4],"EQUIPO")){
                            throw  new FormatoIncorrectoException(MsgProperty.getMensaje("error.equipoMayuscula"));
                          }
                        if(equipo2 == null){
                           equipo2= new Equipo(campo[4], "SELECCIONADO");
                           equipo2.setId(idEquipo);
-                          objCreacion.put(Equipo.class+campo[4], equipo2);
+                           ClaseUtil.agregarObjeto(Equipo.class+campo[4], equipo2);
                           idEquipo++;
                       }
-                       Partido partido= (Partido)  objCreacion.get(Partido.class+equipo1.getNombre()+
+                       Partido partido= (Partido)  ClaseUtil.obtenerObjeto(Partido.class+equipo1.getNombre()+
                                                                                                 "_"+
                                                                                   equipo2.getNombre() );
                        if(partido == null){
@@ -97,29 +98,29 @@ public class RepositorioFileResultado {
                        }
                         partido.setGolesEquipo1(Integer.parseInt(campo[2]));
                         partido.setGolesEquipo2(Integer.parseInt(campo[3]));
-                        partido.setPuntos((PuntosResultado)objCreacion.get(PuntosResultado.class));
-                       objCreacion.put(Partido.class+equipo1.getNombre()+"_"+equipo2.getNombre(), partido);
+                        partido.setPuntos((PuntosResultado) ClaseUtil.obtenerObjeto("PuntosResultado.class"));
+                        ClaseUtil.agregarObjeto(Partido.class+equipo1.getNombre()+"_"+equipo2.getNombre(), partido);
                            idPartido++;
                         }
 
-                       Ronda ronda= (Ronda)  objCreacion.get(Ronda.class+campo[0]);
+                       Ronda ronda= (Ronda)   ClaseUtil.obtenerObjeto(Ronda.class+campo[0]);
                         if(ronda == null){
                             ronda = new Ronda();
                             ronda.setNro(Integer.parseInt(campo[0]));
                             partido.setRonda(ronda);
                             ronda.appendPartido(partido);
-                            objCreacion.put(Ronda.class+String.valueOf(ronda.getNro()), ronda);
+                             ClaseUtil.agregarObjeto(Ronda.class+String.valueOf(ronda.getNro()), ronda);
                         }else{
                              partido.setRonda(ronda); 
                             ronda.appendPartido(partido);
                              
                         }
-                         Fase fase= (Fase)  objCreacion.get(Fase.class+campo[5]); 
+                         Fase fase= (Fase)   ClaseUtil.obtenerObjeto(Fase.class+campo[5]); 
                           if(fase == null){
                             fase = new Fase();
                             fase.setNro(new Integer(campo[5]));
                             fase.appendRonda(ronda);
-                            objCreacion.put(Fase.class+String.valueOf(fase.getNro()), fase);
+                             ClaseUtil.agregarObjeto(Fase.class+String.valueOf(fase.getNro()), fase);
                         }else{
                              fase.appendRonda(ronda);
                              
@@ -127,14 +128,8 @@ public class RepositorioFileResultado {
                         ronda.setFase(fase);
                   }
              }
-      return objCreacion;
+      
          }
 
-   
-     public void setearPuntosResultado(PuntosResultado puntos){
-       objCreacion.put(PuntosResultado.class,puntos);   
-        
-    }
-     
    
 }
