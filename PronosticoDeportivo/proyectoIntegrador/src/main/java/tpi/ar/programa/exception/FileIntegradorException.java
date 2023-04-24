@@ -16,20 +16,15 @@ import java.util.Properties;
  * @author pbarzaghi
  */
 public class FileIntegradorException  extends Exception {
-    private String mensajeError;
+  
 
     
 public FileIntegradorException(String msg){
 
-    this.mensajeError=msg;
+    super(msg);
 }
      
      
-    
-    @Override
-    public String getMessage() {
-      return this.mensajeError;   
-    }
-     
+   
   
 }

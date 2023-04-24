@@ -11,7 +11,7 @@ import java.sql.ResultSet;
 
 
 import java.util.ArrayList;
-import java.util.HashMap;
+
 import java.util.List;
 
 
@@ -23,11 +23,12 @@ import tpi.ar.programa.exception.FormatoIncorrectoException;
 
 import tpi.ar.programa.entidades.Pronostico;
 
-import tpi.ar.programa.enumerado.PuntosResultado;
+import tpi.ar.programa.entidades.PuntosResultado;
 import tpi.ar.programa.entidades.Equipo;
 import tpi.ar.programa.entidades.Partido;
 import tpi.ar.programa.entidades.Participante;
 import resources.MsgProperty;
+import tpi.ar.programa.util.ClaseUtil;
 import tpi.ar.programa.validador.ValidadorCampo;
 
 /**
@@ -40,16 +41,21 @@ public class RepositorioBdPronostico {
   
     
      /*
-      Este metodo lee dado el path del archivo los pronosticos y retorna una lista de Participante con
-     los pronostico realizado
-    cargados desde el archivo
+      Este metodo lee dado el path del archivo los pronosticos.
+      Por cada linea leida va generando la instancia Pronostico y obteniendo las
+      instancia de Equipo,Partidode de la clase ClaseUtil que fueron cargadas con
+      el metodo mapearPtosDeTablaPunto() y  mapearPartidosDeTablaResultado()
+      Tambien genera la instancia Participante la cual se le van agregando los pronosticos 
+      realizados.
+      Return: List<Participante>
+     
     */
-    public List<Participante> getParticipantesConPronostico(HashMap object) throws  Exception{
+    public List<Participante> getParticipantesConPronostico() throws  Exception{
              ValidadorCampo validador= new ValidadorCampo();
-            HashMap objCreacion=( HashMap)object;
+      
             List<Participante> listaParticipante =new ArrayList();
      
-             PreparedStatement stmt = null;
+            PreparedStatement stmt = null;
              ResultSet rs = null;
             Connection conn = null;
             Conexion conexion= new ConexionBd();
@@ -71,18 +77,20 @@ public class RepositorioBdPronostico {
                         )
                       throw  new FormatoIncorrectoException(MsgProperty.getMensaje("error.equipoMayuscula"));
                     
-                Equipo equipo1Obj=(Equipo)objCreacion.get(Equipo.class+equipo1Name);
+                Equipo equipo1Obj=(Equipo) ClaseUtil.obtenerObjeto(Equipo.class+equipo1Name);
+                        //objCreacion.get(Equipo.class+equipo1Name);
+                    
                  if(equipo1Obj == null)
                    throw  new FormatoIncorrectoException(MsgProperty.getMensaje("error.noExisteEquipo"));
                     
-                Equipo equipo2Obj=(Equipo)objCreacion.get(Equipo.class+equipo2Name);
+                Equipo equipo2Obj=(Equipo) ClaseUtil.obtenerObjeto(Equipo.class+equipo2Name);
                  
                  if(equipo2Obj == null)
                           throw  new FormatoIncorrectoException(MsgProperty.getMensaje("error.noExisteEquipo"));
-                Partido partido= (Partido)  objCreacion.get(Partido.class+ equipo1Obj.getNombre()+"_"+equipo2Obj.getNombre() );
+                Partido partido= (Partido)   ClaseUtil.obtenerObjeto(Partido.class+ equipo1Obj.getNombre()+"_"+equipo2Obj.getNombre() );
             
                if(partido== null)
-                  partido= (Partido)  objCreacion.get(Partido.class+equipo2Obj.getNombre()+ "_"+
+                  partido= (Partido)   ClaseUtil.obtenerObjeto(Partido.class+equipo2Obj.getNombre()+ "_"+
                                                                           equipo1Obj.getNombre() );
                if(partido == null)
                    throw  new  FormatoIncorrectoException(MsgProperty.getMensaje("error.noExistePartido"));  
@@ -99,8 +107,8 @@ public class RepositorioBdPronostico {
                  this.getResultadoPronostico(rs.getString("Ganado"),
                                                      rs.getString("Empatado"),
                                                      rs.getString("Perdido")) );
-               
-                pronostico.setPuntosResultado((PuntosResultado) objCreacion.get(PuntosResultado.class));
+                //ClaseUtil.obtenerObjeto
+                pronostico.setPuntosResultado((PuntosResultado) ClaseUtil.obtenerObjeto("PuntosResultado.class"));
                 pronostico.setPartido(partido);
                 
                 if(!validador.validar(rs.getString("Participante"),"PARTICIPANTE" ))
@@ -108,7 +116,7 @@ public class RepositorioBdPronostico {
            
                     
                 
-                Participante participante=(Participante)  objCreacion.remove(Participante.class+
+                Participante participante=(Participante) ClaseUtil.eliminarObjeto(Participante.class+
                                                            rs.getString("Participante"));
                 
                 
@@ -120,12 +128,13 @@ public class RepositorioBdPronostico {
                      
                   participante.addPronostico(pronostico);
                   listaParticipante.add(participante);
-                  objCreacion.put(Participante.class+participante.getNombre(),participante);
+                 ClaseUtil.agregarObjeto(Participante.class+participante.getNombre(),participante);
                  
               }
         conexion.cerrarConexion();
         return listaParticipante;  
     }     
+    
     
 private ResultadoEmun getResultadoPronostico(String strGanadorEq1,String strEmpate,String strGanador2){
 

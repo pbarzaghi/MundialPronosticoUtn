@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.util.List;
 import tpi.ar.programa.exception.FileIntegradorException;
 import tpi.ar.programa.exception.GolesNegativoException;
-import tpi.ar.programa.enumerado.PuntosResultado;
+import tpi.ar.programa.entidades.PuntosResultado;
 import tpi.ar.programa.entidades.Participante;
 import tpi.ar.programa.repositorios.RepositorioBdPunto;
 
@@ -31,15 +31,14 @@ public class ServicesParticipante {
                 // CARGO LOS PUNTOS DE LA BD
           
            RepositorioBdPunto repositorioPunto=new RepositorioBdPunto(); 
-           PuntosResultado tablaDePuntos=repositorioPunto.getTablaDePuntos();
+           repositorioPunto.mapearPtosDeTablaPunto();
             
-            // SETEO LOS PUNTOS EN LA CLASE FILE PARA CUANDO CARGUE LOS RESULTADOS AGREGAR LOS PUNTOS
+           
             RepositorioFileResultado resultadoPartidos= new RepositorioFileResultado();
-            resultadoPartidos.setearPuntosResultado(tablaDePuntos);
-            resultadoPartidos.getResultadoPartidos();
+            resultadoPartidos.mapearPartidosDeTablaResultado();
             
             RepositorioBdPronostico repositorioPronostico=new RepositorioBdPronostico();  
-            participantes= repositorioPronostico.getParticipantesConPronostico(resultadoPartidos.getResultadosTablaPartidos());
+            participantes= repositorioPronostico.getParticipantesConPronostico();
           
         } catch (RuntimeException ex) {
             

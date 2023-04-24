@@ -7,7 +7,6 @@ package tpi.ar.programa.entidades;
 import tpi.ar.programa.enumerado.ResultadoEmun;
 import tpi.ar.programa.entidades.Equipo;
 import tpi.ar.programa.entidades.Partido;
-import tpi.ar.programa.enumerado.PuntosResultado;
 
 /**
  *

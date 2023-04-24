@@ -12,14 +12,23 @@ import tpi.ar.programa.conexion.Conexion;
 import tpi.ar.programa.conexion.ConexionBd;
 import tpi.ar.programa.exception.FileIntegradorException;
 import resources.MsgProperty;
-import tpi.ar.programa.enumerado.PuntosResultado;
+import tpi.ar.programa.entidades.PuntosResultado;
+import tpi.ar.programa.util.ClaseUtil;
 
 /**
  *
  * @author pbarzaghi
  */
 public class RepositorioBdPunto {
-      public  PuntosResultado getTablaDePuntos() throws FileIntegradorException {
+    
+    
+      /*
+       Este metodose conecta a la BD y  ejecuta la consulta para obtener los valores de la tabla Punto, crea un Objeto
+       PuntosResultado y los carga en un HashMap que se encuentra en la clase
+       ClaseUtil el cual tiene una variable de clase Map.
+       
+      */
+      public  void mapearPtosDeTablaPunto() throws FileIntegradorException {
        
      
         
@@ -42,6 +51,7 @@ public class RepositorioBdPunto {
                 puntos.setPuntoAcierto(rs.getInt("ptosAcertar"));
                 puntos.setPuntosRonda(rs.getInt("ptosRonda"));
                 puntos.setPuntosFase(rs.getInt("ptosFase"));
+                ClaseUtil.agregarObjeto("PuntosResultado.class", puntos);
             }
          
             conexion.cerrarConexion();
@@ -49,8 +59,7 @@ public class RepositorioBdPunto {
         } catch (SQLException ex) {
             throw new FileIntegradorException(MsgProperty.getMensaje("error.sentenciaSql"));
         }
-     return puntos;
-
+  
     }
     
     
