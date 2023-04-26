@@ -31,7 +31,7 @@ public class ServicesParticipante {
         try {
                
           
-            ClaseUtil.inizializar();
+           
            // Cargo los punto de la BD y dejo los objetos en la HashMap de ClaseUtil     
            RepositorioBdPunto repositorioPunto=new RepositorioBdPunto(); 
            repositorioPunto.obtenerPtosDeTablaPunto();
@@ -44,7 +44,7 @@ public class ServicesParticipante {
             RepositorioBdPronostico repositorioPronostico=new RepositorioBdPronostico();  
             participantes= repositorioPronostico.obtenerParticipantesConPronostico();
             
-            ClaseUtil.cerrar();
+           
           
         } catch (RuntimeException ex) {
             

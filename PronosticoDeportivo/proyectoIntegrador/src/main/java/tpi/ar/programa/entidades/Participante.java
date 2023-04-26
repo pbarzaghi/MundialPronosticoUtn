@@ -18,9 +18,12 @@ import java.util.List;
 public class Participante extends Persona{
     
     private List<Pronostico> pronosticos;
+    private Integer cantidadPuntosObtenidos;
+    
     public Participante(String nombre) {
         super(nombre);
        this.pronosticos=new ArrayList<>();
+       this.cantidadPuntosObtenidos=0;
     }
 
    

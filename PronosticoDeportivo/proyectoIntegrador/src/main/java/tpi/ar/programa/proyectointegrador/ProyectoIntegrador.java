@@ -9,6 +9,7 @@ import tpi.ar.programa.exception.GolesNegativoException;
 import tpi.ar.programa.services.ServicesParticipante;
 import tpi.ar.programa.model.ParticipanteModel;
 import tpi.ar.programa.entidades.Participante;
+import tpi.ar.programa.util.ClaseUtil;
 
 
 /**
@@ -39,15 +40,15 @@ public class ProyectoIntegrador {
     private static void imprimirEtapa3() throws FileIntegradorException,GolesNegativoException{
      
           ServicesParticipante servicesParticipante = new ServicesParticipante();
-         
+        
           ParticipanteModel participanteGanador= new ParticipanteModel();
-          
-              for (Participante participante : servicesParticipante.getListaParticipante()) {
-                  
+          ClaseUtil.inizializar();
+        
+          for (Participante participante : servicesParticipante.getListaParticipante()) {
                 System.out.println(participanteGanador.puntajeTotalDelParticipante(participante));   
             }
-       
-    
+        
+           ClaseUtil.cleanTabla();
     }  
     
   

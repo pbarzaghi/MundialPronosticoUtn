@@ -8,21 +8,13 @@ package tpi.ar.programa.repositorios;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-
-
 import java.util.ArrayList;
-
 import java.util.List;
-
-
 import tpi.ar.programa.conexion.Conexion;
 import tpi.ar.programa.conexion.ConexionBd;
 import tpi.ar.programa.enumerado.ResultadoEmun;
-
 import tpi.ar.programa.exception.FormatoIncorrectoException;
-
 import tpi.ar.programa.entidades.Pronostico;
-
 import tpi.ar.programa.entidades.Punto;
 import tpi.ar.programa.entidades.Equipo;
 import tpi.ar.programa.entidades.Partido;
@@ -127,6 +119,9 @@ public class RepositorioBdPronostico {
                          listaParticipante.remove(participante);
                      
                   participante.addPronostico(pronostico);
+                  //agrego los puntos por pronostico
+                  participante.setCantidadPuntosObtenidos(participante.getCantidadPuntosObtenidos()+pronostico.getPuntos());
+
                   listaParticipante.add(participante);
                  ClaseUtil.agregarObjeto(Participante.class+participante.getNombre(),participante);
                  
@@ -136,8 +131,16 @@ public class RepositorioBdPronostico {
         return listaParticipante;  
     }     
     
-    
-private ResultadoEmun getResultadoPronostico(String strGanadorEq1,String strEmpate,String strGanador2){
+    /**
+     * Este metodo retorna que resultado fue segun el string por parametro ingresado.
+     * @param strGanadorEq1
+     * @param strEmpate
+     * @param strGanador2
+     * @return 
+     */
+     private ResultadoEmun getResultadoPronostico(String strGanadorEq1,
+                                                  String strEmpate,
+                                                  String strGanador2){
 
        
          if("X".equals(strGanadorEq1))

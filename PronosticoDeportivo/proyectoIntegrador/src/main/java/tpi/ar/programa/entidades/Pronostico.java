@@ -70,7 +70,7 @@ public class Pronostico {
 
     
     /*
-       Este metodo retorna 1 si acepto el pronostico y cero sino.
+       Este metodo retorna Punto.acierto si acepto el pronostico y cero sino.
        // Este metodo se puede utilizar en caso que el puntaje sea dinamico
            
       */

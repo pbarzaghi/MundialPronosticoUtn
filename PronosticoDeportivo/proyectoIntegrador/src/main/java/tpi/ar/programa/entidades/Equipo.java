@@ -20,7 +20,7 @@ public class Equipo {
 
   
   public Equipo(String nombre,String descripcion){
-  
+    super(); 
     this.nombre=nombre;
     this.descripcion=descripcion;
   

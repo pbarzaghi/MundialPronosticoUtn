@@ -64,7 +64,7 @@ public class ClaseUtil {
         
     }
      
-     public static void cerrar(){
+     public static void cleanTabla(){
         if(tablaObjetosIntegrador!=null)
               tablaObjetosIntegrador.clear();
      } 

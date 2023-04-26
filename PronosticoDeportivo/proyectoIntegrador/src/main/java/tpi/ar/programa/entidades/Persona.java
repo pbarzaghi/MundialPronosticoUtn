@@ -21,6 +21,7 @@ public class Persona {
     
     
 public Persona(String nombre){
+        super();
         this.nombre=nombre;
         this.apellido="";
 }

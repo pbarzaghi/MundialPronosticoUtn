@@ -6,6 +6,7 @@ package tpi.ar.programa.entidades;
 
 import java.util.ArrayList;
 import java.util.List;
+import tpi.ar.programa.util.ClaseUtil;
 
 
 /**
@@ -31,36 +32,30 @@ public class Ronda {
           partidos.add(partido);   
       }
     
-     public int getNroRonda(Partido partido){
-           return (partidos.contains(partido)?getNro():0);
-     } 
-
-     public boolean validarPartidoEnARonda(Partido partido){
-         return partidos.contains(partido);
-      }
-     
+  
      public Ronda getRonda(Partido partido){
         return (this.partidos.contains(partido)? this: null);
      }
-     /*
-      Este metodo se fija si el equipo ingresado gano en esa ronda
-      devolviendo un boolean.
-      
-     */
-     
-     public boolean esRondaGanada(Equipo equipo){
-         boolean ganoRonda=false;
-         for (Partido partido : partidos) {
-             if(partido.getEquipoGanador()== null || equipo == null)
-                 return false;
+    
+     public boolean esRondaGanada(List<Pronostico> pronosticos){
+        int cantidadDePartidosEnRonda=0;//this.partidos.size();
+        int ptosObtenidosParaRonda=0;
+        int cantidadAciertos=0;
+         Punto ptos=(Punto) ClaseUtil.obtenerObjeto(Punto.class.toString());
+         
+         for (Pronostico pronostico : pronosticos) {
+             if(pronostico.getPartido().getRonda().equals(this)){
+                cantidadDePartidosEnRonda++; 
+                Partido partido= pronostico.getPartido();
+               if(pronostico.getResultado().equals(partido.getResultado(pronostico.getEquipo())))
+                 ptosObtenidosParaRonda+=ptos.getPuntosRonda();
              
-            if(partido.getEquipo1().equals(equipo))
-                    ganoRonda= partido.getEquipoGanador().equals(equipo);
-            else
-               if(partido.getEquipo2().equals(equipo))
-                    ganoRonda= partido.getEquipoGanador().equals(equipo);
+             }
          }
-     return ganoRonda;
+       
+         cantidadAciertos= ptosObtenidosParaRonda /ptos.getPuntosRonda() ;
+      
+     return cantidadDePartidosEnRonda==cantidadAciertos;
      }
 }
 

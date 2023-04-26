@@ -76,73 +76,6 @@ public class RondaTest {
     
     
     @Test
-    public void equipo1GanoRonda(){
-     //ARGENTINA - BRAZIL
-        partido1.setGolesEquipo1(3);
-        partido1.setGolesEquipo2(1);
-        partidos.add(partido1);
-    
-     //ARGENTINA - CHILE
-       partido2.setGolesEquipo1(3);
-       partido2.setGolesEquipo2(2);
-       partidos.add(partido2);
-     
-    //ARGENTINA - URUGUAY   
-      partido3.setGolesEquipo1(3);
-      partido3.setGolesEquipo2(2);
-      partidos.add(partido3);
-     // Partidos de la 1ra Ronda  
-      ronda1.setPartidos(partidos);
-      Assertions.assertTrue(ronda1.esRondaGanada(equipo1));
-     }
-    
-     @Test
-    public void equipo1Gano2Ronda(){
-     //ARGENTINA - BRAZIL
-        partido1.setGolesEquipo1(3);
-        partido1.setGolesEquipo2(1);
-        partidos.add(partido1);
-    
-     //ARGENTINA - CHILE
-       partido2.setGolesEquipo1(3);
-       partido2.setGolesEquipo2(2);
-       partidos.add(partido2);
-     
-     
-       List<Partido> partidos2 =new ArrayList<Partido>();
-    //ARGENTINA - URUGUAY   
-      partido3.setGolesEquipo1(3);
-      partido3.setGolesEquipo2(2);
-     
-      Equipo equipo5 = new Equipo("PARAGUAY","SELECCION");
-      equipo5.setId(5);
-       
-     Partido partido4= new Partido();
-      partido4.setEquipo1(equipo1);
-     
-      partido4.setEquipo2(equipo5);
-      
-      partido4.setGolesEquipo1(3);
-     partido4.setGolesEquipo2(2);
-      
-      partidos2.add(this.partido3);
-      partidos2.add(partido4);
-      Ronda ronda2= new Ronda();
-      ronda2.setNro(2);
-      
-      this.ronda1.setPartidos(this.partidos);
-      ronda2.setPartidos(partidos2);
-      
-      
-     Assertions.assertTrue(ronda1.esRondaGanada(this.equipo1)
-                             && ronda2.esRondaGanada(this.equipo1) ); 
-      
-    
-        
-    }
-    
-    
-    @Test
     public void argentinaJugoConBrazilEnLaRonda(){
        
         
@@ -158,7 +91,7 @@ public class RondaTest {
         
         ronda1.appendPartido(partido2);
         ronda1.appendPartido(partido1);
-        Assertions.assertTrue(ronda1.validarPartidoEnARonda(partido1));
+        Assertions.assertTrue(ronda1.equals(ronda1.getRonda(partido1)));
     
     }
 }
