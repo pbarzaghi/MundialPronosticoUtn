@@ -13,6 +13,7 @@ import tpi.ar.programa.entidades.Pronostico;
 import tpi.ar.programa.entidades.Punto;
 import tpi.ar.programa.entidades.Equipo;
 import tpi.ar.programa.entidades.Partido;
+import tpi.ar.programa.util.ClaseUtil;
 
 
 
@@ -73,11 +74,12 @@ public class PronosticoTest {
          puntos.setPuntoGanar(3);
          puntos.setPuntoEmpatar(1);
          puntos.setPuntoPerder(0);
+         ClaseUtil.inizializar();
+         ClaseUtil.agregarObjeto(Punto.class.toString(), puntos);
     
          
          pronostico1 = new Pronostico();
-         pronostico1.setPuntosResultado(puntos);
-         
+      
        
          
     }
@@ -117,7 +119,7 @@ public class PronosticoTest {
                 Pronostico pronostico2= new Pronostico();
                 pronostico2.setEquipo(equipo2);
                 pronostico2.setPartido(partido2);
-                pronostico2.setPuntosResultado(puntos);
+            
                  pronostico2.setResultado(resultadoPronostico.PERDEDOR);
                  Assertions.assertEquals(2,pronostico1.getPuntos()+pronostico2.getPuntos());
                  

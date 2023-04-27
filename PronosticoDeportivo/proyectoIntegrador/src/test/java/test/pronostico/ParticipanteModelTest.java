@@ -79,17 +79,11 @@ public class ParticipanteModelTest {
          ronda1=new Ronda();
          ronda1.setNro(1);
          
-          puntos= new Punto();
-         puntos.setPuntoAcierto(1);
-         puntos.setPuntosRonda(2);
          
-         puntos.setPuntoGanar(3);
-         puntos.setPuntoEmpatar(1);
-         puntos.setPuntoPerder(0);
     
          
          pronostico1 = new Pronostico();
-         pronostico1.setPuntosResultado(puntos);
+        
          
         
         
@@ -118,7 +112,7 @@ public class ParticipanteModelTest {
       pronostico1.setEquipo(equipo1);
       
       Pronostico pronostico2 = new Pronostico();
-      pronostico2.setPuntosResultado(puntos);
+   
       pronostico2.setPartido(partido2);
       pronostico2.setResultado(resultadoPronostico.GANADOR);
       pronostico2.setEquipo(equipo1);

@@ -11,10 +11,9 @@ import java.io.IOException;
 import java.util.List;
 import tpi.ar.programa.exception.FileIntegradorException;
 import tpi.ar.programa.exception.GolesNegativoException;
-import tpi.ar.programa.entidades.Punto;
 import tpi.ar.programa.entidades.Participante;
 import tpi.ar.programa.repositorios.RepositorioBdPunto;
-import tpi.ar.programa.util.ClaseUtil;
+
 
 /**
  *

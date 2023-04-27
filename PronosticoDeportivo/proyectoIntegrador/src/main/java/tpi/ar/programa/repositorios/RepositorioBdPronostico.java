@@ -15,7 +15,6 @@ import tpi.ar.programa.conexion.ConexionBd;
 import tpi.ar.programa.enumerado.ResultadoEmun;
 import tpi.ar.programa.exception.FormatoIncorrectoException;
 import tpi.ar.programa.entidades.Pronostico;
-import tpi.ar.programa.entidades.Punto;
 import tpi.ar.programa.entidades.Equipo;
 import tpi.ar.programa.entidades.Partido;
 import tpi.ar.programa.entidades.Participante;
@@ -100,7 +99,7 @@ public class RepositorioBdPronostico {
                                                      rs.getString("Empatado"),
                                                      rs.getString("Perdido")) );
                 //ClaseUtil.obtenerObjeto
-                pronostico.setPuntosResultado((Punto) ClaseUtil.obtenerObjeto(Punto.class.toString()));
+               // pronostico.setPuntosResultado((Punto) ClaseUtil.obtenerObjeto(Punto.class.toString()));
                 pronostico.setPartido(partido);
                 
                 if(!validador.validar(rs.getString("Participante"),"PARTICIPANTE" ))

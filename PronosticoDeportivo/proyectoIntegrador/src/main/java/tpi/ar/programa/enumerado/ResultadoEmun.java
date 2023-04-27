@@ -11,10 +11,7 @@ package tpi.ar.programa.enumerado;
 public enum ResultadoEmun {
     GANADOR,
     PERDEDOR,
-    EMPATE,
-    PTO_RONDA,
-    PTO_FASE,
-    PTO_PARTIDO
-   
+    EMPATE
+  
       
 }

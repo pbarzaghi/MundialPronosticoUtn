@@ -32,7 +32,8 @@ public class ParticipanteModel {
      * @return un String con los aciertos de cada partido,ronda y fase con los puntos obtenidos 
      */
      public String puntajeTotalDelParticipante(Participante participante ){
-           List<Pronostico> pronosticos=participante.getPronosticos(); 
+          
+          List<Pronostico> pronosticos=participante.getPronosticos(); 
            listaDeTodasLasFase= new ArrayList<>();
            listaFaseConRondaPerdida=new ArrayList<>();
            listaRondaPerdida=new ArrayList<>();
@@ -78,7 +79,7 @@ public class ParticipanteModel {
              
              if(!listaContarTodasLasRonda.contains(String.valueOf(pronostico.getPartido().getRonda().getNro())))
                 listaContarTodasLasRonda.add(String.valueOf(pronostico.getPartido().getRonda().getNro()));
-            }
+            } // fin del for
            
            totalDeRonda=listaContarTodasLasRonda.size();
            cantidadRondasConAcierto=listaContarTodasLasRonda.size()-this.listaRondaPerdida.size();

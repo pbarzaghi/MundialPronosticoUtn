@@ -36,7 +36,18 @@ public class Ronda {
      public Ronda getRonda(Partido partido){
         return (this.partidos.contains(partido)? this: null);
      }
-    
+    /**
+     * Dada una Lista<Pronostico> que viene por parametos, se recorre 
+     * De cada pronostico, se obtiene el partido y se saca la ronda
+     * a quien pertenece. Si esa ronda es igual a la que this(la actual)
+     * entonces chequeamos si el resultado de pronostico es igual al resultado
+     * del partido. En caso afirmativo sumamos un punto porque gano la ronda.
+     * Al finalizar el recorrido comparamos si la cantidad de aciertos es igual
+     * a la cantidad de partidos de esa ronda.
+     * Si true else false.
+     * @param pronosticos
+     * @return boolean
+     */
      public boolean esRondaGanada(List<Pronostico> pronosticos){
         int cantidadDePartidosEnRonda=0;//this.partidos.size();
         int ptosObtenidosParaRonda=0;

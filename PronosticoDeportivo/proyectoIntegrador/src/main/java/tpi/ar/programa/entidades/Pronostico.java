@@ -5,8 +5,8 @@
 package tpi.ar.programa.entidades;
 
 import tpi.ar.programa.enumerado.ResultadoEmun;
-import tpi.ar.programa.entidades.Equipo;
-import tpi.ar.programa.entidades.Partido;
+import tpi.ar.programa.util.ClaseUtil;
+
 
 /**
  *
@@ -17,7 +17,7 @@ public class Pronostico {
     private Partido partido;
     private Equipo equipo;
     private ResultadoEmun resultado;
-    private Punto puntosResultado;
+
    
     
    
@@ -76,12 +76,12 @@ public class Pronostico {
       */
       
       public int getPuntos(){
-          
+         Punto punto=(Punto)ClaseUtil.obtenerObjeto(Punto.class.toString());
          ResultadoEmun resultadoReal=   this.partido.getResultado(this.equipo);
          // en caso que haciente el pronostico con el resultado del partido obtengo los puntos
          // por aceptar. En caso negativo 0
          if(this.resultado.equals(resultadoReal))
-            return   this.getPuntosResultado().getPuntoAcierto();
+            return   punto.getPuntoAcierto();
          
       return 0;
         
@@ -89,19 +89,7 @@ public class Pronostico {
 
    
 
-    /**
-     * @return the puntosResultado
-     */
-    public Punto getPuntosResultado() {
-        return puntosResultado;
-    }
-
-    /**
-     * @param puntosResultado the puntosResultado to set
-     */
-    public void setPuntosResultado(Punto puntosResultado) {
-        this.puntosResultado = puntosResultado;
-    }
+  
 
 
    public boolean acertoResultado(ResultadoEmun resultado){

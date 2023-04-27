@@ -23,27 +23,11 @@ public class Partido {
    private int golesEquipo1;
    private int golesEquipo2;
    private Ronda ronda;
-   private Punto puntos;
+   //private Punto puntos;
 
    
 
-    /**
-     * @param golesEquipo1 the golesEquipo1 to set
-     */
-    public void setGolesEquipo1(int golesEquipo1) {
-        
-        this.golesEquipo1 = golesEquipo1;
-    }
-
-    
-    /**
-     * @param golesEquipo2 the golesEquipo2 to set
-     */
-    public void setGolesEquipo2(int golesEquipo2) {
-      
-        this.golesEquipo2 = golesEquipo2;
-    }
-
+   
    
     public ResultadoEmun getResultado(Equipo equipo){
         

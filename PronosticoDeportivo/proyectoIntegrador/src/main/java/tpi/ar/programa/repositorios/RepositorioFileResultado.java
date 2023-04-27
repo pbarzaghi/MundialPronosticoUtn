@@ -4,13 +4,13 @@
  */
 package tpi.ar.programa.repositorios;
 
-import java.util.HashMap;
+
 import java.util.List;
 import tpi.ar.programa.conexion.Conexion;
 import tpi.ar.programa.conexion.ConexionFileCsv;
 import tpi.ar.programa.exception.FileIntegradorException;
 import tpi.ar.programa.exception.FormatoIncorrectoException;
-import tpi.ar.programa.entidades.Punto;
+
 import tpi.ar.programa.entidades.Equipo;
 import tpi.ar.programa.entidades.Fase;
 import tpi.ar.programa.entidades.Partido;
@@ -66,10 +66,10 @@ public class RepositorioFileResultado {
                       if(equipo1 == null){
                           if(!validador.validar(campo[1],"EQUIPO")){
                            throw  new FormatoIncorrectoException(MsgProperty.getMensaje("error.equipoMayuscula"));
-                   }
+                        }
                          equipo1= new Equipo(campo[1], "SELECCIONADO");
                          equipo1.setId(idEquipo);
-                          ClaseUtil.agregarObjeto(Equipo.class+campo[1], equipo1);
+                         ClaseUtil.agregarObjeto(Equipo.class+campo[1], equipo1);
                          idEquipo++;
                       }
                        Equipo equipo2= (Equipo)  ClaseUtil.obtenerObjeto(Equipo.class+campo[4]);
@@ -98,7 +98,7 @@ public class RepositorioFileResultado {
                        }
                         partido.setGolesEquipo1(Integer.parseInt(campo[2]));
                         partido.setGolesEquipo2(Integer.parseInt(campo[3]));
-                        partido.setPuntos((Punto) ClaseUtil.obtenerObjeto(Punto.class.toString()));
+                       // partido.setPuntos((Punto) ClaseUtil.obtenerObjeto(Punto.class.toString()));
                         ClaseUtil.agregarObjeto(Partido.class+equipo1.getNombre()+"_"+equipo2.getNombre(), partido);
                            idPartido++;
                         }

@@ -36,7 +36,7 @@ public class RepositorioBdPunto {
             ResultSet rs = null;
             Connection conn = null;
             Conexion conexion= new ConexionBd();
-            Punto puntos=null;
+            Punto punto=null;
             String qry="Select * from punto";
         try{
             conn = (Connection) conexion.abrirConexion();
@@ -44,14 +44,14 @@ public class RepositorioBdPunto {
             rs = stmt.executeQuery(qry);
             // Procesa los resultados
             if (rs.next()) {
-                puntos= new Punto();
-                puntos.setPuntoGanar(rs.getInt("ptosGanar"));
-                puntos.setPuntoEmpatar(rs.getInt("ptosEmpatar"));  
-                puntos.setPuntoPerder(rs.getInt("ptosPerder"));
-                puntos.setPuntoAcierto(rs.getInt("ptosAcertar"));
-                puntos.setPuntosRonda(rs.getInt("ptosRonda"));
-                puntos.setPuntosFase(rs.getInt("ptosFase"));
-                ClaseUtil.agregarObjeto(Punto.class.toString(), puntos);
+                punto= new Punto();
+                punto.setPuntoGanar(rs.getInt("ptosGanar"));
+                punto.setPuntoEmpatar(rs.getInt("ptosEmpatar"));  
+                punto.setPuntoPerder(rs.getInt("ptosPerder"));
+                punto.setPuntoAcierto(rs.getInt("ptosAcertar"));
+                punto.setPuntosRonda(rs.getInt("ptosRonda"));
+                punto.setPuntosFase(rs.getInt("ptosFase"));
+                ClaseUtil.agregarObjeto(Punto.class.toString(), punto);
             }
          
             conexion.cerrarConexion();
